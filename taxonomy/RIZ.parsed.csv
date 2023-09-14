@@ -1,0 +1,93 @@
+"","OTU","assignmentQual","taxID","superkingdom","phylum","class","order","family","genus","species"
+"1","ASV_1","High","9606","Eukaryota","Chordata","Mammalia","Primates","Hominidae","Homo","Homo sapiens"
+"2","ASV_2","High","113544","Eukaryota","Chordata","Actinopteri","Osteoglossiformes","Osteoglossidae","Arapaima","Arapaima gigas"
+"3","ASV_3","High-MH","None","Eukaryota","Chordata","Actinopteri","Cypriniformes","Cyprinidae",NA,NA
+"4","ASV_5","Low","87785","Eukaryota","Chordata","Actinopteri","Atheriniformes","Atherinidae","Atherina","Atherina boyeri"
+"5","ASV_8","None","None",NA,NA,NA,NA,NA,NA,NA
+"6","ASV_13","High-MH","None","Eukaryota","Chordata","Actinopteri","Clupeiformes","Clupeidae",NA,NA
+"7","ASV_19","High","113544","Eukaryota","Chordata","Actinopteri","Osteoglossiformes","Osteoglossidae","Arapaima","Arapaima gigas"
+"8","ASV_22","Low","9606","Eukaryota","Chordata","Mammalia","Primates","Hominidae","Homo","Homo sapiens"
+"9","ASV_23","Low","9606","Eukaryota","Chordata","Mammalia","Primates","Hominidae","Homo","Homo sapiens"
+"10","ASV_24","High","9606","Eukaryota","Chordata","Mammalia","Primates","Hominidae","Homo","Homo sapiens"
+"11","ASV_30","High","9606","Eukaryota","Chordata","Mammalia","Primates","Hominidae","Homo","Homo sapiens"
+"12","ASV_36","Low","9606","Eukaryota","Chordata","Mammalia","Primates","Hominidae","Homo","Homo sapiens"
+"13","ASV_37","Low","2663022","Bacteria","Bacillota","Bacilli","Bacillales","Bacillaceae","Gracilibacillus","Gracilibacillus salitolerans"
+"14","ASV_39","High-MH","None","Eukaryota","Chordata","Chondrichthyes","Myliobatiformes","Potamotrygonidae","Potamotrygon",NA
+"15","ASV_43","Low","113544","Eukaryota","Chordata","Actinopteri","Osteoglossiformes","Osteoglossidae","Arapaima","Arapaima gigas"
+"16","ASV_52","None","None",NA,NA,NA,NA,NA,NA,NA
+"17","ASV_54","None","None",NA,NA,NA,NA,NA,NA,NA
+"18","ASV_75","Low","9606","Eukaryota","Chordata","Mammalia","Primates","Hominidae","Homo","Homo sapiens"
+"19","ASV_86","Low","2806251","Bacteria","Actinomycetota","Actinomycetes","Streptosporangiales","Nocardiopsaceae","Nocardiopsis","Nocardiopsis sp. BM-2018"
+"20","ASV_89","Low","2694784","Viruses","Uroviricota","Caudoviricetes","","","","Marine virus AFVG_25M86"
+"21","ASV_98","None","None",NA,NA,NA,NA,NA,NA,NA
+"22","ASV_104","High-MH","None","Eukaryota","Chordata","Mammalia","Primates","Hominidae",NA,NA
+"23","ASV_114","Low","1490","Bacteria","Bacillota","Clostridia","Eubacteriales","Clostridiaceae","Paraclostridium","Paraclostridium bifermentans"
+"24","ASV_122","None","None",NA,NA,NA,NA,NA,NA,NA
+"25","ASV_126","None","None",NA,NA,NA,NA,NA,NA,NA
+"26","ASV_127","None","None",NA,NA,NA,NA,NA,NA,NA
+"27","ASV_138","None","None",NA,NA,NA,NA,NA,NA,NA
+"28","ASV_140","None","None",NA,NA,NA,NA,NA,NA,NA
+"29","ASV_146","None","None",NA,NA,NA,NA,NA,NA,NA
+"30","ASV_147","None","None",NA,NA,NA,NA,NA,NA,NA
+"31","ASV_148","High","9606","Eukaryota","Chordata","Mammalia","Primates","Hominidae","Homo","Homo sapiens"
+"32","ASV_151","None","None",NA,NA,NA,NA,NA,NA,NA
+"33","ASV_152","None","None",NA,NA,NA,NA,NA,NA,NA
+"34","ASV_155","High","9606","Eukaryota","Chordata","Mammalia","Primates","Hominidae","Homo","Homo sapiens"
+"35","ASV_156","Low","113544","Eukaryota","Chordata","Actinopteri","Osteoglossiformes","Osteoglossidae","Arapaima","Arapaima gigas"
+"36","ASV_158","High","9606","Eukaryota","Chordata","Mammalia","Primates","Hominidae","Homo","Homo sapiens"
+"37","ASV_169","None","None",NA,NA,NA,NA,NA,NA,NA
+"38","ASV_172","Low","1104234","Eukaryota","Chordata","Actinopteri","Cypriniformes","Cyprinidae","Labeobarbus","Labeobarbus caudovittatus"
+"39","ASV_173","Low","1490","Bacteria","Bacillota","Clostridia","Eubacteriales","Clostridiaceae","Paraclostridium","Paraclostridium bifermentans"
+"40","ASV_176","Low","192812","Bacteria","Pseudomonadota","Alphaproteobacteria","Sphingomonadales","Erythrobacteraceae","Qipengyuania","Qipengyuania flava"
+"41","ASV_194","Low","113544","Eukaryota","Chordata","Actinopteri","Osteoglossiformes","Osteoglossidae","Arapaima","Arapaima gigas"
+"42","ASV_202","Low","1636152","Bacteria","Planctomycetota","Planctomycetia","Planctomycetales","Planctomycetaceae","Planctomyces","Planctomyces sp. SH-PL62"
+"43","ASV_206","Low","1968541","Bacteria","Pseudomonadota","Alphaproteobacteria","Rhodobacterales","Roseobacteraceae","Sulfitobacter","Sulfitobacter sp. D7"
+"44","ASV_215","Low","2026735","Bacteria","","Deltaproteobacteria","","","","Deltaproteobacteria bacterium"
+"45","ASV_245","None","None",NA,NA,NA,NA,NA,NA,NA
+"46","ASV_251","Low","47865","Bacteria","Actinomycetota","Actinomycetes","Micromonosporales","Micromonosporaceae","Micromonospora","Micromonospora inositola"
+"47","ASV_255","None","None",NA,NA,NA,NA,NA,NA,NA
+"48","ASV_258","Low","322509","Bacteria","Actinomycetota","Actinomycetes","Mycobacteriales","Dietziaceae","Dietzia","Dietzia kunjamensis"
+"49","ASV_262","None","None",NA,NA,NA,NA,NA,NA,NA
+"50","ASV_265","None","None",NA,NA,NA,NA,NA,NA,NA
+"51","ASV_278","None","None",NA,NA,NA,NA,NA,NA,NA
+"52","ASV_280","Low","2895980","Bacteria","Pseudomonadota","Alphaproteobacteria","Hyphomicrobiales","","","Hyphomicrobiales bacterium 7MK25"
+"53","ASV_296","Low","2980108","Bacteria","Pseudomonadota","Alphaproteobacteria","Rhodobacterales","Roseobacteraceae","Roseovarius","Roseovarius sp. HL-MP18"
+"54","ASV_304","None","None",NA,NA,NA,NA,NA,NA,NA
+"55","ASV_305","Low","2865672","Bacteria","Actinomycetota","Actinomycetes","Streptosporangiales","Nocardiopsaceae","Nocardiopsis","Nocardiopsis sp. MT53"
+"56","ASV_327","None","None",NA,NA,NA,NA,NA,NA,NA
+"57","ASV_340","Low","39765","Bacteria","Pseudomonadota","Gammaproteobacteria","Thiotrichales","Piscirickettsiaceae","Hydrogenovibrio","Hydrogenovibrio crunogenus"
+"58","ASV_354","None","None",NA,NA,NA,NA,NA,NA,NA
+"59","ASV_360","None","None",NA,NA,NA,NA,NA,NA,NA
+"60","ASV_366","Low","1404443","Bacteria","Pseudomonadota","Alphaproteobacteria","Hyphomicrobiales","Nitrobacteraceae","Bradyrhizobium","Bradyrhizobium sp. 41S5"
+"61","ASV_409","None","None",NA,NA,NA,NA,NA,NA,NA
+"62","ASV_412","None","None",NA,NA,NA,NA,NA,NA,NA
+"63","ASV_427","Low","2052149","Bacteria","Candidatus Aminicenantes","","","","","Candidatus Aminicenantes bacterium"
+"64","ASV_431","None","None",NA,NA,NA,NA,NA,NA,NA
+"65","ASV_439","None","None",NA,NA,NA,NA,NA,NA,NA
+"66","ASV_446","Low","2831970","Bacteria","Actinomycetota","Actinomycetes","Streptosporangiales","Nocardiopsaceae","Nocardiopsis","Nocardiopsis eucommiae"
+"67","ASV_451","None","None",NA,NA,NA,NA,NA,NA,NA
+"68","ASV_454","None","None",NA,NA,NA,NA,NA,NA,NA
+"69","ASV_469","None","None",NA,NA,NA,NA,NA,NA,NA
+"70","ASV_470","Low","587","Bacteria","Pseudomonadota","Gammaproteobacteria","Enterobacterales","Morganellaceae","Providencia","Providencia rettgeri"
+"71","ASV_480","None","None",NA,NA,NA,NA,NA,NA,NA
+"72","ASV_489","None","None",NA,NA,NA,NA,NA,NA,NA
+"73","ASV_497","None","None",NA,NA,NA,NA,NA,NA,NA
+"74","ASV_498","None","None",NA,NA,NA,NA,NA,NA,NA
+"75","ASV_503","None","None",NA,NA,NA,NA,NA,NA,NA
+"76","ASV_512","Low","44574","Bacteria","Pseudomonadota","Betaproteobacteria","Nitrosomonadales","Nitrosomonadaceae","Nitrosomonas","Nitrosomonas communis"
+"77","ASV_517","Low","1517","Bacteria","Bacillota","Clostridia","Thermoanaerobacterales","Thermoanaerobacterales Family III. Incertae Sedis","Thermoanaerobacterium","Thermoanaerobacterium thermosaccharolyticum"
+"78","ASV_544","None","None",NA,NA,NA,NA,NA,NA,NA
+"79","ASV_545","Low","980445","Bacteria","Thermodesulfobacteriota","Syntrophobacteria","Syntrophobacterales","Syntrophobacteraceae","Desulfoglaeba","Desulfoglaeba alkanexedens"
+"80","ASV_547","Low","3061629",NA,NA,NA,NA,NA,NA,NA
+"81","ASV_567","Low","261654","Bacteria","Actinomycetota","Actinomycetes","Micromonosporales","Micromonosporaceae","Micromonospora","Micromonospora auratinigra"
+"82","ASV_568","None","None",NA,NA,NA,NA,NA,NA,NA
+"83","ASV_573","None","None",NA,NA,NA,NA,NA,NA,NA
+"84","ASV_575","Low","2831968","Bacteria","Actinomycetota","Actinomycetes","Streptosporangiales","Nocardiopsaceae","Nocardiopsis","Nocardiopsis akebiae"
+"85","ASV_576","Low","163604","Bacteria","Actinomycetota","Actinomycetes","Streptosporangiales","Nocardiopsaceae","Nocardiopsis","Nocardiopsis exhalans"
+"86","ASV_578","None","None",NA,NA,NA,NA,NA,NA,NA
+"87","ASV_579","Low","1076","Bacteria","Pseudomonadota","Alphaproteobacteria","Hyphomicrobiales","Nitrobacteraceae","Rhodopseudomonas","Rhodopseudomonas palustris"
+"88","ASV_582","None","None",NA,NA,NA,NA,NA,NA,NA
+"89","ASV_587","High","163604","Bacteria","Actinomycetota","Actinomycetes","Streptosporangiales","Nocardiopsaceae","Nocardiopsis","Nocardiopsis exhalans"
+"90","ASV_588","None","None",NA,NA,NA,NA,NA,NA,NA
+"91","ASV_594","Low","32644","","","","","","","unidentified"
+"92","ASV_597","None","None",NA,NA,NA,NA,NA,NA,NA
