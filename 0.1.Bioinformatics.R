@@ -929,7 +929,7 @@ writeXStringSet(ASVs,"../5.OTUs/RIZ.DADA2.ASVs.fasta", append=FALSE,
 #Save output with OTU names
 RIZ.SubsetTable.named <- RIZ.SubsetTable
 colnames(RIZ.SubsetTable.named) <-paste0("ASV_",1:length(ASVs))
-write.table(as.data.frame(t(RIZ.SubsetTable.named)),"../6.mappings/OTUtabs/RIZ.raw.diffname.csv",sep=",")
+write.table(as.data.frame(t(RIZ.SubsetTable.named)),"../6.mappings/OTUtabs/RIZ.raw.names.csv",sep=",")
 
 
 ##Lets also run LULU while we are here
