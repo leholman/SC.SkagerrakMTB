@@ -163,11 +163,8 @@ for (contamOTU in 1:length(controlsCONTAM[,1])){
 }
 
 
-##### we are here and need to write an output
-expSamplesNreps <- NrepsMaker(expSamples)
-
-
-colnames(expSamples)
+##### make a version of the data with Nreps
+expSamplesNreps <- NrepsMaker(expSamples,gsub("(^.*)[.][0-9]$","\\1",colnames(expSamples)))
 
 
 #Reattach taxonomy and ASVs
@@ -179,7 +176,14 @@ CleanedOutput <- cbind(expSamples,
                        unname(rawSeqs)[match(row.names(expSamples),names(rawSeqs))],
                        Assignments[match(row.names(expSamples),Assignments$OTU),])
 dir.create("cleanedData",showWarnings = F)
-write.csv(CleanedOutput,paste0("cleanedData/clean.",dataset,".dada2.csv"))
+write.csv(CleanedOutput,paste0("cleanedData/clean.",dataset,".csv"))
+
+CleanedNrepsOutput <- cbind(expSamplesNreps,
+                       unname(rawSeqs)[match(row.names(expSamplesNreps),names(rawSeqs))],
+                       Assignments[match(row.names(expSamplesNreps),Assignments$OTU),])
+
+write.csv(CleanedNrepsOutput,paste0("cleanedData/clean.",dataset,".Nreps.csv"))
+
 
 }
 

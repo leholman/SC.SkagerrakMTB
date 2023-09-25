@@ -40,3 +40,5 @@ cd ~/data/temp_db/nt/WP5.2/results
 cat split* > EUK.dada2.raw.taxonomy.txt
 cat split* > RIZ.dada2.raw.taxonomy.txt
 cat split* > MAM.dada2.raw.taxonomy.txt
+
+

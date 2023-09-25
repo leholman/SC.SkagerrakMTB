@@ -1,8 +1,6 @@
 #First we enter the little docker env below
 # docker run -it --mount type=bind,source=/Volumes/BackUp02/,target=/root/ssd --entrypoint /bin/bash lukeholman/dockedna:0.3
 
-docker run -it --mount type=bind,source=/Volumes/BackUp02/,target=/root/ssd --entrypoint /bin/bash lukeholman/dockedna:0.3
-
 ## 1.0 Demultiplex Pools & trim primers
 
 ##We need to demultiplex the data 
