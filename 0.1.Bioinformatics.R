@@ -584,6 +584,17 @@ colnames(EUK.TotalTable.named) <-paste0("ASV_",1:length(ASVs))
 write.table(as.data.frame(t(EUK.TotalTable.named)),"../6.mappings/OTUtabs/EUK.raw.names.csv",sep=",")
 
 
+##Lets try assigning to PR2
+
+PR2assign <- assignTaxonomy(getSequences(EUK.TotalTable),refFasta = "../pr2_version_5.0.0_SSU_dada2.fasta.gz",tryRC = TRUE,multithread = TRUE,taxLevels = c("Kingdom","Supergroup","Division","Class","Order","Family","Genus","Species"),outputBootstraps = TRUE)
+SILVAassign <- assignTaxonomy(getSequences(EUK.TotalTable),refFasta = "../silva_nr99_v138.1_train_set.fa.gz",tryRC = TRUE,multithread = TRUE,outputBootstraps = TRUE)
+
+PR2master <- cbind(colnames(EUK.TotalTable.named),PR2assign$tax,PR2assign$boot)
+SILVAmaster <- cbind(colnames(EUK.TotalTable.named),SILVAassign$tax,SILVAassign$boot)
+write.csv(PR2master,"tax.PR2.csv")
+write.csv(SILVAmaster,"tax.SILVA.csv")
+
+
 ##Lets also run LULU while we are here
 ApplyLulu(seqs="5.OTUs/EUK.DADA2.ASVs.fasta",
           table="6.mappings/OTUtabs/EUK.raw.csv",
