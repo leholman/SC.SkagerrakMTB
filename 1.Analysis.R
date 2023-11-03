@@ -20,6 +20,27 @@ euk.Nreps <- read.csv("cleanedData/clean.EUK.raw.names.csv.Nreps.csv",row.names 
 colnames(euk) <- c(gsub("\\.","-",gsub(".*(MD9.\\d{4})","\\1",colnames(euk[,1:88]))),colnames(euk[,89:99]))
 colnames(euk.Nreps) <- c(gsub("\\.","-",gsub(".*(MD9.\\d{4})","\\1",colnames(euk.Nreps[,1:11]))),colnames(euk.Nreps[,12:22]))
 
+
+
+##ToDo List
+Alpha
+-ASV richness
+-Bacterial richness
+-Non-metazoans, non-bacteria - protists and others
+-Metazoan 
+
+Beta (above datasets)
+
+Taxonomic changes
+
+High Conf Metazoan Comparison
+
+
+
+
+
+
+
 #plot high quality assignments
 euk.Nreps.high <- euk.Nreps[!is.na(euk.Nreps$assignmentQual),]
 euk.Nreps.high <- euk.Nreps.high[ euk.Nreps.high$assignmentQual=="High-MH"|euk.Nreps.high$assignmentQual=="High",]

@@ -27,6 +27,14 @@ EUK.data<- read.csv("rawData/EUK.raw.names.csv",row.names = 1)
 
 EUK.tax <- read.csv("taxonomy/EUK.parsed.csv",row.names = 1)
 
+EUK.asvs <- read.fasta("rawdata/ASVs/EUK.DADA2.ASVs.fasta",as.string = TRUE)
+
+EUK.asv.len <- nchar(unlist(EUK.asvs))
+
+hist(EUK.asv.len,breaks=100)
+
+[EUK.asv.len<75 | EUK.asv.len>150,]
+
 colnames(EUK.data)
 
 EUK.all <- cbind(EUK.data,EUK.tax[match(rownames(EUK.data),EUK.tax$OTU),])
@@ -52,6 +60,7 @@ for (column in 1:length(EUK.nReps[1,])){
 EUK.all.nReps <- cbind(EUK.nReps,EUK.tax[match(rownames(EUK.binary),EUK.tax$OTU),])
 
 write.csv(EUK.all,"rawdata/EUK.raw.wTAX.csv")
+
 write.csv(EUK.all.nReps,"rawdata/EUK.raw.nReps.wTAX.csv")
 
 
@@ -162,6 +171,15 @@ for (contamOTU in 1:length(controlsCONTAM[,1])){
   print(paste("Cleaning contaminants",contamOTU))
 }
 
+##Filter 4 - exclude OTUs/ASVS outside of a size range
+
+size <- rbind("EUK"=c(75,150),"RIZ"=c(75,140))
+rawSeqs <- as.character(readDNAStringSet(paste0("rawdata/ASVs/",datasetname,".DADA2.ASVs.fasta")))
+
+greenlistLength <- names(rawSeqs[nchar(rawSeqs)>size[datasetname,1] & nchar(rawSeqs)<size[datasetname,2]])
+
+expSamples <- expSamples[rownames(expSamples) %in% greenlistLength,]
+
 
 ##### make a version of the data with Nreps
 expSamplesNreps <- NrepsMaker(expSamples,gsub("(^.*)[.][0-9]$","\\1",colnames(expSamples)))
@@ -170,12 +188,18 @@ expSamplesNreps <- NrepsMaker(expSamples,gsub("(^.*)[.][0-9]$","\\1",colnames(ex
 #Reattach taxonomy and ASVs
 
 rawSeqs <- as.character(readDNAStringSet(paste0("rawdata/ASVs/",datasetname,".DADA2.ASVs.fasta")))
+
 Assignments <- read.csv(paste0("taxonomy/",datasetname,".parsed.csv"),row.names = 1)
 
 CleanedOutput <- cbind(expSamples,
                        unname(rawSeqs)[match(row.names(expSamples),names(rawSeqs))],
                        Assignments[match(row.names(expSamples),Assignments$OTU),])
 dir.create("cleanedData",showWarnings = F)
+
+
+cleanSeqs <- unname(rawSeqs)[match(row.names(expSamples),names(rawSeqs))]
+
+
 write.csv(CleanedOutput,paste0("cleanedData/clean.",dataset,".csv"))
 
 CleanedNrepsOutput <- cbind(expSamplesNreps,
