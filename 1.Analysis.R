@@ -8,19 +8,88 @@ library(tidyverse)
 library(dplyr)
 library(maditr)
 library(vegan)
-
+library(breakaway)
+install.packages("phyloseq")
 
 #### METABARCODING ####
 
 euk <- read.csv("cleanedData/clean.EUK.raw.names.csv.csv",row.names = 1)
 euk.Nreps <- read.csv("cleanedData/clean.EUK.raw.names.csv.Nreps.csv",row.names = 1)
+dates <-read.csv("metadataAge.csv")
+dates$sampleID <- gsub("\\.","-",gsub(".*(MD9.\\d{4})","\\1", dates$Sample))
+
+taxPR2 <-read.csv("rawdata/")
 
 
 #Correct col names
 colnames(euk) <- c(gsub("\\.","-",gsub(".*(MD9.\\d{4})","\\1",colnames(euk[,1:88]))),colnames(euk[,89:99]))
 colnames(euk.Nreps) <- c(gsub("\\.","-",gsub(".*(MD9.\\d{4})","\\1",colnames(euk.Nreps[,1:11]))),colnames(euk.Nreps[,12:22]))
 
+#Alpha diversity 
 
+rarecurve(t(euk[,1:88]),step=10000)
+
+##ASV richness (blind)
+
+euk.Nreps.high.binary.1rep <- euk.Nreps[,1:11]
+euk.Nreps.high.binary.1rep[euk.Nreps.high.binary.1rep>0.5] <- 1
+
+euk.Nreps.high.binary.3rep <- euk.Nreps[,1:11]
+euk.Nreps.high.binary.3rep[euk.Nreps.high.binary.3rep<3] <- 0
+euk.Nreps.high.binary.3rep[euk.Nreps.high.binary.3rep>2.5] <- 1
+
+euk.Nreps.high.binary.8rep <- euk.Nreps[,1:11]
+euk.Nreps.high.binary.8rep[euk.Nreps.high.binary.8rep<8] <- 0
+euk.Nreps.high.binary.8rep[euk.Nreps.high.binary.8rep>7.5] <- 1
+
+
+
+
+pdf("figures/richness.sample.pdf",width = 8,height = 5)
+par(mar=c(6.1,4.1,1.1,1.1),mfrow=c(1,3))
+plot(colSums(euk.Nreps.high.binary.1rep),pch=16,cex=1.5,xaxt="n",ylab="ASV Richness",xlab="")
+axis(1,at=1:11,labels = colnames(euk.Nreps.high.binary.1rep),las=2,cex.axis=1)
+plot(colSums(euk.Nreps.high.binary.3rep),pch=16,cex=1.5,xaxt="n",ylab="ASV Richness",xlab="")
+axis(1,at=1:11,labels = colnames(euk.Nreps.high.binary.3rep),las=2,cex.axis=1)
+plot(colSums(euk.Nreps.high.binary.8rep),pch=16,cex=1.5,xaxt="n",ylab="ASV Richness",xlab="")
+axis(1,at=1:11,labels = colnames(euk.Nreps.high.binary.8rep),las=2,cex.axis=1)
+dev.off()
+
+pdf("figures/richness.date.pdf",width = 8,height = 5)
+par(mar=c(5.1,4.1,1.1,1.1),mfrow=c(1,3))
+plot(dates$Median[match(colnames(euk.Nreps.high.binary.1rep),dates$sampleID)],
+     colSums(euk.Nreps.high.binary.1rep),
+     pch=16,cex=1.5,ylab="ASV Richness (1rep)",xlab="CalYrBP")
+plot(dates$Median[match(colnames(euk.Nreps.high.binary.3rep),dates$sampleID)],
+     colSums(euk.Nreps.high.binary.3rep),
+     pch=16,cex=1.5,ylab="ASV Richness (3rep)",xlab="CalYrBP")
+plot(dates$Median[match(colnames(euk.Nreps.high.binary.8rep),dates$sampleID)],
+     colSums(euk.Nreps.high.binary.8rep),
+     pch=16,cex=1.5,ylab="ASV Richness (8rep)",xlab="CalYrBP")
+dev.off()
+
+
+### Here we are estimating richness using breakaway which uses this approach - https://onlinelibrary.wiley.com/doi/full/10.1111/biom.12332
+###since our metabarcoding data will only ever amplify a fraction of total biodiversity 
+###therefore these are useless as absolute estimates of richness but useful as relative measures of richness along the core
+
+#we use the euk dataset as it contains read data 
+richEst <- breakaway(euk[,1:88])
+richEst2 <-as.data.frame(richEst)
+
+richEstimate <- unlist(lapply(richEst,FUN = function(x){x[["estimate"]]}))
+richEstimateCIlwr <- unlist(lapply(richEst,FUN = function(x){x[["ci"]][1]}))
+richEstimateCIupr <- unlist(lapply(richEst,FUN = function(x){x[["ci"]][2]}))
+
+substr(names(richEstimate),1,8)
+
+pdf("figures/richness.freqEst.pdf",width = 8,height = 5)
+plot(dates$Median[match(as.factor(substr(names(richEstimate),1,8)),dates$sampleID)],
+     richEstimate,pch=16,
+     xlab="CalYrBP",
+     ylab="EstimatedRichness")
+
+dev.off()
 
 ##ToDo List
 Alpha
@@ -36,6 +105,38 @@ Taxonomic changes
 High Conf Metazoan Comparison
 
 
+Alpha 
+Richness of unfiltered reads
+-kraken2
+-metaPhylan
+-Kmer something?
+
+Bacterial richness
+-metaPhylan
+
+Non-metazoans (protists) 
+-SMAGs mapping 
+
+Metzoa
+-nt/refseq mapping
+
+
+Beta
+Raw seqs 
+-simka
+
+
+
+
+
+
+
+
+
+
+
+
+  
 
 
 
