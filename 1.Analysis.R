@@ -9,7 +9,6 @@ library(dplyr)
 library(maditr)
 library(vegan)
 library(breakaway)
-install.packages("phyloseq")
 
 #### METABARCODING ####
 
@@ -17,8 +16,7 @@ euk <- read.csv("cleanedData/clean.EUK.raw.names.csv.csv",row.names = 1)
 euk.Nreps <- read.csv("cleanedData/clean.EUK.raw.names.csv.Nreps.csv",row.names = 1)
 dates <-read.csv("metadataAge.csv")
 dates$sampleID <- gsub("\\.","-",gsub(".*(MD9.\\d{4})","\\1", dates$Sample))
-
-taxPR2 <-read.csv("rawdata/")
+taxPR2 <-read.csv("taxonomy/tax.PR2.csv",row.names = 1)
 
 
 #Correct col names
@@ -27,7 +25,14 @@ colnames(euk.Nreps) <- c(gsub("\\.","-",gsub(".*(MD9.\\d{4})","\\1",colnames(euk
 
 #Alpha diversity 
 
-rarecurve(t(euk[,1:88]),step=10000)
+pdf("figures/rarefaction.big.pdf",width = 20,height = 13)
+rarecurve(t(euk[,1:88]),label=FALSE,step = 1000)
+ordilabel(cbind(rowSums(t(euk[,1:88])), specnumber(t(euk[,1:88])))+5, labels=rownames(t(euk[,1:88])),cex=0.5, border = NA,fill=NULL,col="Darkred")
+dev.off()
+pdf("figures/rarefaction.small.pdf",width = 9,height = 6.5)
+rarecurve(t(euk[,1:88]),label=FALSE,step = 1000)
+ordilabel(cbind(rowSums(t(euk[,1:88])), specnumber(t(euk[,1:88])))+5, labels=rownames(t(euk[,1:88])),cex=0.5, border = NA,fill=NULL,col="Darkred")
+dev.off()
 
 ##ASV richness (blind)
 
@@ -75,21 +80,56 @@ dev.off()
 
 #we use the euk dataset as it contains read data 
 richEst <- breakaway(euk[,1:88])
-richEst2 <-as.data.frame(richEst)
+
 
 richEstimate <- unlist(lapply(richEst,FUN = function(x){x[["estimate"]]}))
 richEstimateCIlwr <- unlist(lapply(richEst,FUN = function(x){x[["ci"]][1]}))
 richEstimateCIupr <- unlist(lapply(richEst,FUN = function(x){x[["ci"]][2]}))
 
-substr(names(richEstimate),1,8)
+
 
 pdf("figures/richness.freqEst.pdf",width = 8,height = 5)
 plot(dates$Median[match(as.factor(substr(names(richEstimate),1,8)),dates$sampleID)],
      richEstimate,pch=16,
      xlab="CalYrBP",
      ylab="EstimatedRichness")
+dev.off()
+
+
+## Are breakaway estimates and raw richness correlated?
+
+compRich <- data.frame("breakaway"=tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8)),
+                       "Richness.8rep"=colSums(euk.Nreps.high.binary.8rep),
+                       "Richness.3rep"=colSums(euk.Nreps.high.binary.3rep),
+                       "Richness.1rep"=colSums(euk.Nreps.high.binary.1rep))
+
+m1 <- lm(colSums(euk.Nreps.high.binary.1rep)~tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8)))
+m2 <- lm(colSums(euk.Nreps.high.binary.3rep)~tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8)))
+m3 <- lm(colSums(euk.Nreps.high.binary.8rep)~tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8)))
+
+
+
+pdf("figures/breakaway-richness.comp.pdf",width = 8,height = 6.5)
+plot(tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8)),
+     colSums(euk.Nreps.high.binary.1rep),pch=16,cex=2,col="lightblue",ylim=c(0,2200),xlim=c(0,1100),
+     xlab="Breakaway Estimate",ylab="Observed Richness (8rep)")
+abline(m1,col="lightblue",lwd=1.5)
+points(tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8)),
+     colSums(euk.Nreps.high.binary.3rep),pch=16,cex=2,col="dodgerblue")
+abline(m2,col="dodgerblue",lwd=1.5)
+points(tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8)),
+     colSums(euk.Nreps.high.binary.8rep),pch=16,cex=2,col="darkblue")
+abline(m3,col="darkblue",lwd=1.5)
+
+legend("topleft",border=NA,legend=c("1 rep","3 rep","8 rep"),col=c("lightblue","dodgerblue","darkblue"),pch=16,pt.cex=2)
+
+###insert R2 for moels here
 
 dev.off()
+
+summary(lm(tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8))~colSums(euk.Nreps.high.binary.1rep)))
+summary(lm(tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8))~colSums(euk.Nreps.high.binary.3rep)))
+summary(lm(tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8))~colSums(euk.Nreps.high.binary.8rep)))
 
 ##ToDo List
 Alpha
