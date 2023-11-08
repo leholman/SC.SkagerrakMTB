@@ -111,25 +111,27 @@ m3 <- lm(colSums(euk.Nreps.high.binary.8rep)~tapply(richEstimate,FUN=mean,INDEX 
 
 pdf("figures/breakaway-richness.comp.pdf",width = 8,height = 6.5)
 plot(tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8)),
-     colSums(euk.Nreps.high.binary.1rep),pch=16,cex=2,col="lightblue",ylim=c(0,2200),xlim=c(0,1100),
+     colSums(euk.Nreps.high.binary.1rep),pch=16,cex=1.5,col="lightblue",ylim=c(0,2200),xlim=c(0,1100),
      xlab="Breakaway Estimate",ylab="Observed Richness (8rep)")
 abline(m1,col="lightblue",lwd=1.5)
 points(tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8)),
-     colSums(euk.Nreps.high.binary.3rep),pch=16,cex=2,col="dodgerblue")
+     colSums(euk.Nreps.high.binary.3rep),pch=16,cex=1.5,col="dodgerblue")
 abline(m2,col="dodgerblue",lwd=1.5)
 points(tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8)),
-     colSums(euk.Nreps.high.binary.8rep),pch=16,cex=2,col="darkblue")
+     colSums(euk.Nreps.high.binary.8rep),pch=16,cex=1.5,col="darkblue")
 abline(m3,col="darkblue",lwd=1.5)
 
 legend("topleft",border=NA,legend=c("1 rep","3 rep","8 rep"),col=c("lightblue","dodgerblue","darkblue"),pch=16,pt.cex=2)
 
-###insert R2 for moels here
+text(800,1800,round(summary(lm(tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8))~colSums(euk.Nreps.high.binary.1rep)))$adj.r.squared,4),col="lightblue",adj=0)
+text(800,700,round(summary(lm(tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8))~colSums(euk.Nreps.high.binary.3rep)))$adj.r.squared,4),col="dodgerblue",adj=0)
+text(800,200,round(summary(lm(tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8))~colSums(euk.Nreps.high.binary.8rep)))$adj.r.squared,4),col="darkblue",adj=0)
 
 dev.off()
 
-summary(lm(tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8))~colSums(euk.Nreps.high.binary.1rep)))
-summary(lm(tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8))~colSums(euk.Nreps.high.binary.3rep)))
-summary(lm(tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8))~colSums(euk.Nreps.high.binary.8rep)))
+summary(lm(tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8))~colSums(euk.Nreps.high.binary.1rep)))$adj.r.squared
+summary(lm(tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8))~colSums(euk.Nreps.high.binary.3rep)))$adj.r.squared
+summary(lm(tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8))~colSums(euk.Nreps.high.binary.8rep)))$adj.r.squared
 
 ##ToDo List
 Alpha
