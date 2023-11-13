@@ -6,6 +6,7 @@
 
 ####====0.0 Packages & Parameters====####
 library("Biostrings")
+library("seqinr")
 
 #Set some variables 
 minreads <- 2
@@ -32,8 +33,6 @@ EUK.asvs <- read.fasta("rawdata/ASVs/EUK.DADA2.ASVs.fasta",as.string = TRUE)
 EUK.asv.len <- nchar(unlist(EUK.asvs))
 
 hist(EUK.asv.len,breaks=100)
-
-[EUK.asv.len<75 | EUK.asv.len>150,]
 
 colnames(EUK.data)
 

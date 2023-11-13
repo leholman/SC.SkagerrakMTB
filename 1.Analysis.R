@@ -16,12 +16,62 @@ euk <- read.csv("cleanedData/clean.EUK.raw.names.csv.csv",row.names = 1)
 euk.Nreps <- read.csv("cleanedData/clean.EUK.raw.names.csv.Nreps.csv",row.names = 1)
 dates <-read.csv("metadataAge.csv")
 dates$sampleID <- gsub("\\.","-",gsub(".*(MD9.\\d{4})","\\1", dates$Sample))
-taxPR2 <-read.csv("taxonomy/tax.PR2.csv",row.names = 1)
+taxPR2 <-read.csv("taxonomy/EUK.tax.PR2.csv",row.names = 1)
 
 
 #Correct col names
 colnames(euk) <- c(gsub("\\.","-",gsub(".*(MD9.\\d{4})","\\1",colnames(euk[,1:88]))),colnames(euk[,89:99]))
 colnames(euk.Nreps) <- c(gsub("\\.","-",gsub(".*(MD9.\\d{4})","\\1",colnames(euk.Nreps[,1:11]))),colnames(euk.Nreps[,12:22]))
+
+#Taxonomic overview
+## Some functions to help 
+
+CountTable <- function(in.taxonomy,in.data,output="Count",some.unassigned=T){
+  if(length(in.taxonomy)!=length(in.data[,1])){stop("Dataframe and corresponding taxonomy are not the same length")}
+  in.taxonomy[is.na(in.taxonomy)] <- ""
+  out.dat <- as.data.frame(matrix(ncol=length(in.data[1,]),nrow=length(unique(in.taxonomy))))
+  rownames(out.dat) <- sort(unique(in.taxonomy))
+  colnames(out.dat) <- colnames(in.data)    
+  out.dat.abundance <- out.dat
+  for (sample in 1:length(in.data[1,])){
+    out.dat[,sample] <- table(in.taxonomy[in.data[,sample]>0])[match(sort(unique(in.taxonomy)),names(table(in.taxonomy[in.data[,sample]>0])))]
+    out.dat.abundance[,sample] <- aggregate(in.data[,sample], by=list(Category=in.taxonomy), FUN=sum)[,2]
+  }
+  out.dat[is.na(out.dat)] <- 0
+  if(some.unassigned==T){rownames(out.dat)[1] <- "Unassigned"}
+  if(output=="Count"){return(out.dat)}else if(
+    output=="Abundance"){return(out.dat.abundance)}
+}
+#Then we write a function for concatenating small abundance groups per sample
+minAbundance <- function(inputtable=NA,minAbun= 0.01){
+  inputtable <- rbind(inputtable,rep(0,dim(inputtable)[1]))
+  rownames(inputtable)[dim(inputtable)[1]] <- "Others"
+  for (row in 1:dim(inputtable)[2]){
+    min <- sum(inputtable[,row])*minAbun
+    others <- sum(inputtable[inputtable[,row]<min,row])
+    inputtable[inputtable[,row]<min,row] <- 0
+    inputtable["Others",row] <- others
+    inputtable <- inputtable[rowSums(inputtable)>1,]
+  }
+  return(inputtable)
+}
+
+#Kingdom per sample
+#make a database with the same ASVs as the filtered dataset
+
+taxPR2.f <- taxPR2[match(row.names(euk),taxPR2$X.1),]
+taxPR2.f[is.na(taxPR2.f)] <- ""
+
+test <- minAbundance(CountTable(as.character(taxPR2.f$Division),euk[,1:88],output = "Abundance"),minAbun=0.01)
+
+test2 <-  minAbundance(CountTable(as.character(taxPR2.f$Division),euk[,1:88],output = "Abundance"),minAbun=0.01)
+
+barplot(as.matrix(prop.table(as.matrix(test2),margin = 2)))
+dev.off()
+
+
+
+
 
 #Alpha diversity 
 
@@ -75,7 +125,7 @@ dev.off()
 
 
 ### Here we are estimating richness using breakaway which uses this approach - https://onlinelibrary.wiley.com/doi/full/10.1111/biom.12332
-###since our metabarcoding data will only ever amplify a fraction of total biodiversity 
+### our metabarcoding data will only ever amplify a fraction of total biodiversity 
 ###therefore these are useless as absolute estimates of richness but useful as relative measures of richness along the core
 
 #we use the euk dataset as it contains read data 

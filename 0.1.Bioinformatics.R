@@ -213,8 +213,8 @@ out <- filterAndTrim(fnFsSense, filtFsSense, fnRsSense, filtRsSense, minLen = 50
                      maxN=0, maxEE=c(1,1), truncQ=2, rm.phix=TRUE,
                      matchIDs=TRUE,compress=TRUE, multithread=7)
 
-filtFsSense <- sort(list.files("../7.DADA2/filtered", pattern="_S_F_filt.fastq.gz", full.names = TRUE))
-filtRsSense <- sort(list.files("../7.DADA2/filtered", pattern="_S_R_filt.fastq.gz", full.names = TRUE))
+filtFsSense <- sort(list.files("../7.DADA2/filtered", pattern="EUK.*_S_F_filt.fastq.gz", full.names = TRUE))
+filtRsSense <- sort(list.files("../7.DADA2/filtered", pattern="EUK.*_S_R_filt.fastq.gz", full.names = TRUE))
 
 
 
@@ -366,12 +366,12 @@ dev.off()
 
 # Now lets dereplicate the samples, some of our files have dissapeared so we use a complex expression to restore them
 
-derepFs <- derepFastq(list.files("../7.DADA2/filtered", pattern="_S_F_filt.fastq.gz", full.names = TRUE), verbose=TRUE)
-derepRs <- derepFastq(list.files("../7.DADA2/filtered", pattern="_S_R_filt.fastq.gz", full.names = TRUE), verbose=TRUE)
+derepFs <- derepFastq(list.files("../7.DADA2/filtered", pattern="EUK.*_S_F_filt.fastq.gz", full.names = TRUE), verbose=TRUE)
+derepRs <- derepFastq(list.files("../7.DADA2/filtered", pattern="EUK.*_S_R_filt.fastq.gz", full.names = TRUE), verbose=TRUE)
 
 # Name the derep-class objects by the sample names
-names(derepFs) <- sapply(strsplit(basename(list.files("../7.DADA2/filtered", pattern="_S_F_filt.fastq.gz", full.names = TRUE)), "_"), `[`, 1)
-names(derepRs) <- sapply(strsplit(basename(list.files("../7.DADA2/filtered", pattern="_S_R_filt.fastq.gz", full.names = TRUE)), "_"), `[`, 1)
+names(derepFs) <- sapply(strsplit(basename(list.files("../7.DADA2/filtered", pattern="EUK.*_S_F_filt.fastq.gz", full.names = TRUE)), "_"), `[`, 1)
+names(derepRs) <- sapply(strsplit(basename(list.files("../7.DADA2/filtered", pattern="EUK.*_S_R_filt.fastq.gz", full.names = TRUE)), "_"), `[`, 1)
 
 # Now we can pply the DADA2 algorithm to the data
 dadaFsSense <- dada(derepFs, err=errF, multithread=TRUE,pool = TRUE)
@@ -443,8 +443,8 @@ out <- filterAndTrim(fnFsASense, filtFsASense, fnRsASense, filtRsASense, minLen 
 
 
 
-filtFsASense <- sort(list.files("../7.DADA2/filtered", pattern="_A_F_filt.fastq.gz", full.names = TRUE))
-filtRsASense <- sort(list.files("../7.DADA2/filtered", pattern="_A_R_filt.fastq.gz", full.names = TRUE))
+filtFsASense <- sort(list.files("../7.DADA2/filtered", pattern="EUK.*_A_F_filt.fastq.gz", full.names = TRUE))
+filtRsASense <- sort(list.files("../7.DADA2/filtered", pattern="EUK.*_A_R_filt.fastq.gz", full.names = TRUE))
 
 
 
@@ -470,12 +470,12 @@ dev.off()
 
 # Now lets dereplicate the samples, some of our files have dissapeared so we use a complex expression to restore them
 
-derepFs <- derepFastq(list.files("../7.DADA2/filtered", pattern="_A_F_filt.fastq.gz", full.names = TRUE), verbose=TRUE)
-derepRs <- derepFastq(list.files("../7.DADA2/filtered", pattern="_A_R_filt.fastq.gz", full.names = TRUE), verbose=TRUE)
+derepFs <- derepFastq(list.files("../7.DADA2/filtered", pattern="EUK.*_A_F_filt.fastq.gz", full.names = TRUE), verbose=TRUE)
+derepRs <- derepFastq(list.files("../7.DADA2/filtered", pattern="EUK.*_A_R_filt.fastq.gz", full.names = TRUE), verbose=TRUE)
 
 # Name the derep-class objects by the sample names
-names(derepFs) <- sapply(strsplit(basename(list.files("../7.DADA2/filtered", pattern="_A_F_filt.fastq.gz", full.names = TRUE)), "_"), `[`, 1)
-names(derepRs) <- sapply(strsplit(basename(list.files("../7.DADA2/filtered", pattern="_A_R_filt.fastq.gz", full.names = TRUE)), "_"), `[`, 1)
+names(derepFs) <- sapply(strsplit(basename(list.files("../7.DADA2/filtered", pattern="EUK.*_A_F_filt.fastq.gz", full.names = TRUE)), "_"), `[`, 1)
+names(derepRs) <- sapply(strsplit(basename(list.files("../7.DADA2/filtered", pattern="EUK.*_A_R_filt.fastq.gz", full.names = TRUE)), "_"), `[`, 1)
 
 # Now we can pply the DADA2 algorithm to the data
 dadaFsASense <- dada(derepFs, err=errF, multithread=TRUE,pool=TRUE)
@@ -585,6 +585,7 @@ write.table(as.data.frame(t(EUK.TotalTable.named)),"../6.mappings/OTUtabs/EUK.ra
 
 
 ##Lets try assigning to PR2
+
 
 PR2assign <- assignTaxonomy(getSequences(EUK.TotalTable),refFasta = "../pr2_version_5.0.0_SSU_dada2.fasta.gz",tryRC = TRUE,multithread = TRUE,taxLevels = c("Kingdom","Supergroup","Division","Class","Order","Family","Genus","Species"),outputBootstraps = TRUE)
 SILVAassign <- assignTaxonomy(getSequences(EUK.TotalTable),refFasta = "../silva_nr99_v138.1_train_set.fa.gz",tryRC = TRUE,multithread = TRUE,outputBootstraps = TRUE)
@@ -812,11 +813,11 @@ errR <- learnErrors(filtRsASense, multithread=7,
 
 #lets visualise the error rates
 
-pdf("../7.DADA2/A_EUK_errorF.pdf")
+pdf("../7.DADA2/A_RIZ_errorF.pdf")
 plotErrors(errF)
 dev.off()
 
-pdf("../7.DADA2/A_EUK_errorR.pdf")
+pdf("../7.DADA2/A_RIZ_errorR.pdf")
 plotErrors(errR, nominalQ=TRUE)
 dev.off()
 
