@@ -586,8 +586,9 @@ write.table(as.data.frame(t(EUK.TotalTable.named)),"../6.mappings/OTUtabs/EUK.ra
 
 ##Lets try assigning to PR2
 
+PR2assign <- assignTaxonomy( unlist(read.fasta("rawdata/ASVs/EUK.DADA2.ASVs.fasta",as.string = T)),refFasta = "pr2_version_5.0.0_SSU_dada2.fasta.gz",tryRC = TRUE,multithread = TRUE,taxLevels = c("Domain","Supergroup","Division","Subdivision","Class","Order","Family","Genus","Species"),outputBootstraps = TRUE)
 
-PR2assign <- assignTaxonomy(getSequences(EUK.TotalTable),refFasta = "../pr2_version_5.0.0_SSU_dada2.fasta.gz",tryRC = TRUE,multithread = TRUE,taxLevels = c("Kingdom","Supergroup","Division","Class","Order","Family","Genus","Species"),outputBootstraps = TRUE)
+PR2assign <- assignTaxonomy(getSequences(EUK.TotalTable),refFasta = "../pr2_version_5.0.0_SSU_dada2.fasta.gz",tryRC = TRUE,multithread = TRUE,taxLevels = c("Domain","Supergroup","Division","Subdivision","Class","Order","Family","Genus","Species"),outputBootstraps = TRUE)
 SILVAassign <- assignTaxonomy(getSequences(EUK.TotalTable),refFasta = "../silva_nr99_v138.1_train_set.fa.gz",tryRC = TRUE,multithread = TRUE,outputBootstraps = TRUE)
 
 PR2master <- cbind(colnames(EUK.TotalTable.named),PR2assign$tax,PR2assign$boot)

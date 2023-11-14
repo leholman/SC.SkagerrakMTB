@@ -9,6 +9,7 @@ library(dplyr)
 library(maditr)
 library(vegan)
 library(breakaway)
+library(RColorBrewer)
 
 #### METABARCODING ####
 
@@ -56,21 +57,84 @@ minAbundance <- function(inputtable=NA,minAbun= 0.01){
   return(inputtable)
 }
 
-#Kingdom per sample
-#make a database with the same ASVs as the filtered dataset
+##Colour function 
+#getPalette = colorRampPalette(brewer.pal(9, "Pastel1"))
+getPalette = colorRampPalette(brewer.pal(9, "Set3"))
 
+
+#First we get rid of poor assignments - these can be changed 
 taxPR2.f <- taxPR2[match(row.names(euk),taxPR2$X.1),]
 taxPR2.f[is.na(taxPR2.f)] <- ""
+hist(taxPR2.f$Subdivision,breaks=1000)
+taxPR2.f$tax.Domain[taxPR2.f$Domain<70] <- ""
+taxPR2.f$tax.Supergroup[taxPR2.f$Supergroup<40] <- ""
+taxPR2.f$tax.Division[taxPR2.f$Division<40] <- ""
+taxPR2.f$tax.Family[taxPR2.f$Family<40] <- ""
 
-test <- minAbundance(CountTable(as.character(taxPR2.f$Division),euk[,1:88],output = "Abundance"),minAbun=0.01)
+##Domain level taxonomy 
+Domain.A <- minAbundance(CountTable(as.character(taxPR2.f$tax.Domain),euk[,1:88],output = "Abundance"),minAbun=0.01)
+Domain.C <- minAbundance(CountTable(as.character(taxPR2.f$tax.Domain),euk[,1:88],output = "Count"),minAbun=0.01)
+Domain.A.prop <- as.matrix(prop.table(as.matrix(Domain.A),margin = 2))
+Domain.C.prop <- as.matrix(prop.table(as.matrix(Domain.C),margin = 2))
+row.names(Domain.A.prop)[1] <- "Unknown"
+row.names(Domain.C.prop)[1] <- "Unknown"
 
-test2 <-  minAbundance(CountTable(as.character(taxPR2.f$Division),euk[,1:88],output = "Abundance"),minAbun=0.01)
+pdf("figures/tax.domain.pdf",width = 12,height = 9)
+par(mfrow=c(2,1),mar=c(5.1, 4.1, 1.1, 6.1),xpd=TRUE)
+barplot(Domain.A.prop,las=2,cex.names=0.6,col=rev(getPalette(dim(Domain.A.prop)[1])),ylab="Read Abundance")
+legend(105,0.8,rev(rownames(Domain.A.prop)),fill=getPalette(dim(Domain.A.prop)[1]),cex=0.9,bty = "n",y.intersp=0.75)
+barplot(Domain.C.prop,las=2,cex.names=0.6,col=rev(getPalette(dim(Domain.C.prop)[1])),ylab="ASV Counts")
+legend(105,0.8,rev(rownames(Domain.C.prop)),fill=getPalette(dim(Domain.C.prop)[1]),cex=0.9,bty = "n",y.intersp=0.75)
+dev.off()
 
-barplot(as.matrix(prop.table(as.matrix(test2),margin = 2)))
+##Supergroup level taxonomy 
+Supergroup.A <- minAbundance(CountTable(as.character(taxPR2.f$tax.Supergroup),euk[,1:88],output = "Abundance"),minAbun=0.01)
+Supergroup.C <- minAbundance(CountTable(as.character(taxPR2.f$tax.Supergroup),euk[,1:88],output = "Count"),minAbun=0.01)
+Supergroup.A.prop <- as.matrix(prop.table(as.matrix(Supergroup.A),margin = 2))
+Supergroup.C.prop <- as.matrix(prop.table(as.matrix(Supergroup.C),margin = 2))
+row.names(Supergroup.A.prop)[1] <- "Unknown"
+row.names(Supergroup.C.prop)[1] <- "Unknown"
+
+pdf("figures/tax.supergroup.pdf",width = 12,height = 9)
+par(mfrow=c(2,1),mar=c(5.1, 4.1, 1.1, 6.1),xpd=TRUE)
+barplot(Supergroup.A.prop,las=2,cex.names=0.6,col=rev(getPalette(dim(Supergroup.A.prop)[1])),ylab="Read Abundance")
+legend(105,0.8,rev(rownames(Supergroup.A.prop)),fill=getPalette(dim(Supergroup.A.prop)[1]),cex=0.9,bty = "n",y.intersp=0.75)
+barplot(Supergroup.C.prop,las=2,cex.names=0.6,col=rev(getPalette(dim(Supergroup.C.prop)[1])),ylab="ASV Counts")
+legend(105,0.8,rev(rownames(Supergroup.C.prop)),fill=getPalette(dim(Supergroup.C.prop)[1]),cex=0.9,bty = "n",y.intersp=0.75)
 dev.off()
 
 
+##Division level taxonomy 
+Division.A <- minAbundance(CountTable(as.character(taxPR2.f$tax.Division),euk[,1:88],output = "Abundance"),minAbun=0.01)
+Division.C <- minAbundance(CountTable(as.character(taxPR2.f$tax.Division),euk[,1:88],output = "Count"),minAbun=0.01)
+Division.A.prop <- as.matrix(prop.table(as.matrix(Division.A),margin = 2))
+Division.C.prop <- as.matrix(prop.table(as.matrix(Division.C),margin = 2))
+row.names(Division.A.prop)[1] <- "Unknown"
+row.names(Division.C.prop)[1] <- "Unknown"
 
+pdf("figures/tax.Division.pdf",width = 12,height = 9)
+par(mfrow=c(2,1),mar=c(5.1, 4.1, 1.1, 6.1),xpd=TRUE)
+barplot(Division.A.prop,las=2,cex.names=0.6,col=rev(getPalette(dim(Division.A.prop)[1])),ylab="Read Abundance")
+legend(105,0.8,rev(rownames(Division.A.prop)),fill=getPalette(dim(Division.A.prop)[1]),cex=0.9,bty = "n",y.intersp=0.75)
+barplot(Division.C.prop,las=2,cex.names=0.6,col=rev(getPalette(dim(Division.C.prop)[1])),ylab="ASV Counts")
+legend(105,0.8,rev(rownames(Division.C.prop)),fill=getPalette(dim(Division.C.prop)[1]),cex=0.9,bty = "n",y.intersp=0.75)
+dev.off()
+
+##Family level taxonomy 
+Family.A <- minAbundance(CountTable(as.character(taxPR2.f$tax.Family),euk[,1:88],output = "Abundance"),minAbun=0.01)
+Family.C <- minAbundance(CountTable(as.character(taxPR2.f$tax.Family),euk[,1:88],output = "Count"),minAbun=0.01)
+Family.A.prop <- as.matrix(prop.table(as.matrix(Family.A),margin = 2))
+Family.C.prop <- as.matrix(prop.table(as.matrix(Family.C),margin = 2))
+row.names(Family.A.prop)[1] <- "Unknown"
+row.names(Family.C.prop)[1] <- "Unknown"
+
+pdf("figures/tax.Family.pdf",width = 12,height = 9)
+par(mfrow=c(2,1),mar=c(5.1, 4.1, 1.1, 6.1),xpd=TRUE)
+barplot(Family.A.prop,las=2,cex.names=0.6,col=rev(getPalette(dim(Family.A.prop)[1])),ylab="Read Abundance")
+legend(108,1,rev(rownames(Family.A.prop)),fill=getPalette(dim(Family.A.prop)[1]),cex=0.5,bty = "n",y.intersp=0.75)
+barplot(Family.C.prop,las=2,cex.names=0.6,col=rev(getPalette(dim(Family.C.prop)[1])),ylab="ASV Counts")
+legend(108,1,rev(rownames(Family.C.prop)),fill=getPalette(dim(Family.C.prop)[1]),cex=0.4,bty = "n",y.intersp=0.75)
+dev.off()
 
 
 #Alpha diversity 
@@ -183,6 +247,60 @@ summary(lm(tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8))
 summary(lm(tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8))~colSums(euk.Nreps.high.binary.3rep)))$adj.r.squared
 summary(lm(tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8))~colSums(euk.Nreps.high.binary.8rep)))$adj.r.squared
 
+
+#Now some taxonomic subsets of richness with 3 reps 
+
+
+euk.Nreps.high.binary.3rep
+
+euk.Nreps.high.binary.3rep.PRO <- euk.Nreps.high.binary.3rep[taxPR2.f$tax.Domain=="Bacteria",]
+euk.Nreps.high.binary.3rep.EUK.1 <- euk.Nreps.high.binary.3rep[taxPR2.f$tax.Domain=="Eukaryota",]
+euk.Nreps.high.binary.3rep.EUK <- euk.Nreps.high.binary.3rep.EUK.1[!(rownames(euk.Nreps.high.binary.3rep.EUK.1) %in% taxPR2.f$X.1[taxPR2.f$tax.Subdivision=="Metazoa"]),]
+euk.Nreps.high.binary.3rep.MET <- euk.Nreps.high.binary.3rep.EUK.1[rownames(euk.Nreps.high.binary.3rep.EUK.1) %in% taxPR2.f$X.1[taxPR2.f$tax.Subdivision=="Metazoa"],]
+
+
+pdf("figures/richness.groups.pdf",width = 8,height = 5)
+par(mar=c(5.1,4.1,1.1,1.1),mfrow=c(1,3))
+plot(dates$Median[match(colnames(euk.Nreps.high.binary.3rep.PRO),dates$sampleID)],
+     colSums(euk.Nreps.high.binary.3rep.PRO),
+     pch=16,cex=1.5,ylab="ASV Richness (Prokaryotes)",xlab="CalYrBP")
+plot(dates$Median[match(colnames(euk.Nreps.high.binary.3rep.EUK),dates$sampleID)],
+     colSums(euk.Nreps.high.binary.3rep.EUK),
+     pch=16,cex=1.5,ylab="ASV Richness (Protists)",xlab="CalYrBP")
+plot(dates$Median[match(colnames(euk.Nreps.high.binary.3rep.MET),dates$sampleID)],
+     colSums(euk.Nreps.high.binary.3rep.MET),
+     pch=16,cex=1.5,ylab="ASV Richness (Metazoa)",xlab="CalYrBP")
+dev.off()
+
+
+
+
+
+#Beta diversity 
+
+
+out <- metaMDS(vegdist(t(euk.Nreps.high.binary.3rep[1:11]))) 
+pdf("figures/betadiv.3reps.pdf",height = 6,width = 6)
+plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,ylab="",xlab="",
+     ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
+     xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1))
+text(out$points[,1],out$points[,2]+0.02,labels = dates$Median[match(rownames(out$points),dates$sampleID)])
+dev.off()
+
+out <- metaMDS(vegdist(t(euk[1:88]),binary = TRUE,method = "jaccard"),trymax = 200) 
+pdf("figures/betadiv.allreps.pdf",height = 8,width = 8)
+plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,
+     ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
+     xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1),ylab="",xlab="")
+ordihull(out,substr(colnames(euk[1:88]),1,8),draw = "polygon",col="darkgrey",lty=0)
+points(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16)
+text(tapply(out$points[,1],FUN=mean,INDEX = substr(colnames(euk[1:88]),1,8)),
+     tapply(out$points[,2],FUN=mean,INDEX = substr(colnames(euk[1:88]),1,8))+0.25,
+     labels = dates$Median[match(names(tapply(out$points[,1],FUN=mean,INDEX = substr(colnames(euk[1:88]),1,8))),dates$sampleID)],
+     col="darkblue")
+
+dev.off()
+
 ##ToDo List
 Alpha
 -ASV richness
@@ -266,6 +384,9 @@ text(out$points[,1],out$points[,2]+0.02,labels = metadata$Mean[match(rownames(ou
 dev.off()
 
 # pull out the following taxa
+
+ordihull(out,substr(names(euk[,1:88]),1,8))
+
 
 
 
