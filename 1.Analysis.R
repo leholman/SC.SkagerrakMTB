@@ -226,7 +226,7 @@ m3 <- lm(colSums(euk.Nreps.high.binary.8rep)~tapply(richEstimate,FUN=mean,INDEX 
 pdf("figures/breakaway-richness.comp.pdf",width = 8,height = 6.5)
 plot(tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8)),
      colSums(euk.Nreps.high.binary.1rep),pch=16,cex=1.5,col="lightblue",ylim=c(0,2200),xlim=c(0,1100),
-     xlab="Breakaway Estimate",ylab="Observed Richness (8rep)")
+     xlab="Breakaway Estimate",ylab="Observed Richness")
 abline(m1,col="lightblue",lwd=1.5)
 points(tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8)),
      colSums(euk.Nreps.high.binary.3rep),pch=16,cex=1.5,col="dodgerblue")
@@ -279,27 +279,64 @@ dev.off()
 #Beta diversity 
 
 
-out <- metaMDS(vegdist(t(euk.Nreps.high.binary.3rep[1:11]))) 
-pdf("figures/betadiv.3reps.pdf",height = 6,width = 6)
+out <- metaMDS(vegdist(t(euk.Nreps.high.binary.3rep[1:11])),trymax = 200) 
+out.j <- metaMDS(vegdist(t(euk.Nreps.high.binary.3rep[1:11]),binary = TRUE,method = "jaccard"),trymax = 200) 
+pdf("figures/betadiv.BC.3reps.pdf",height = 6,width = 6)
 plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,ylab="",xlab="",
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
      xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1))
 text(out$points[,1],out$points[,2]+0.02,labels = dates$Median[match(rownames(out$points),dates$sampleID)])
 dev.off()
+pdf("figures/betadiv.JC.3reps.pdf",height = 6,width = 6)
+plot(out.j$points[,1],out.j$points[,2],col="darkred",cex=1.3,pch=16,ylab="",xlab="",
+     ylim=c(min(out.j$points[,2])-0.1,max(out.j$points[,2])+0.1),
+     xlim=c(min(out.j$points[,1])-0.1,max(out.j$points[,1])+0.1))
+text(out.j$points[,1],out.j$points[,2]+0.02,labels = dates$Median[match(rownames(out.j$points),dates$sampleID)])
+dev.off()
 
-out <- metaMDS(vegdist(t(euk[1:88]),binary = TRUE,method = "jaccard"),trymax = 200) 
-pdf("figures/betadiv.allreps.pdf",height = 8,width = 8)
+
+
+out <- metaMDS(vegdist(t(euk[1:88])))
+out.j <- metaMDS(vegdist(t(euk[1:88]),binary = TRUE,method = "jaccard"),trymax = 200) 
+pdf("figures/betadiv.BC.allreps.pdf",height = 8,width = 8)
 plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
      xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1),ylab="",xlab="")
 ordihull(out,substr(colnames(euk[1:88]),1,8),draw = "polygon",col="darkgrey",lty=0)
+ordispider(out,substr(colnames(euk[1:88]),1,8),lty=1,lwd=2,col="grey2")
 points(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16)
+for (i in 1:(length(tapply(out$points[,1],FUN=mean,INDEX = substr(colnames(euk[1:88]),1,8)))-1)) {
+         arrows(tapply(out$points[,1],FUN=mean,INDEX = substr(colnames(euk[1:88]),1,8))[[i]],
+                tapply(out$points[,2],FUN=mean,INDEX = substr(colnames(euk[1:88]),1,8))[[i]],
+                tapply(out$points[,1],FUN=mean,INDEX = substr(colnames(euk[1:88]),1,8))[[i+1]],
+                tapply(out$points[,2],FUN=mean,INDEX = substr(colnames(euk[1:88]),1,8))[[i+1]],
+                length = 0.1,lwd = 1.5,col = "red3")}
 text(tapply(out$points[,1],FUN=mean,INDEX = substr(colnames(euk[1:88]),1,8)),
      tapply(out$points[,2],FUN=mean,INDEX = substr(colnames(euk[1:88]),1,8))+0.25,
      labels = dates$Median[match(names(tapply(out$points[,1],FUN=mean,INDEX = substr(colnames(euk[1:88]),1,8))),dates$sampleID)],
      col="darkblue")
-
 dev.off()
+
+pdf("figures/betadiv.JC.allreps.pdf",height = 8,width = 8)
+plot(out.j$points[,1],out.j$points[,2],col="darkred",cex=1.3,pch=16,
+     ylim=c(min(out.j$points[,2])-0.1,max(out.j$points[,2])+0.1),
+     xlim=c(min(out.j$points[,1])-0.1,max(out.j$points[,1])+0.1),ylab="",xlab="")
+ordihull(out.j,substr(colnames(euk[1:88]),1,8),draw = "polygon",col="darkgrey",lty=0)
+ordispider(out.j,substr(colnames(euk[1:88]),1,8),lty=1,lwd=2,col="grey2")
+points(out.j$points[,1],out.j$points[,2],col="darkred",cex=1.3,pch=16)
+for (i in 1:(length(tapply(out$points[,1],FUN=mean,INDEX = substr(colnames(euk[1:88]),1,8)))-1)) {
+  arrows(tapply(out.j$points[,1],FUN=mean,INDEX = substr(colnames(euk[1:88]),1,8))[[i]],
+         tapply(out.j$points[,2],FUN=mean,INDEX = substr(colnames(euk[1:88]),1,8))[[i]],
+         tapply(out.j$points[,1],FUN=mean,INDEX = substr(colnames(euk[1:88]),1,8))[[i+1]],
+         tapply(out.j$points[,2],FUN=mean,INDEX = substr(colnames(euk[1:88]),1,8))[[i+1]],
+         length = 0.1,lwd = 1.5,col = "red3")}
+text(tapply(out.j$points[,1],FUN=mean,INDEX = substr(colnames(euk[1:88]),1,8)),
+     tapply(out.j$points[,2],FUN=mean,INDEX = substr(colnames(euk[1:88]),1,8))+0.25,
+     labels = dates$Median[match(names(tapply(out.j$points[,1],FUN=mean,INDEX = substr(colnames(euk[1:88]),1,8))),dates$sampleID)],
+     col="darkblue")
+dev.off()
+
+
 
 ##ToDo List
 Alpha
