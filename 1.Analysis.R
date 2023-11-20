@@ -136,6 +136,23 @@ barplot(Family.C.prop,las=2,cex.names=0.6,col=rev(getPalette(dim(Family.C.prop)[
 legend(108,1,rev(rownames(Family.C.prop)),fill=getPalette(dim(Family.C.prop)[1]),cex=0.4,bty = "n",y.intersp=0.75)
 dev.off()
 
+### Who da fungi!?
+
+
+
+test <- euk.Nreps[rownames(euk.Nreps) %in% taxPR2.f$X.1[taxPR2.f$tax.Family=="Eurotiomycetes"],]
+test2 <- euk[rownames(euk) %in% taxPR2.f$X.1[taxPR2.f$tax.Family=="Eurotiomycetes"],]
+taxPR2.f$X.1[taxPR2.f$tax.Family=="Eurotiomycetes"]
+rownames(euk.Nreps) %in% taxPR2.f$X.1[taxPR2.f$tax.Family=="Eurotiomycetes"]
+
+
+test <- euk.Nreps[rownames(euk.Nreps) %in% taxPR2.f$X.1[taxPR2.f$tax.Family=="Cephaloidophoridae"],]
+test2 <- euk[rownames(euk) %in% taxPR2.f$X.1[taxPR2.f$tax.Family=="Cephaloidophoridae"],]
+taxPR2.f$X.1[taxPR2.f$tax.Family=="Cephaloidophoridae"]
+rownames(euk.Nreps) %in% taxPR2.f$X.1[taxPR2.f$tax.Family=="Cephaloidophoridae"]
+
+Cephaloidophoridae
+
 
 #Alpha diversity 
 
