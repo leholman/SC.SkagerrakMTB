@@ -353,6 +353,40 @@ text(tapply(out.j$points[,1],FUN=mean,INDEX = substr(colnames(euk[1:88]),1,8)),
      col="darkblue")
 dev.off()
 
+## Pull selected taxa
+
+euk.selectedTaxa <- euk.Nreps[row.names(euk.Nreps) %in% c("ASV_35","ASV_621","ASV_1456","ASV_2468"),]
+
+MTG <-read.csv("rawdata/metaG.r100.metazoa.csv",row.names =1)
+MTG.genus <- MTG[MTG$tax_rank=="genus",]
+MTG.selected <- MTG.genus[MTG.genus$tax_name %in% c("Gadus","Clupea","Oikopleura"),]
+
+MTG.P <- read.csv("rawdata/r10.viridiplantae.csv",row.names = 1)
+MTG.P.genus <- MTG.P[MTG.P$tax_rank=="genus",]
+MTG.zostera <- MTG.P.genus[MTG.P.genus$tax_name =="Zostera",]
+
+
+MTG.selected.2 <- rbind(MTG.selected,MTG.zostera)
+
+MTG.wide <- dcast(MTG.selected.2, tax_name ~ sample2, value.var="N_reads")
+
+euk.selectedTaxa.long <- melt(euk.selectedTaxa)
+
+euk.selectedTaxa.long$variable
+
+MTG.selected.2$sample2
+
+euk.selectedTaxa.long$OTU
+
+ASVid <- data.frame("ASV"=c("ASV_35","ASV_621","ASV_1456","ASV_2468" ),
+                    "ID"=c("Zostera","Oikopleura","Gadus","Clupea"))
+euk.selectedTaxa.long$ID <- ASVid$ID[match(euk.selectedTaxa.long$OTU,ASVid$ASV)]
+
+
+MTB.MTG.comp <- data.frame("Site"=,"Value"=,"ID"=,"Dataset"=)
+
+
+
 
 
 ##ToDo List
