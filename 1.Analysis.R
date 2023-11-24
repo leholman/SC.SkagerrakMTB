@@ -10,6 +10,7 @@ library(maditr)
 library(vegan)
 library(breakaway)
 library(RColorBrewer)
+library(scales)
 
 #### METABARCODING ####
 
@@ -151,7 +152,6 @@ test2 <- euk[rownames(euk) %in% taxPR2.f$X.1[taxPR2.f$tax.Family=="Cephaloidopho
 taxPR2.f$X.1[taxPR2.f$tax.Family=="Cephaloidophoridae"]
 rownames(euk.Nreps) %in% taxPR2.f$X.1[taxPR2.f$tax.Family=="Cephaloidophoridae"]
 
-Cephaloidophoridae
 
 
 #Alpha diversity 
@@ -383,10 +383,30 @@ ASVid <- data.frame("ASV"=c("ASV_35","ASV_621","ASV_1456","ASV_2468" ),
 euk.selectedTaxa.long$ID <- ASVid$ID[match(euk.selectedTaxa.long$OTU,ASVid$ASV)]
 
 
-MTB.MTG.comp <- data.frame("Site"=,"Value"=,"ID"=,"Dataset"=)
+MTB.MTG.comp <- data.frame("Sample"=c(as.character(euk.selectedTaxa.long$variable),MTG.selected.2$sample2),
+                           "Value"=c(euk.selectedTaxa.long$value,rescale(MTG.selected.2$N_reads, to = c(0, 8))),
+                           "ID"=c(euk.selectedTaxa.long$ID,MTG.selected.2$tax_name),
+                           "Dataset"=c(rep("MTB",length(euk.selectedTaxa.long$variable)),
+                                       rep("MTG",length(MTG.selected.2$sample2))))
 
+MTB.com <- MTB.MTG.comp[MTB.MTG.comp$Dataset=="MTB",]
+MTG.com <- MTB.MTG.comp[MTB.MTG.comp$Dataset=="MTG",]
 
+pdf("figures/ComparisonMTBMTG.pdf",height = 4,width = 9)
+par(mar=c(5.1, 7.1, 2.1, 2.1))
+plot(dates$Median[match(MTB.com$Sample,dates$sampleID)],
+     as.numeric(factor(MTB.com$ID,levels=c("Zostera" ,"Gadus","Oikopleura","Clupea")))+0.1,
+     pch=16,cex=MTB.com$Value/2,col="dodgerblue",
+     ylim=c(0.5,5),
+     xlab="",yaxt='n',
+     ylab="")
 
+points(dates$Median[match(MTG.com$Sample,dates$sampleID)],
+       as.numeric(factor(MTG.com$ID,levels=c("Zostera" ,"Gadus","Oikopleura","Clupea")))-0.1,
+       pch=16,cex=MTB.com$Value/2,col="darkred")
+
+axis(2,labels=c("Zostera" ,"Gadus","Oikopleura","Clupea"),1:4,las=1)
+dev.off()
 
 
 ##ToDo List
