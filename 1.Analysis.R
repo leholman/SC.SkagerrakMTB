@@ -19,6 +19,8 @@ euk.Nreps <- read.csv("cleanedData/clean.EUK.raw.names.csv.Nreps.csv",row.names 
 dates <-read.csv("metadataAge.csv")
 dates$sampleID <- gsub("\\.","-",gsub(".*(MD9.\\d{4})","\\1", dates$Sample))
 taxPR2 <-read.csv("taxonomy/EUK.tax.PR2.csv",row.names = 1)
+euk.css <- read.csv("cleanedData/clean.EUK.CSS.csv",row.names = 1)
+euk.rare <- read.csv("cleanedData/clean.EUK.rarefy.csv",row.names = 1)
 
 
 #Correct col names
@@ -205,6 +207,7 @@ plot(dates$Median[match(colnames(euk.Nreps.high.binary.8rep),dates$sampleID)],
 dev.off()
 
 
+
 ### Here we are estimating richness using breakaway which uses this approach - https://onlinelibrary.wiley.com/doi/full/10.1111/biom.12332
 ### our metabarcoding data will only ever amplify a fraction of total biodiversity 
 ###therefore these are useless as absolute estimates of richness but useful as relative measures of richness along the core
@@ -225,6 +228,58 @@ plot(dates$Median[match(as.factor(substr(names(richEstimate),1,8)),dates$sampleI
      xlab="CalYrBP",
      ylab="EstimatedRichness")
 dev.off()
+
+
+
+## Now let's look at the normalised data 
+
+richEst.css <- breakaway(round(euk.css,0))
+richEstimate.css <- unlist(lapply(richEst.css,FUN = function(x){x[["estimate"]]}))
+rich.mean.css <- tapply(richEstimate.css,FUN=mean,INDEX = substr(names(richEstimate.css),8,15))
+names(rich.css) <- gsub('\\.',"-",names(rich.css))
+
+richEst.rare <- breakaway(euk.rare[,1:72])
+richEstimate.rare <- unlist(lapply(richEst.rare,FUN = function(x){x[["estimate"]]}))
+rich.mean.rare <- tapply(richEstimate.rare,FUN=mean,INDEX = substr(names(richEstimate.rare),8,15))
+names(rich.rare) <- gsub('\\.',"-",names(rich.rare))
+
+#lets plot 
+
+pdf("figures/richness.rarefaction.scaled.pdf",width = 8,height = 5)
+par(mar=c(5.1,4.1,1.1,1.1),mfrow=c(1,3))
+plot(dates$Median[match(as.factor(substr(names(richEstimate),1,8)),dates$sampleID)],
+     richEstimate,pch=16,
+     ylim=c(0,4200),
+     xlab="CalYrBP",
+     ylab="EstimatedRichness (breakaway on non-norm)")
+plot(dates$Median[match(gsub("\\.","-",substr(names(richEstimate.css),8,15)),dates$sampleID)],
+     richEstimate.css,pch=16,
+     ylim=c(0,4200),
+     xlab="CalYrBP",
+     ylab="EstimatedRichness CSS norm")
+plot(dates$Median[match(gsub("\\.","-",substr(names(richEstimate.rare),8,15)),dates$sampleID)],
+     richEstimate.rare,pch=16,
+     ylim=c(0,4200),
+     xlab="CalYrBP",
+     ylab="EstimatedRichness rare norm")
+dev.off()
+
+pdf("figures/richness.rarefaction.unscaled.pdf",width = 8,height = 5)
+par(mar=c(5.1,4.1,1.1,1.1),mfrow=c(1,3))
+plot(dates$Median[match(as.factor(substr(names(richEstimate),1,8)),dates$sampleID)],
+     richEstimate,pch=16,
+     xlab="CalYrBP",
+     ylab="EstimatedRichness (breakaway on non-norm)")
+plot(dates$Median[match(gsub("\\.","-",substr(names(richEstimate.css),8,15)),dates$sampleID)],
+     richEstimate.css,pch=16,
+     xlab="CalYrBP",
+     ylab="EstimatedRichness CSS norm")
+plot(dates$Median[match(gsub("\\.","-",substr(names(richEstimate.rare),8,15)),dates$sampleID)],
+     richEstimate.rare,pch=16,
+     xlab="CalYrBP",
+     ylab="EstimatedRichness rare norm")
+dev.off()
+
 
 
 ## Are breakaway estimates and raw richness correlated?
@@ -357,11 +412,11 @@ dev.off()
 
 euk.selectedTaxa <- euk.Nreps[row.names(euk.Nreps) %in% c("ASV_35","ASV_621","ASV_1456","ASV_2468"),]
 
-MTG <-read.csv("rawdata/metaG.r100.metazoa.csv",row.names =1)
+MTG <-read.csv("rawdata/r100.metazoa.csv",row.names =1)
 MTG.genus <- MTG[MTG$tax_rank=="genus",]
 MTG.selected <- MTG.genus[MTG.genus$tax_name %in% c("Gadus","Clupea","Oikopleura"),]
 
-MTG.P <- read.csv("rawdata/r10.viridiplantae.csv",row.names = 1)
+MTG.P <- read.csv("rawdata/r100.viridiplantae.csv",row.names = 1)
 MTG.P.genus <- MTG.P[MTG.P$tax_rank=="genus",]
 MTG.zostera <- MTG.P.genus[MTG.P.genus$tax_name =="Zostera",]
 
@@ -384,7 +439,7 @@ euk.selectedTaxa.long$ID <- ASVid$ID[match(euk.selectedTaxa.long$OTU,ASVid$ASV)]
 
 
 MTB.MTG.comp <- data.frame("Sample"=c(as.character(euk.selectedTaxa.long$variable),MTG.selected.2$sample2),
-                           "Value"=c(euk.selectedTaxa.long$value,rescale(MTG.selected.2$N_reads, to = c(0, 8))),
+                           "Value"=c(euk.selectedTaxa.long$value,cut(MTG.selected.2$N_reads,breaks = c(50,100,1000,5000,10000),labels=c(0.5,1,2.5,4))),
                            "ID"=c(euk.selectedTaxa.long$ID,MTG.selected.2$tax_name),
                            "Dataset"=c(rep("MTB",length(euk.selectedTaxa.long$variable)),
                                        rep("MTG",length(MTG.selected.2$sample2))))
@@ -392,71 +447,71 @@ MTB.MTG.comp <- data.frame("Sample"=c(as.character(euk.selectedTaxa.long$variabl
 MTB.com <- MTB.MTG.comp[MTB.MTG.comp$Dataset=="MTB",]
 MTG.com <- MTB.MTG.comp[MTB.MTG.comp$Dataset=="MTG",]
 
-pdf("figures/ComparisonMTBMTG.pdf",height = 4,width = 9)
-par(mar=c(5.1, 7.1, 2.1, 2.1))
+pdf("figures/ComparisonMTBMTG.pdf",height = 4,width = 11)
+par(mar=c(5.1, 7.1, 2.1, 9.1), xpd=TRUE)
 plot(dates$Median[match(MTB.com$Sample,dates$sampleID)],
      as.numeric(factor(MTB.com$ID,levels=c("Zostera" ,"Gadus","Oikopleura","Clupea")))+0.1,
      pch=16,cex=MTB.com$Value/2,col="dodgerblue",
-     ylim=c(0.5,5),
+     ylim=c(0.5,4.5),
      xlab="",yaxt='n',
      ylab="")
 
 points(dates$Median[match(MTG.com$Sample,dates$sampleID)],
        as.numeric(factor(MTG.com$ID,levels=c("Zostera" ,"Gadus","Oikopleura","Clupea")))-0.1,
-       pch=16,cex=MTB.com$Value/2,col="darkred")
+       pch=16,cex=MTG.com$Value,col="darkred")
 
 axis(2,labels=c("Zostera" ,"Gadus","Oikopleura","Clupea"),1:4,las=1)
+
+legend(9000,4.5,col = "dodgerblue",pch=16,
+       pt.cex=c(0.5,1.5,4),legend=c("  1 rep","  3 reps","  8 reps"),bty="n",y.intersp=1.5)
+legend(9000,2.5,col = "darkred",pch=16,
+       pt.cex=c(2,3,4),legend=c(" 100-1k reads"," 1k-5k reads"," 5k+ reads"),bty="n",y.intersp=1.5)
+
+
 dev.off()
 
 
-##ToDo List
-Alpha
--ASV richness
--Bacterial richness
--Non-metazoans, non-bacteria - protists and others
--Metazoan 
+### Extra stuff
+#length age relationship
 
-Beta (above datasets)
+euk$ASV_len <- nchar(euk$unname.rawSeqs..match.row.names.expSamples...names.rawSeqs...) 
 
-Taxonomic changes
+test <- melt(euk, measure.vars=1:88, variable.name="Sample", value.name="nReads")
+test2 <- test[test$nReads>5,]
 
-High Conf Metazoan Comparison
+pdf("figures/lengthAgeAllReps.pdf",width=7,height=5.5)
+plot(jitter(dates$Median[match(substr(test2$Sample,1,8),dates$sampleID)],amount = 200),
+     jitter(test2$ASV_len,amount = 0.3),pch=16,cex=0.3,
+     xlab="CalYrBP",
+     ylab="ASV Length")
+dev.off()
 
+euk.Nreps$ASV_len <- nchar(euk.Nreps$unname.rawSeqs..match.row.names.expSamplesNreps...names.rawSeqs...) 
 
-Alpha 
-Richness of unfiltered reads
--kraken2
--metaPhylan
--Kmer something?
+test3 <- melt(euk.Nreps, measure.vars=1:11, variable.name="Sample", value.name="nReps")
+test4 <- test3[test3$nReps>0,]
+test5 <- test4[test4$phylum=="Chordata",]
 
-Bacterial richness
--metaPhylan
-
-Non-metazoans (protists) 
--SMAGs mapping 
-
-Metzoa
--nt/refseq mapping
-
-
-Beta
-Raw seqs 
--simka
+pdf("figures/lengthAge.nReps.pdf",width=11,height=7)
+plot(jitter(dates$Median[match(test4$Sample,dates$sampleID)],amount = 150),
+     jitter(test4$ASV_len,amount = 0.15),pch=16,cex=0.3,
+     xlab="CalYrBP",
+     ylab="ASV Length")
+dev.off()
 
 
-
-
-
-
-
-
-
-
-
-
-  
-
-
+pdf("figures/lengthAge.nReps.cols.pdf",width=11,height=7)
+par(mar=c(5.1, 4.1, 2.1, 4.1), xpd=TRUE)
+palette(c("grey","blue","darkgreen","darkgrey","red"))
+plot(jitter(dates$Median[match(test4$Sample,dates$sampleID)],amount = 150),
+     jitter(test4$ASV_len,amount = 0.15),pch=16,cex=0.3,
+     xlab="CalYrBP",
+     ylab="ASV Length",
+     col=as.factor(test4$superkingdom))
+points(jitter(dates$Median[match(test5$Sample,dates$sampleID)],amount = 150),
+       jitter(test5$ASV_len,amount = 0.15),pch=16,cex=0.5,col="purple")
+legend(9000,130,legend = c("Eukaryotes","Bacteria","Archaea","Chordata","No Assign"),pch=15,col=c("red","darkgreen","blue","purple","grey"),cex=0.5, bty='n')
+dev.off()
 
 
 

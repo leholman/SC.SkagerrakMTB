@@ -7,6 +7,8 @@
 ####====0.0 Packages & Parameters====####
 library("Biostrings")
 library("seqinr")
+library("vegan")
+
 
 #Set some variables 
 minreads <- 2
@@ -210,6 +212,36 @@ write.csv(CleanedNrepsOutput,paste0("cleanedData/clean.",dataset,".Nreps.csv"))
 
 }
 
+
+####====2.1 ====#### Normalisation tests
+
+euk <- read.csv("cleanedData/clean.EUK.raw.names.csv.csv",row.names = 1)
+
+## rarefy 
+library("vegan")
+
+euk[,1:88]
+colSums(euk[,1:88])
+
+hist(colSums(euk[,1:88]),breaks=1000)
+
+sort(colSums(euk[,1:88]))
+
+new <- t(rrarefy(t(euk[,1:88]),20000))
+
+euk.rare <- cbind(as.data.frame(new[,!unname(colSums(new))<20000]),euk[,89:99])
+
+write.csv(euk.rare,"cleanedData/clean.EUK.rarefy.csv")
+
+
+## CSS
+library(metagenomeSeq)
+
+metaSeqObject=newMRexperiment(euk[,1:88]) 
+metaSeqObject_CSS  = cumNorm( metaSeqObject , p=cumNormStat(metaSeqObject))
+euk.CSS = data.frame(MRcounts(metaSeqObject_CSS, norm=TRUE, log=FALSE))
+
+write.csv(euk.CSS,"cleanedData/clean.EUK.CSS.csv")
 
 ####====3.0 ====#### BASEMENT
 
