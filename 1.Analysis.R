@@ -236,16 +236,16 @@ dev.off()
 richEst.css <- breakaway(round(euk.css,0))
 richEstimate.css <- unlist(lapply(richEst.css,FUN = function(x){x[["estimate"]]}))
 rich.mean.css <- tapply(richEstimate.css,FUN=mean,INDEX = substr(names(richEstimate.css),8,15))
-names(rich.css) <- gsub('\\.',"-",names(rich.css))
+names(rich.mean.css) <- gsub('\\.',"-",names(rich.mean.css))
 
 richEst.rare <- breakaway(euk.rare[,1:72])
 richEstimate.rare <- unlist(lapply(richEst.rare,FUN = function(x){x[["estimate"]]}))
 rich.mean.rare <- tapply(richEstimate.rare,FUN=mean,INDEX = substr(names(richEstimate.rare),8,15))
-names(rich.rare) <- gsub('\\.',"-",names(rich.rare))
+names(rich.mean.rare) <- gsub('\\.',"-",names(rich.mean.rare))
 
 #lets plot 
 
-pdf("figures/richness.rarefaction.scaled.pdf",width = 8,height = 5)
+pdf("figures/richness.rarefaction.unscaled.pdf",width = 8,height = 5)
 par(mar=c(5.1,4.1,1.1,1.1),mfrow=c(1,3))
 plot(dates$Median[match(as.factor(substr(names(richEstimate),1,8)),dates$sampleID)],
      richEstimate,pch=16,
@@ -264,7 +264,7 @@ plot(dates$Median[match(gsub("\\.","-",substr(names(richEstimate.rare),8,15)),da
      ylab="EstimatedRichness rare norm")
 dev.off()
 
-pdf("figures/richness.rarefaction.unscaled.pdf",width = 8,height = 5)
+pdf("figures/richness.rarefaction.scaled.pdf",width = 8,height = 5)
 par(mar=c(5.1,4.1,1.1,1.1),mfrow=c(1,3))
 plot(dates$Median[match(as.factor(substr(names(richEstimate),1,8)),dates$sampleID)],
      richEstimate,pch=16,
@@ -323,7 +323,6 @@ summary(lm(tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8))
 #Now some taxonomic subsets of richness with 3 reps 
 
 
-euk.Nreps.high.binary.3rep
 
 euk.Nreps.high.binary.3rep.PRO <- euk.Nreps.high.binary.3rep[taxPR2.f$tax.Domain=="Bacteria",]
 euk.Nreps.high.binary.3rep.EUK.1 <- euk.Nreps.high.binary.3rep[taxPR2.f$tax.Domain=="Eukaryota",]
@@ -469,6 +468,66 @@ legend(9000,2.5,col = "darkred",pch=16,
 
 
 dev.off()
+
+##Comparison plots
+
+## import new MTG
+
+MTG.raw <- read.csv('rawdata/r100.metazoa.csv',row.names = 1)
+MTG.new <- MTG.raw[MTG.raw$tax_rank=="genus",]
+
+MTG.wide <- dcast(MTG.new, tax_name ~ sample2, value.var="N_reads")
+MTG.wide[is.na(MTG.wide)] <- 0
+MTG.binary <- MTG.wide[,-1]
+MTG.binary[MTG.binary>1] <- 1
+
+
+##Alpha 
+
+
+MTB.rich <- colSums(euk.Nreps.high.binary.3rep.MET)
+dates$Median[match(as.factor(substr(names(colSums(euk.Nreps.high.binary.3rep.MET)),1,8)),dates$sampleID)]
+
+pdf("figures/figure1/richness.MTB.3repsMET.pdf",width = 4,height = 4)
+par(mar=c(4.1, 4.1, 1.1, 1.1))
+plot(dates$Median[match(as.factor(substr(names(colSums(euk.Nreps.high.binary.3rep.MET)),1,8)),dates$sampleID)],
+     MTB.rich,pch=16,
+     xlab="CalYrBP",
+     ylab="ASV Richness (3 reps Metazoa)",
+     xlim=c(0,8400))
+dev.off()
+
+MTG.rich <- colSums(MTG.binary)
+
+pdf("figures/figure1/richness.MTG.metazoa.pdf",width = 4,height = 4)
+par(mar=c(4.1, 4.1, 1.1, 1.1))
+plot(dates$Median[match(as.factor(substr(names(MTG.rich),1,8)),dates$sampleID)],
+     MTG.rich,pch=16,
+     xlab="CalYrBP",
+     ylab="MTG Genus Richness",
+     xlim=c(0,8400))
+dev.off()
+
+
+matchIndex <- match(dates$Median[match(as.factor(substr(names(MTG.rich),1,8)),dates$sampleID)],
+                    dates$Median[match(as.factor(substr(names(colSums(euk.Nreps.high.binary.3rep.MET)),1,8)),dates$sampleID)])
+
+lm1 <- lm(MTB.rich[matchIndex]~MTG.rich)
+summary(lm1)
+
+pdf("figures/figure1/richness.comparison.pdf",width = 4,height = 4)
+par(mar=c(4.1, 4.1, 1.1, 1.1))
+plot(MTG.rich,
+     MTB.rich[matchIndex],
+     pch=16,
+     xlab="MTG",
+     ylab="MTB")
+abline(lm1,col="red")
+dev.off()
+
+
+
+
 
 
 ### Extra stuff
