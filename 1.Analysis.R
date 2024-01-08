@@ -60,6 +60,18 @@ minAbundance <- function(inputtable=NA,minAbun= 0.01){
   return(inputtable)
 }
 
+##function to make dataset binary 
+
+make_binary <- function (df,threshold){
+  df <- sapply(df, function(x) ifelse(is.numeric(x) & x < threshold, 0, 1))
+  return(as.data.frame(df))
+}
+
+
+
+
+
+
 ##Colour function 
 #getPalette = colorRampPalette(brewer.pal(9, "Pastel1"))
 getPalette = colorRampPalette(brewer.pal(9, "Set3"))
@@ -473,59 +485,221 @@ dev.off()
 
 ## import new MTG
 
-MTG.raw <- read.csv('rawdata/r100.metazoa.csv',row.names = 1)
-MTG.new <- MTG.raw[MTG.raw$tax_rank=="genus",]
+## Dataset 1 all taxa @ genus
+## Dataset 2 metazoa @ genus
+## Dataset 3 age-dmg excluded all taxa
+## Dataset 4 age-dmg excluded metazoa
 
-MTG.wide <- dcast(MTG.new, tax_name ~ sample2, value.var="N_reads")
-MTG.wide[is.na(MTG.wide)] <- 0
-MTG.binary <- MTG.wide[,-1]
-MTG.binary[MTG.binary>1] <- 1
+
+#DS1
+MTG.raw.DS1 <- read.csv("rawdata/Skagerrak_0_38.csv.gz")
+MTG.raw.DS1 <- MTG.raw.DS1[MTG.raw.DS1$tax_rank=="genus",]
+MTG.raw.DS1 <- MTG.raw.DS1[MTG.raw.DS1$N_reads>99,]
+MTG.raw.DS1$sample2 <- gsub(".*(MD9-\\d{4}).*","\\1",MTG.raw.DS1$sample)
+#DS2
+MTG.raw.DS2 <- MTG.raw.DS1[grepl("metazoa",MTG.raw.DS1$tax_path),] 
+#DS3
+MTG.raw.DS3 <- read.csv('rawdata/Giulia080124/filtered_genus_all_2nc.csv',row.names = 1)
+MTG.raw.DS3$sample2 <- gsub(".*(MD9-\\d{4}).*","\\1",MTG.raw.DS3$sample)
+MTG.raw.DS3$Kingdom[ is.na(MTG.raw.DS3$Kingdom)] <- ""
+MTG.raw.DS3 <- MTG.raw.DS3[MTG.raw.DS3$Kingdom!="Viridiplantae",]
+MTG.raw.DS3 <- MTG.raw.DS3[MTG.raw.DS3$Filtering=="Ancient",]
+
+#DS4
+MTG.raw.DS4 <- read.csv('rawdata/Giulia080124/filtered_metazoans_all_2nc.csv',row.names = 1)
+MTG.raw.DS4$sample2 <- gsub(".*(MD9-\\d{4}).*","\\1",MTG.raw.DS4$sample)
+MTG.raw.DS4 <- MTG.raw.DS4[MTG.raw.DS4$Filtering=="Ancient",]
+
+## Make wide data
+MTG.wide.DS1 <- dcast(MTG.raw.DS1, tax_name ~ sample2, value.var="N_reads",fill = 0)
+MTG.wide.DS2 <- dcast(MTG.raw.DS2, tax_name ~ sample2, value.var="N_reads",fill = 0)
+MTG.wide.DS3 <- dcast(MTG.raw.DS3, tax_name ~ sample2, value.var="N_reads",fill = 0)
+MTG.wide.DS4 <- dcast(MTG.raw.DS4, tax_name ~ sample2, value.var="N_reads",fill = 0)
+
+
+##MTB
+##DS1 all ASVs
+##DS2 met ASVs
+
+MTB.wide.DS1 <- euk.Nreps[,0:11]
+MTB.wide.DS2 <- euk.Nreps[rownames(euk.Nreps) %in% taxPR2.f$X.1[taxPR2.f$tax.Subdivision=="Metazoa"],0:11]
 
 
 ##Alpha 
 
 
-MTB.rich <- colSums(euk.Nreps.high.binary.3rep.MET)
-dates$Median[match(as.factor(substr(names(colSums(euk.Nreps.high.binary.3rep.MET)),1,8)),dates$sampleID)]
+MTG.binary.DS1 <- make_binary(MTG.wide.DS1,1)[,-1]
+MTG.binary.DS1 <- MTG.binary.DS1[,!grepl("NTC|BLANK",names(MTG.binary.DS1))]
+MTG.binary.DS2 <- make_binary(MTG.wide.DS2,1)[,-1]
+MTG.binary.DS3 <- make_binary(MTG.wide.DS3,1)[,-1]
+MTG.binary.DS4 <- make_binary(MTG.wide.DS4,1)[,-1]
 
-pdf("figures/figure1/richness.MTB.3repsMET.pdf",width = 4,height = 4)
+MTB.binary.DS1 <- make_binary(MTB.wide.DS1,1)
+MTB.binary.DS2 <- make_binary(MTB.wide.DS2,1)
+
+
+
+
+
+## Plots 
+
+pdf("figures/figure1/richness.MTG.DS1.pdf",width = 4,height = 4)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(dates$Median[match(as.factor(substr(names(colSums(euk.Nreps.high.binary.3rep.MET)),1,8)),dates$sampleID)],
-     MTB.rich,pch=16,
-     xlab="CalYrBP",
-     ylab="ASV Richness (3 reps Metazoa)",
-     xlim=c(0,8400))
-dev.off()
-
-MTG.rich <- colSums(MTG.binary)
-
-pdf("figures/figure1/richness.MTG.metazoa.pdf",width = 4,height = 4)
-par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(dates$Median[match(as.factor(substr(names(MTG.rich),1,8)),dates$sampleID)],
-     MTG.rich,pch=16,
-     xlab="CalYrBP",
-     ylab="MTG Genus Richness",
-     xlim=c(0,8400))
-dev.off()
-
-
-matchIndex <- match(dates$Median[match(as.factor(substr(names(MTG.rich),1,8)),dates$sampleID)],
-                    dates$Median[match(as.factor(substr(names(colSums(euk.Nreps.high.binary.3rep.MET)),1,8)),dates$sampleID)])
-
-lm1 <- lm(MTB.rich[matchIndex]~MTG.rich)
-summary(lm1)
-
-pdf("figures/figure1/richness.comparison.pdf",width = 4,height = 4)
-par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(MTG.rich,
-     MTB.rich[matchIndex],
+plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS1),1,8)),dates$sampleID)],
+     colSums(MTG.binary.DS1),
      pch=16,
-     xlab="MTG",
-     ylab="MTB")
-abline(lm1,col="red")
+     xlab="CalYrBP",
+     ylab="MTG.DS1 Genus Richness",
+     xlim=c(0,8400))
 dev.off()
 
 
+pdf("figures/figure1/richness.MTG.DS2.pdf",width = 4,height = 4)
+par(mar=c(4.1, 4.1, 1.1, 1.1))
+plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS2),1,8)),dates$sampleID)],
+     colSums(MTG.binary.DS2),
+     pch=16,
+     xlab="CalYrBP",
+     ylab="MTG.DS2 Genus Richness",
+     xlim=c(0,8400))
+dev.off()
+
+pdf("figures/figure1/richness.MTG.DS3.pdf",width = 4,height = 4)
+par(mar=c(4.1, 4.1, 1.1, 1.1))
+plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS3),1,8)),dates$sampleID)],
+     colSums(MTG.binary.DS3),
+     pch=16,
+     xlab="CalYrBP",
+     ylab="MTG.DS3 Genus Richness",
+     xlim=c(0,8400))
+dev.off()
+
+pdf("figures/figure1/richness.MTG.DS4.pdf",width = 4,height = 4)
+par(mar=c(4.1, 4.1, 1.1, 1.1))
+plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS4),1,8)),dates$sampleID)],
+     colSums(MTG.binary.DS4),
+     pch=16,
+     xlab="CalYrBP",
+     ylab="MTG.DS4 Genus Richness",
+     xlim=c(0,8400))
+dev.off()
+
+pdf("figures/figure1/richness.MTB.DS1.pdf",width = 4,height = 4)
+par(mar=c(4.1, 4.1, 1.1, 1.1))
+plot(dates$Median[match(as.factor(substr(names(MTB.binary.DS1),1,8)),dates$sampleID)],
+     colSums(MTB.binary.DS1),
+     pch=16,
+     xlab="CalYrBP",
+     ylab="MTB.DS1 ASV Richness",
+     xlim=c(0,8400))
+dev.off()
+
+pdf("figures/figure1/richness.MTB.DS2.pdf",width = 4,height = 4)
+par(mar=c(4.1, 4.1, 1.1, 1.1))
+plot(dates$Median[match(as.factor(substr(names(MTB.binary.DS2),1,8)),dates$sampleID)],
+     colSums(MTB.binary.DS2),
+     pch=16,
+     xlab="CalYrBP",
+     ylab="MTB.DS2 ASV Richness",
+     xlim=c(0,8400))
+dev.off()
+
+
+
+colSums(MTG.binary.DS1)
+colSums(MTB.binary.DS1)
+
+pdf("figures/figure1/richness.comp.MTG.DS1-MTB.DS1.pdf",width = 4,height = 4)
+par(mar=c(4.1, 4.1, 1.1, 1.1))
+plot(colSums(MTG.binary.DS1),
+     colSums(MTB.binary.DS1),
+     pch=16,
+     xlab="MTG.DS1",
+     ylab="MTB.DS1")
+
+test <- cor.test(colSums(MTG.binary.DS1),colSums(MTB.binary.DS1))
+abline(lm(colSums(MTB.binary.DS1)~colSums(MTG.binary.DS1)),col="red")
+legend("topright",legend=c(paste0("Corr = ",round(unname(test$estimate),3)),
+                           paste0("p =",signif(test$p.value,3))),
+       text.col="red",bty="n")
+
+dev.off()
+
+
+pdf("figures/figure1/richness.comp.MTG.DS1-MTB.DS2.pdf",width = 4,height = 4)
+par(mar=c(4.1, 4.1, 1.1, 1.1))
+plot(colSums(MTG.binary.DS1),
+     colSums(MTB.binary.DS2),
+     pch=16,
+     xlab="MTG.DS1",
+     ylab="MTB.DS2")
+
+test <- cor.test(colSums(MTG.binary.DS1),colSums(MTB.binary.DS2))
+abline(lm(colSums(MTB.binary.DS2)~colSums(MTG.binary.DS1)),col="red")
+legend("topright",legend=c(paste0("Corr = ",round(unname(test$estimate),3)),
+                           paste0("p =",signif(test$p.value,3))),
+       text.col="red",bty="n")
+
+dev.off()
+
+#here we make a little index to subset the MTB dataset as MTG loses a sample
+
+index <- match(names(colSums(MTG.binary.DS2)),names(colSums(MTB.binary.DS1)))
+
+pdf("figures/figure1/richness.comp.MTG.DS2-MTB.DS1.pdf",width = 4,height = 4)
+par(mar=c(4.1, 4.1, 1.1, 1.1))
+plot(colSums(MTG.binary.DS2),
+     colSums(MTB.binary.DS1)[index],
+     pch=16,
+     xlab="MTG.DS2",
+     ylab="MTB.DS1")
+
+test <- cor.test(colSums(MTG.binary.DS2),colSums(MTB.binary.DS1)[index])
+abline(lm(colSums(MTB.binary.DS1)[index]~colSums(MTG.binary.DS2)),col="red")
+legend("topright",legend=c(paste0("Corr = ",round(unname(test$estimate),3)),
+                           paste0("p =",signif(test$p.value,3))),
+       text.col="red",bty="n")
+
+dev.off()
+
+
+index <- match(names(colSums(MTG.binary.DS2)),names(colSums(MTB.binary.DS2)))
+
+pdf("figures/figure1/richness.comp.MTG.DS2-MTB.DS2.pdf",width = 4,height = 4)
+par(mar=c(4.1, 4.1, 1.1, 1.1))
+plot(colSums(MTG.binary.DS2),
+     colSums(MTB.binary.DS2)[index],
+     pch=16,
+     xlab="MTG.DS2",
+     ylab="MTB.DS2")
+
+test <- cor.test(colSums(MTG.binary.DS2),colSums(MTB.binary.DS2)[index])
+abline(lm(colSums(MTB.binary.DS2)[index]~colSums(MTG.binary.DS2)),col="red")
+legend("topright",legend=c(paste0("Corr = ",round(unname(test$estimate),3)),
+                           paste0("p =",signif(test$p.value,3))),
+       text.col="red",bty="n")
+
+dev.off()
+
+#### BETA DIV 
+MTG.wide.DS1 <- dcast(MTG.raw.DS1, tax_name ~ sample2, value.var="N_reads",fill = 0)
+MTG.wide.DS2 <- dcast(MTG.raw.DS2, tax_name ~ sample2, value.var="N_reads",fill = 0)
+MTG.wide.DS3 <- dcast(MTG.raw.DS3, tax_name ~ sample2, value.var="N_reads",fill = 0)
+MTG.wide.DS4 <- dcast(MTG.raw.DS4, tax_name ~ sample2, value.var="N_reads",fill = 0)
+
+##MTB
+##DS1 all ASVs
+##DS2 met ASVs
+
+MTB.wide.DS1 <- euk.Nreps[,0:11]
+MTB.wide.DS2 <- euk.Nreps[rownames(euk.Nreps) %in% taxPR2.f$X.1[taxPR2.f$tax.Subdivision=="Metazoa"],0:11]
+
+
+
+out <- metaMDS(vegdist(t(MTG.wide.DS1[,4:14])),trymax = 200)
+out.j <- metaMDS(vegdist(t(MTG.wide.DS1[,4:14]),binary = TRUE,method = "jaccard"),trymax = 200) 
+
+plot(out.j)
 
 
 
