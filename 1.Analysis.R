@@ -21,7 +21,7 @@ dates$sampleID <- gsub("\\.","-",gsub(".*(MD9.\\d{4})","\\1", dates$Sample))
 taxPR2 <-read.csv("taxonomy/EUK.tax.PR2.csv",row.names = 1)
 euk.css <- read.csv("cleanedData/clean.EUK.CSS.csv",row.names = 1)
 euk.rare <- read.csv("cleanedData/clean.EUK.rarefy.csv",row.names = 1)
-
+riz <- read.csv("cleanedData/clean.RIZ.raw.names.csv.csv",row.names = 1)
 
 #Correct col names
 colnames(euk) <- c(gsub("\\.","-",gsub(".*(MD9.\\d{4})","\\1",colnames(euk[,1:88]))),colnames(euk[,89:99]))
@@ -520,10 +520,17 @@ MTG.wide.DS4 <- dcast(MTG.raw.DS4, tax_name ~ sample2, value.var="N_reads",fill 
 ##MTB
 ##DS1 all ASVs
 ##DS2 met ASVs
+##DS3 met assigned genus only 
 
 MTB.wide.DS1 <- euk.Nreps[,0:11]
 MTB.wide.DS2 <- euk.Nreps[rownames(euk.Nreps) %in% taxPR2.f$X.1[taxPR2.f$tax.Subdivision=="Metazoa"],0:11]
+temp <- cbind("Genus"=taxPR2.f$tax.Genus[match(rownames(MTB.wide.DS2),taxPR2.f$X.1)],MTB.wide.DS2)
+MTB.wide.DS3 <- aggregate(. ~ Genus, data=temp, FUN = function(x) mean(x, na.rm = TRUE))
+MTB.wide.DS3 <- make_binary(MTB.wide.DS3[-1,],1)
+MTB.wide.DS3 <- MTB.wide.DS3[,-1]
 
+colSums(MTB.wide.DS3)
+plottable(taxPR2.f$tax.Genus[match(rownames(MTB.wide.DS2),taxPR2.f$X.1)])
 
 ##Alpha 
 
@@ -933,7 +940,7 @@ MTB.com <- MTB.MTG.comp[MTB.MTG.comp$Dataset=="MTB",]
 MTG.com <- MTB.MTG.comp[MTB.MTG.comp$Dataset=="MTG",]
 
 #ancient data only 
-MTG.raw.DS3. <- read.csv('rawdata/Giulia080124/filtered_genus_all_2nc.csv',row.names = 1)
+MTG.raw.DS3 <- read.csv('rawdata/Giulia080124/filtered_genus_all_2nc.csv',row.names = 1)
 MTG.raw.DS3$sample2 <- gsub(".*(MD9-\\d{4}).*","\\1",MTG.raw.DS3$sample)
 MTG.raw.DS3$Kingdom[ is.na(MTG.raw.DS3$Kingdom)] <- ""
 MTG.raw.DS3 <- MTG.raw.DS3[MTG.raw.DS3$Filtering=="Ancient",]
@@ -947,6 +954,46 @@ MTG.com.a.plot$values <- cut(MTG.com.a.plot$value,breaks = c(50,100,1000,5000,10
 
 
 pdf("figures/figure1/ComparisonMTBMTG.pdf",height = 4,width = 11)
+par(mar=c(5.1, 7.1, 2.1, 9.1), xpd=TRUE)
+plot(dates$Median[match(MTB.com$Sample,dates$sampleID)],
+     as.numeric(factor(MTB.com$ID,levels=c("Zostera" ,"Gadus","Oikopleura","Clupea")))+0.1,
+     pch=16,cex=MTB.com$Value/2,col="dodgerblue",
+     ylim=c(0.5,4.5),
+     xlab="",yaxt='n',
+     ylab="")
+
+points(dates$Median[match(MTG.com$Sample,dates$sampleID)],
+       as.numeric(factor(MTG.com$ID,levels=c("Zostera" ,"Gadus","Oikopleura","Clupea")))-0.1,
+       pch=16,cex=MTG.com$Value,col="pink")
+points(dates$Median[match(MTG.com.a.plot$variable,dates$sampleID)],
+       as.numeric(factor(MTG.com.a.plot$tax_name,levels=c("Zostera" ,"Gadus","Oikopleura","Clupea")))-0.1,
+       pch=16,cex=as.numeric(as.character(MTG.com.a.plot$values)),col="darkred")
+
+axis(2,labels=c("Zostera" ,"Gadus","Oikopleura","Clupea"),1:4,las=1)
+
+legend(9000,4.5,col = "dodgerblue",pch=16,
+       pt.cex=c(0.5,1.5,4),legend=c("  1 rep","  3 reps","  8 reps"),bty="n",y.intersp=1.5)
+legend(9000,2.5,col = "darkred",pch=16,
+       pt.cex=c(2,3,4),legend=c(" 100-1k reads"," 1k-5k reads"," 5k+ reads"),bty="n",y.intersp=1.5)
+
+dev.off()
+
+
+#ancient data filtered with algae
+MTG.raw.DS3 <- read.csv('rawdata/Giulia080124/filtered_genus_all_1.csv',row.names = 1)
+MTG.raw.DS3$sample2 <- gsub(".*(MD9-\\d{4}).*","\\1",MTG.raw.DS3$sample)
+MTG.raw.DS3$Kingdom[ is.na(MTG.raw.DS3$Kingdom)] <- ""
+MTG.raw.DS3 <- MTG.raw.DS3[MTG.raw.DS3$Filtering=="Ancient",]
+MTG.raw.DS3.s <- MTG.raw.DS3[MTG.raw.DS3$tax_name %in% c("Gadus","Clupea","Oikopleura","Zostera"),]
+
+
+MTG.com.a <- dcast(MTG.raw.DS3.s, tax_name ~ sample2, value.var="N_reads",fill = 0)
+MTG.com.a.plot <- melt(MTG.com.a)
+MTG.com.a.plot$values <- cut(MTG.com.a.plot$value,breaks = c(50,100,1000,5000,10000),labels=c(0.5,1,2.5,4))
+
+
+
+pdf("figures/figure1/ComparisonMTBMTG.incAlG.pdf",height = 4,width = 11)
 par(mar=c(5.1, 7.1, 2.1, 9.1), xpd=TRUE)
 plot(dates$Median[match(MTB.com$Sample,dates$sampleID)],
      as.numeric(factor(MTB.com$ID,levels=c("Zostera" ,"Gadus","Oikopleura","Clupea")))+0.1,
