@@ -16,6 +16,8 @@ library(dplyr)
 library(gghighlight)
 library(ggpubr)
 library(plotly)
+library(gridExtra)
+
 
 # import data (metaDMG output)
 dt <- read_csv("rawdata/Skagerrak_0_38.csv")
@@ -545,4 +547,3 @@ p2
 
 grid.arrange(p1, p2,
              ncol = 2, nrow = 1)
-
