@@ -101,15 +101,15 @@ dt9[, 2:8] <- lapply(dt9[, 2:8], as.numeric)
 
 # plotting the calculated stats
 pdf(file="DNAdamagePlantsReads10.pdf")
-plot(dt9a$median, dt9a$Age, type ="b", ylim = rev(range(c(0,9000))), xlim=c(0,0.5), xlab="DNA damage", ylab="Age in Years BP")
-points(dt9a$min,dt9a$Age, col="red", pch="*")
-lines(dt9a$min,dt9a$Age, col="red",lty=2)
-points(dt9a$max,dt9a$Age, col="blue", pch="+")
-lines(dt9a$max,dt9a$Age, col="blue",lty=2)
-points(dt9a$mode,dt9a$Age, col="grey", pch=1)
-lines(dt9a$mode,dt9a$Age, col="grey",lty=2)
-points(dt9a$A_mode,dt9a$Age, col="green", pch=1)
-lines(dt9a$A_mode,dt9a$Age, col="green",lty=2)
+plot(dt9$median, dt9$Age, type ="b", ylim = rev(range(c(0,9000))), xlim=c(0,0.5), xlab="DNA damage", ylab="Age in Years BP")
+points(dt9$min,dt9$Age, col="red", pch="*")
+lines(dt9$min,dt9$Age, col="red",lty=2)
+points(dt9$max,dt9$Age, col="blue", pch="+")
+lines(dt9$max,dt9$Age, col="blue",lty=2)
+points(dt9$mode,dt9$Age, col="grey", pch=1)
+lines(dt9$mode,dt9$Age, col="grey",lty=2)
+points(dt9$A_mode,dt9$Age, col="green", pch=1)
+lines(dt9$A_mode,dt9$Age, col="green",lty=2)
 legend(0.4,0,legend=c("Min","Median","Max", "Mode", "A_mode"), col=c("red","black","blue", "grey", "green"),
        pch=c("o","*","+"),lty=c(1,2,3), ncol=1)
 dev.off()
@@ -388,14 +388,14 @@ pdf(file = "DNAdamage_JitterPlot_significance.pdf", width = 8, height = 4)
 ggplot(data = dt1) +
   geom_jitter(aes(x=as.numeric(Median_age), y=MAP_damage, size = MAP_significance), alpha =0.5) +
   gghighlight(N_reads > 500) +
-  geom_line(data = mfd2, aes(x=age, y=DNAdamage, color=category), size = 1) + 
-  geom_point(data = mfd2, aes(x=age, y=DNAdamage, color=category), size = 2) +
+  geom_line(data = mfd, aes(x=age, y=DNAdamage, color=category), size = 1) + 
+  geom_point(data = mfd, aes(x=age, y=DNAdamage, color=category), size = 2) +
   xlab("Years BP")+
   ylab("DNA damage") +
   labs(color = "Values for Plants with \n>500 reads", size = "Significance \nfor Taxa with >500 reads")
 dev.off()
 
-##Density plot for plants > 500 reads
+##Density plot for plants > 500 reads ####to be checked #######
 dtX <- dt1 %>% filter(N_reads >= 500) 
 
 pdf("PLant_DamageDensityPlot.pdf", height = 6,width = 4) 
@@ -405,7 +405,6 @@ dt_plant %>%
   ggplot(aes(x = MAP_damage, y = Median_age, fill = after_stat(x))) +
   geom_density_ridges_gradient(scale = 1, rel_min_height = 0.01) +
   theme_bw() +
-  #geom_line(data = mfd2, aes(y=age, x=DNAdamage, color=category), size = 1) + 
   theme(legend.position = "none") + xlab("MAP_damage") + ylab("Age in Years BP") 
 dev.off()
 
