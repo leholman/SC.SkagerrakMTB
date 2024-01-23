@@ -20,13 +20,16 @@ library(gridExtra)
 
 
 # import data (metaDMG output)
-dt <- read_csv("rawdata/Skagerrak_0_38.csv")
-metadataAge <- read_csv("metadataAge.csv")
-
-#adding age
-dt$new <-metadataAge$Median[match(dt$sample, metadataAge$Sample)]
-names(dt)[names(dt) == 'new'] <- 'Age'
+dt <- read_csv("rawdata/Skagerrak_0_38.csv.gz")
+metadataAge <- read_csv("MTG.metadataAge.csv")
+dt$Age <- metadataAge$Median[match(gsub("^[^-]+-[^-]+-([^_]+)_.*$", "\\1", dt$sample), metadataAge$Sample)]
 dt$Age[is.na(dt$Age)] <- "Control" #replacing NAs in blanks with 'Control'
+
+##adding age v2
+dt$Median_age <-metadataAge$Median[match(gsub("^[^-]+-[^-]+-([^_]+)_.*$", "\\1", dt$sample), metadataAge$Sample)]
+dt$Median_age[is.na(dt$Median_age)] <- "Control" #replacing NAs in blanks with 'Control'
+
+
 
 #functions
 # mode function 2 returns the mean in case there’s less than 2 values, NAs, and uses the density function
@@ -89,10 +92,11 @@ dt8 <- dt1 %>%
 dt9 <- cbind(dt4, dt4a[,2], dt5[,2], dt6[,2], dt7[,2], dt8[,2])
 
 #adding age
-dt9$new <-metadataAge$Median[match(dt9$sample, metadataAge$Sample)]
-names(dt9)[names(dt9) == 'new'] <- 'Age'
+##
+dt9$Age <-metadataAge$Median[match(gsub("^[^-]+-[^-]+-([^_]+)_.*$", "\\1", dt9$sample), metadataAge$Sample)]
 
 #preliminary plot age vs. max damage
+dt9 <-dt9[order(dt9$Age),]
 plot(dt9$Age, dt9$max)
 
 #checking the classes of the rows and changing these to be numeric
@@ -100,8 +104,8 @@ sapply(dt9, class)
 dt9[, 2:8] <- lapply(dt9[, 2:8], as.numeric)
 
 # plotting the calculated stats
-pdf(file="DNAdamagePlantsReads10.pdf")
-plot(dt9$median, dt9$Age, type ="b", ylim = rev(range(c(0,9000))), xlim=c(0,0.5), xlab="DNA damage", ylab="Age in Years BP")
+pdf(file="figures/DNAdamagePlantsReads10.pdf")
+plot(dt9$median, dt9$Age, type ="b", ylim = rev(range(c(0,9000))), xlim=c(0,0.3), xlab="DNA damage", ylab="Age in Years BP")
 points(dt9$min,dt9$Age, col="red", pch="*")
 lines(dt9$min,dt9$Age, col="red",lty=2)
 points(dt9$max,dt9$Age, col="blue", pch="+")
@@ -110,7 +114,7 @@ points(dt9$mode,dt9$Age, col="grey", pch=1)
 lines(dt9$mode,dt9$Age, col="grey",lty=2)
 points(dt9$A_mode,dt9$Age, col="green", pch=1)
 lines(dt9$A_mode,dt9$Age, col="green",lty=2)
-legend(0.4,0,legend=c("Min","Median","Max", "Mode", "A_mode"), col=c("red","black","blue", "grey", "green"),
+legend(0.2,0,legend=c("Min","Median","Max", "Mode", "A_mode"), col=c("red","black","blue", "grey", "green"),
        pch=c("o","*","+"),lty=c(1,2,3), ncol=1)
 dev.off()
 
@@ -355,10 +359,10 @@ mydata <- rbind(X1, X2, X3, X4, X5, X6, X7, X8, X9, X10, X11, X12, X13, X14, X15
 colnames(mydata) <- c("sample", "category", "N_reads", "DNAdamage")
 
 #adding age
-mydata$new <-metadataAge$Median[match(mydata$sample, metadataAge$Sample)]
+mydata$new <-metadataAge$Median[match(gsub("^[^-]+-[^-]+-([^_]+)_.*$", "\\1", mydata$sample), metadataAge$Sample)]
 names(mydata)[names(mydata) == 'new'] <- 'age'
 
-pdf(file="DNAdamageMultiReads.pdf")
+pdf(file="figures/MTG.DNAdamageMultiReads.pdf")
 ggplot(data=mydata) +
   geom_line(aes(x=as.numeric(age), y=DNAdamage, color=N_reads)) + scale_color_brewer(palette="Spectral") +
   facet_wrap(~category) +
@@ -371,7 +375,7 @@ dev.off()
 mfd <- mydata %>% filter(N_reads == 500) 
 
 ## Plot plant taxa and add the min, max and median, size = N_reads. Save as pdf
-pdf(file = "DNAdamageJitterPlot_N_reads.pdf", width = 8, height = 4)
+pdf(file = "figures/MTG.DNAdamageJitterPlot_N_reads.pdf", width = 8, height = 4)
 ggplot() +
   geom_jitter(data = dt1, aes(x=as.numeric(Median_age), y=MAP_damage, size = N_reads), alpha =0.5) +
   gghighlight(N_reads > 500) +
@@ -384,28 +388,16 @@ ggplot() +
 dev.off()
 
 ## Plot plant taxa and add the min, max and median, size = MAP_significance Save as pdf
-pdf(file = "DNAdamage_JitterPlot_significance.pdf", width = 8, height = 4)
+pdf(file = "figures/MTG.DNAdamage_JitterPlot_significance.pdf", width = 8, height = 4)
 ggplot(data = dt1) +
   geom_jitter(aes(x=as.numeric(Median_age), y=MAP_damage, size = MAP_significance), alpha =0.5) +
   gghighlight(N_reads > 500) +
   geom_line(data = mfd, aes(x=age, y=DNAdamage, color=category), size = 1) + 
+  scale_color_brewer(palette="Spectral") +
   geom_point(data = mfd, aes(x=age, y=DNAdamage, color=category), size = 2) +
   xlab("Years BP")+
   ylab("DNA damage") +
   labs(color = "Values for Plants with \n>500 reads", size = "Significance \nfor Taxa with >500 reads")
-dev.off()
-
-##Density plot for plants > 500 reads ####to be checked #######
-dtX <- dt1 %>% filter(N_reads >= 500) 
-
-pdf("PLant_DamageDensityPlot.pdf", height = 6,width = 4) 
-dt_plant %>%
-  mutate(Median_age = fct_relevel(Median_age,
-                                  "8440.5" , "7413", "6499.5",  "5637",  "4800", "2639.5",  "2016.5" , "1586", "997", "465"))%>%
-  ggplot(aes(x = MAP_damage, y = Median_age, fill = after_stat(x))) +
-  geom_density_ridges_gradient(scale = 1, rel_min_height = 0.01) +
-  theme_bw() +
-  theme(legend.position = "none") + xlab("MAP_damage") + ylab("Age in Years BP") 
 dev.off()
 
 ########Filtering animal taxa (Meazoa) >100 reads based on the values of the plant damage model built above.
@@ -419,9 +411,22 @@ MinLength1 = 35
 # subsetting the table
 
 tb1 <- dt %>% filter(N_reads >= 100, mean_L > MinLength, MAP_significance  > MS2,  grepl("",tax_path), grepl("\\bgenus\\b", tax_rank), grepl("", sample))
-dt_plant <- dt %>% filter(N_reads >= 500, mean_L > MinLength, MAP_significance  > MS2,  grepl("Viridiplantae",tax_path), grepl("\\bgenus\\b", tax_rank), grepl("", sample))
+dt_plant <- dt %>% filter(N_reads >= 500, mean_L > MinLength, MAP_significance  > MS2,  grepl("Viridiplantae",tax_path), grepl("\\bgenus\\b", tax_rank), grepl("", sample),tax_name!="Zostera")
 
 unique(dt_plant$tax_name) 
+
+##Density plot for plants > 500 reads ####to be checked #######
+dtX <- dt1 %>% filter(N_reads >= 500)  
+
+pdf("figures/MTG.PLant_DamageDensityPlot.pdf", height = 6,width = 4) 
+dt_plant %>%
+  mutate(Median_age = fct_relevel(Median_age,
+                                  "8440.5" , "7413", "6499.5",  "5637",  "4800", "2639.5",  "2016.5" , "1586", "997", "465"))%>%
+  ggplot(aes(x = MAP_damage, y = Median_age, fill = after_stat(x))) +
+  geom_density_ridges_gradient(scale = 1, rel_min_height = 0.01) +
+  theme_bw() +
+  theme(legend.position = "none") + xlab("MAP_damage") + ylab("Age in Years BP") 
+dev.off()
 
 # create filtering table 
 ## calculate stats and combine data 
@@ -453,16 +458,19 @@ pb8 <- dt_plant %>%
 pb9 <- cbind(pb4, pb4a[,2], pb5[,2], pb6[,2], pb7[,2], pb8[,2])
 
 #add age
-pb9$new <-metadataAge$Median[match(pb9$sample, metadataAge$Sample)]
-names(pb9)[names(pb9) == 'new'] <- 'Age'
+pb9$Age <-metadataAge$Median[match(gsub("^[^-]+-[^-]+-([^_]+)_.*$", "\\1",pb9$sample), metadataAge$Sample)]
+
 
 #checking the classes of the rows and changing these to be numeric
 sapply(pb9, class)
 x <- ncol(pb9)
 pb9[, 2:x] <- lapply(pb9[, 2:x], as.numeric)
+pb9.w <- melt(pb9, id.vars = c("sample", "Age"),measure.vars = c("max","median","min"))
 
 # Join the two data frames based on the sample ID
 joined_data <- left_join(tb1, pb9, by = "sample")
+joined_data$Age <-metadataAge$Median[match(gsub("^[^-]+-[^-]+-([^_]+)_.*$", "\\1",joined_data$sample), metadataAge$Sample)]
+
 
 # Filter the joined data frame based on the minimum and maximum values for all genuses
 filtered_data_genus <- joined_data %>%
@@ -502,13 +510,16 @@ filtered_data_genus_all <- rbind(filtered_data_genus, filtered_data_genus_max, f
 
 # Filter the joined data frame based on the minimum and maximum values for only Metazoa
 filtered_data_metazoan <- filtered_data_genus_all %>% filter(grepl("Metazoa",tax_path), grepl("\\bgenus\\b", tax_rank))
+filtered_data_metazoan$Age <- metadataAge$Median[match(gsub("^[^-]+-[^-]+-([^_]+)_.*$", "\\1", filtered_data_metazoan$sample), metadataAge$Sample)]
+
 
 ###save csv
-write.csv(filtered_data_metazoan, file = "filtered_metazoan_all.csv")
-write.csv(filtered_data_genus_all, file = "filtered_genus_all.csv")
+write.csv(filtered_data_metazoan, file = "cleanedData/filtered_metazoan_all.csv")
+write.csv(filtered_data_genus_all, file = "cleanedData/filtered_genus_all.csv")
 
+#####ORIGINAL####
 #plot metazoan reads and identify outliers based on the damage model
-pdf(file = "DNAdamageJitterPlot_finalAnimals100readsWithOutliers.pdf", width = 12, height = 6)
+pdf(file = "figures/MTG.DNAdamageJitterPlot_finalAnimals100readsWithOutliers.pdf", width = 9, height = 6)
 ggplot() +
   geom_jitter(data = subset(joined_data, grepl("Metazoa", tax_path)), aes(x=Age, y=MAP_damage, size = N_reads), alpha =0.5) +
   geom_line(data = mfd, aes(x=age, y=DNAdamage, color=category), size = 1) + 
@@ -520,29 +531,19 @@ ggplot() +
   xlab("Age in Years BP")
 dev.off()
 
-#plot damage profiles and mean length of Metazoa by age
-pd <- position_dodge(0.5)
-p1 <- ggplot(filtered_data_metazoan, aes(x=MAP_damage, y=tax_name, shape = tax_name, colour= Damage_model)) + 
-  geom_errorbar(aes(xmin=MAP_damage-MAP_damage_std, xmax=MAP_damage+MAP_damage_std, group=Age), position=pd) +
-  geom_point(size = 2.2, position=pd)+
-  scale_shape_manual(values = c(8,12,17,18,19,15,13,4), name = "Tax name")+ #change symbol
-  scale_color_manual(values = c("Outlier" = "red", "Fitting" = "black"), name = "Damage_model")+
-  scale_y_discrete(limits = rev(levels(filtered_data_metazoan2b$Age)))+
-  facet_grid(Age ~ ., scales = "free_y", space = "free_y", switch = "y") +
-  theme(strip.placement = "outside")+
-  theme_minimal()
-p1
+#####LUKE's version ####
+#plot metazoan reads and identify outliers based on the damage model
 
-p2 <- ggplot(filtered_data_metazoan, aes(x=mean_L, y=tax_name, shape = tax_name, colour= Damage_model)) + 
-  geom_errorbar(aes(xmin=mean_L-std_L, xmax=mean_L+std_L, group=Age), position=pd) +
-  geom_point(size = 2.2, position=pd)+
-  scale_shape_manual(values = c(8,12,17,18,19,15,13,4), name = "Tax name")+ #change symbol
-  scale_color_manual(values = c("Outlier" = "red", "Fitting" = "black"), name = "Damage_model")+
-  scale_y_discrete(limits = rev(levels(filtered_data_metazoan_nc$Age)))+
-  facet_grid(Age ~ ., scales = "free_y", space = "free_y", switch = "y") +
-  theme(strip.placement = "outside")+
-  theme_minimal()
-p2 
 
-grid.arrange(p1, p2,
-             ncol = 2, nrow = 1)
+pdf(file = "figures/MTG.DNAdamageJitterPlot_finalAnimals100readsWithOutliers.pdf", width = 9, height = 6)
+ggplot() +
+  geom_jitter(data = subset(joined_data, grepl("Metazoa", tax_path)), aes(x=Age, y=MAP_damage, size = N_reads), alpha =0.3) +
+  geom_line(data = pb9.w, aes(x=Age, y=value, color=variable), size = 1) + 
+  scale_color_brewer(palette="Spectral") +
+  geom_point(data = pb9.w, aes(x=Age, y=value, color=variable), size = 1) +
+  geom_text(data = subset(joined_data, grepl("Metazoa", tax_path) & MAP_damage < min ), aes(x =Age, y = MAP_damage, label = tax_name), size = 3, color = "black") +
+  geom_text(data = subset(joined_data, grepl("Metazoa", tax_path) & MAP_damage > max ), aes(x =Age, y = MAP_damage, label = tax_name), size = 3, color = "black") +
+  #scale_size_continuous(trans="sqrt") +
+  xlab("Age in Years BP")
+dev.off()
+
