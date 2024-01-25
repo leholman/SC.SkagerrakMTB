@@ -507,6 +507,7 @@ filtered_data_genus_max <- filtered_data_genus_max %>%
 
 #making one table all genuses
 filtered_data_genus_all <- rbind(filtered_data_genus, filtered_data_genus_max, filtered_data_genus_min)
+filtered_data_genus_all <- filtered_data_genus_all[filtered_data_genus_all$tax_name!="Loxodonta",]
 
 # Filter the joined data frame based on the minimum and maximum values for only Metazoa
 filtered_data_metazoan <- filtered_data_genus_all %>% filter(grepl("Metazoa",tax_path), grepl("\\bgenus\\b", tax_rank))
@@ -519,7 +520,7 @@ write.csv(filtered_data_genus_all, file = "cleanedData/filtered_genus_all.csv")
 
 #####ORIGINAL####
 #plot metazoan reads and identify outliers based on the damage model
-pdf(file = "figures/MTG.DNAdamageJitterPlot_finalAnimals100readsWithOutliers.pdf", width = 9, height = 6)
+pdf(file = "figures/OLDMTG.DNAdamageJitterPlot_finalAnimals100readsWithOutliers.pdf", width = 9, height = 6)
 ggplot() +
   geom_jitter(data = subset(joined_data, grepl("Metazoa", tax_path)), aes(x=Age, y=MAP_damage, size = N_reads), alpha =0.5) +
   geom_line(data = mfd, aes(x=age, y=DNAdamage, color=category), size = 1) + 
@@ -535,7 +536,7 @@ dev.off()
 #plot metazoan reads and identify outliers based on the damage model
 
 
-pdf(file = "figures/MTG.DNAdamageJitterPlot_finalAnimals100readsWithOutliers.pdf", width = 9, height = 6)
+pdf(file = "figures/MTG.DNAdamageJitterPlot_finalAnimals100readsWithOutliers.pdf", width = 7, height = 5)
 ggplot() +
   geom_jitter(data = subset(joined_data, grepl("Metazoa", tax_path)), aes(x=Age, y=MAP_damage, size = N_reads), alpha =0.3) +
   geom_line(data = pb9.w, aes(x=Age, y=value, color=variable), size = 1) + 
@@ -544,6 +545,6 @@ ggplot() +
   geom_text(data = subset(joined_data, grepl("Metazoa", tax_path) & MAP_damage < min ), aes(x =Age, y = MAP_damage, label = tax_name), size = 3, color = "black") +
   geom_text(data = subset(joined_data, grepl("Metazoa", tax_path) & MAP_damage > max ), aes(x =Age, y = MAP_damage, label = tax_name), size = 3, color = "black") +
   #scale_size_continuous(trans="sqrt") +
-  xlab("Age in Years BP")
+  xlab("Cal Years BP")
 dev.off()
 
