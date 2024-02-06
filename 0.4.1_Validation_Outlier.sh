@@ -1,5 +1,5 @@
 #######Validation Outlier (Loxodonta) reads ##########
-##1. Part A. Extraction of reads from lca file
+##1.Extraction of reads from lca file
 #Print sample list based on name files
 ls *lca.txt > sample.list
 
@@ -32,7 +32,8 @@ seqtk subseq LV7001884490-LV7001305740-NM-MD9-2450_S2_L004.merge.filt2.sga4.fq L
 bowtie2-build -f GCF_000001905.1_Loxafr3.0_genomic.fna Elephante_africanus 
 bowtie2-build -f Mammuthus_primigenius_assisted_Loxafr3.0_HiC.fasta Mammuthus_primigenius
 
-#remap separately
+##2. Part B. Mapping to the references
+
 for file in *.Loxodonta.fq
 do
 bname=$(basename $file)
