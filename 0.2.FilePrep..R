@@ -18,7 +18,7 @@ items <- NULL
 set.seed("123456")
 
 #Read in metadata
-metadata<-read.csv("metadata.csv") 
+metadata<-read.csv("MTB.metadata.csv") 
 metadata$rep <- gsub(".*-([0-9])$","\\1",metadata$SampleID)
 
 
@@ -213,7 +213,7 @@ write.csv(CleanedNrepsOutput,paste0("cleanedData/clean.",dataset,".Nreps.csv"))
 }
 
 
-####====2.1 ====#### Normalisation tests
+####====2.1 Normalisation====####
 
 euk <- read.csv("cleanedData/clean.EUK.raw.names.csv.csv",row.names = 1)
 
@@ -242,6 +242,48 @@ metaSeqObject_CSS  = cumNorm( metaSeqObject , p=cumNormStat(metaSeqObject))
 euk.CSS = data.frame(MRcounts(metaSeqObject_CSS, norm=TRUE, log=FALSE))
 
 write.csv(euk.CSS,"cleanedData/clean.EUK.CSS.csv")
+
+
+
+####====2.0 Read Count====####
+
+MTBreads <- read.csv("MTB.reads.csv")
+MTBreads$ID <- gsub(".S","",MTBreads$X)
+MTBreads$dataset <- substr(MTBreads$ID,1,3)
+
+###EUK data
+
+#experimental samples
+mean(MTBreads$SenseStripped[MTBreads$dataset=="EUK"][metadata$SampleType[match(gsub("EUK.","",MTBreads$ID[MTBreads$dataset=="EUK"]),metadata$SampleID)]=="Experimental"] + 
+       MTBreads$AntSenseStripped[MTBreads$dataset=="EUK"][metadata$SampleType[match(gsub("EUK.","",MTBreads$ID[MTBreads$dataset=="EUK"]),metadata$SampleID)]=="Experimental"])
+
+sd(MTBreads$SenseStripped[MTBreads$dataset=="EUK"][metadata$SampleType[match(gsub("EUK.","",MTBreads$ID[MTBreads$dataset=="EUK"]),metadata$SampleID)]=="Experimental"] + 
+     MTBreads$AntSenseStripped[MTBreads$dataset=="EUK"][metadata$SampleType[match(gsub("EUK.","",MTBreads$ID[MTBreads$dataset=="EUK"]),metadata$SampleID)]=="Experimental"])
+
+
+#negative control samples
+
+mean(MTBreads$SenseStripped[MTBreads$dataset=="EUK"][metadata$SampleType[match(gsub("EUK.","",MTBreads$ID[MTBreads$dataset=="EUK"]),metadata$SampleID)]=="ControlN"] + 
+       MTBreads$AntSenseStripped[MTBreads$dataset=="EUK"][metadata$SampleType[match(gsub("EUK.","",MTBreads$ID[MTBreads$dataset=="EUK"]),metadata$SampleID)]=="ControlN"])
+
+sd(MTBreads$SenseStripped[MTBreads$dataset=="EUK"][metadata$SampleType[match(gsub("EUK.","",MTBreads$ID[MTBreads$dataset=="EUK"]),metadata$SampleID)]=="ControlN"] + 
+     MTBreads$AntSenseStripped[MTBreads$dataset=="EUK"][metadata$SampleType[match(gsub("EUK.","",MTBreads$ID[MTBreads$dataset=="EUK"]),metadata$SampleID)]=="ControlN"])
+
+
+###RIZ data
+
+mean(MTBreads$SenseStripped[MTBreads$dataset=="RIZ"][metadata$SampleType[match(gsub("RIZ.","",MTBreads$ID[MTBreads$dataset=="RIZ"]),metadata$SampleID)]=="Experimental"] + 
+       MTBreads$AntSenseStripped[MTBreads$dataset=="RIZ"][metadata$SampleType[match(gsub("RIZ.","",MTBreads$ID[MTBreads$dataset=="RIZ"]),metadata$SampleID)]=="Experimental"])
+
+sd(MTBreads$SenseStripped[MTBreads$dataset=="RIZ"][metadata$SampleType[match(gsub("RIZ.","",MTBreads$ID[MTBreads$dataset=="RIZ"]),metadata$SampleID)]=="Experimental"] + 
+     MTBreads$AntSenseStripped[MTBreads$dataset=="RIZ"][metadata$SampleType[match(gsub("RIZ.","",MTBreads$ID[MTBreads$dataset=="RIZ"]),metadata$SampleID)]=="Experimental"])
+
+# here we get rid of one massive sample 
+data <- MTBreads$SenseStripped[MTBreads$dataset=="RIZ"][metadata$SampleType[match(gsub("RIZ.","",MTBreads$ID[MTBreads$dataset=="RIZ"]),metadata$SampleID)]=="ControlN"] + 
+  MTBreads$AntSenseStripped[MTBreads$dataset=="RIZ"][metadata$SampleType[match(gsub("RIZ.","",MTBreads$ID[MTBreads$dataset=="RIZ"]),metadata$SampleID)]=="ControlN"]
+mean(data[-20])
+sd(data[-20])
+
 
 ####====3.0 ====#### BASEMENT
 

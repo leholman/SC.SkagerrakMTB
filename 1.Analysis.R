@@ -193,9 +193,9 @@ points(dates$Median[match(MTG.com.a.plot$variable,dates$sampleID)],
 
 axis(2,labels=c("Zostera" ,"Gadus","Oikopleura","Clupea"),1:4,las=1)
 
-legend(9000,4.5,col = "dodgerblue",pch=16,
+legend(9100,4.5,col = "dodgerblue",pch=16,
        pt.cex=c(0.5,1.5,4),legend=c("  1 rep","  3 reps","  8 reps"),bty="n",y.intersp=1.5)
-legend(9000,2.5,col = "darkred",pch=16,
+legend(9100,2.5,col = "darkred",pch=16,
        pt.cex=c(2,3,4),legend=c(" 100-1k reads"," 1k-5k reads"," 5k+ reads"),bty="n",y.intersp=1.5)
 
 dev.off()
@@ -218,14 +218,76 @@ MTB.binary.DS2 <- make_binary(MTB.wide.DS2,3)
 
 ## Plots 
 
+### test both plot
+
+pdf("figures/figure2/richness.MTG.DS1.MTB.DS1.pdf",width = 4.5,height = 4)
+par(mar=c(4.1, 4.1, 1.1, 4.1))
+plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS1),1,8)),dates$sampleID)],
+     colSums(MTG.binary.DS1),
+     pch=16,
+     cex=2,
+     col="#941914",
+     xlab="CalYrBP",
+     ylab="Metagenomic Genus Richness",
+     xlim=c(0,8600))
+axis(side = 2,col.axis = "#941914",col="#941914")
+par(new = TRUE)
+plot(dates$Median[match(as.factor(substr(names(MTB.binary.DS1),1,8)),dates$sampleID)],
+     colSums(MTB.binary.DS1),
+     axes=FALSE,
+     ylim=c(0,max(colSums(MTB.binary.DS1))),
+     pch=16,
+     cex=2,
+     col="#4583C4",
+     xlab="CalYrBP",
+     ylab="",
+     xlim=c(0,8600))
+axis(side = 4,col.axis = "#4583C4",col="#4583C4")
+mtext("Metabarcoding ASV Richness", side = 4, line = 3)
+dev.off()
+
+
+pdf("figures/figure2/richness.MTG.DS2.MTB.DS2.pdf",width = 4.5,height = 4)
+par(mar=c(4.1, 4.1, 1.1, 4.1))
+plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS2),1,8)),dates$sampleID)],
+     colSums(MTG.binary.DS2),
+     pch=16,
+     cex=2,
+     col="#941914",
+     xlab="CalYrBP",
+     ylab="Metagenomic Genus Richness",
+     xlim=c(0,8600))
+axis(side = 2,col.axis = "#941914",col="#941914")
+par(new = TRUE)
+plot(dates$Median[match(as.factor(substr(names(MTB.binary.DS2),1,8)),dates$sampleID)],
+     colSums(MTB.binary.DS2),
+     axes=FALSE,
+     ylim=c(0,max(colSums(MTB.binary.DS2))),
+     pch=16,
+     cex=2,
+     col="#4583C4",
+     xlab="CalYrBP",
+     ylab="",
+     xlim=c(0,8600))
+axis(side = 4,col.axis = "#4583C4",col="#4583C4")
+mtext("Metabarcoding ASV Richness", side = 4, line = 3)
+dev.off()
+
+
+
+
+
+
 pdf("figures/figure2/richness.MTG.DS1.pdf",width = 4,height = 4)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS1),1,8)),dates$sampleID)],
      colSums(MTG.binary.DS1),
      pch=16,
+     cex=2,
+     col="#941914",
      xlab="CalYrBP",
      ylab="Metagenomic Genus Richness",
-     xlim=c(0,8400))
+     xlim=c(0,8600))
 dev.off()
 
 
@@ -234,9 +296,11 @@ par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS2),1,8)),dates$sampleID)],
      colSums(MTG.binary.DS2),
      pch=16,
+     cex=2,
+     col="#941914",
      xlab="CalYrBP",
      ylab="Metagenomic Metazoa Genus Richness",
-     xlim=c(0,8400))
+     xlim=c(0,8600))
 dev.off()
 
 pdf("figures/figure2/richness.MTG.DS3.pdf",width = 4,height = 4)
@@ -244,9 +308,11 @@ par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS3),1,8)),dates$sampleID)],
      colSums(MTG.binary.DS3),
      pch=16,
+     cex=2,
+     col="#941914",
      xlab="CalYrBP",
      ylab="MTG.DS3 Genus Richness",
-     xlim=c(0,8400))
+     xlim=c(0,8600))
 dev.off()
 
 pdf("figures/figure2/richness.MTG.DS4.pdf",width = 4,height = 4)
@@ -254,9 +320,11 @@ par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS4),1,8)),dates$sampleID)],
      colSums(MTG.binary.DS4),
      pch=16,
+     cex=2,
+     col="#941914",
      xlab="CalYrBP",
      ylab="MTG.DS4 Genus Richness",
-     xlim=c(0,8400))
+     xlim=c(0,8600))
 dev.off()
 
 pdf("figures/figure2/richness.MTB.DS1.pdf",width = 4,height = 4)
@@ -264,9 +332,11 @@ par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(dates$Median[match(as.factor(substr(names(MTB.binary.DS1),1,8)),dates$sampleID)],
      colSums(MTB.binary.DS1),
      pch=16,
+     cex=2,
+     col="#4583C4",
      xlab="CalYrBP",
      ylab="Metabarcoding ASV Richness",
-     xlim=c(0,8400))
+     xlim=c(0,8600))
 dev.off()
 
 pdf("figures/figure2/richness.MTB.DS2.pdf",width = 4,height = 4)
@@ -274,9 +344,11 @@ par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(dates$Median[match(as.factor(substr(names(MTB.binary.DS2),1,8)),dates$sampleID)],
      colSums(MTB.binary.DS2),
      pch=16,
+     cex=2,
+     col="#4583C4",
      xlab="CalYrBP",
      ylab="Metabarcoding Metazoa ASV Richness",
-     xlim=c(0,8400))
+     xlim=c(0,8600))
 dev.off()
 
 
@@ -378,11 +450,13 @@ colnames(datain) <- as.character(dates$Median[match(colnames(datain),dates$sampl
 out <- metaMDS(vegdist(t(prop.table(as.matrix(datain),2))),trymax = 200)
 out.j <- metaMDS(vegdist(t(prop.table(as.matrix(datain),2)),binary = TRUE,method = "jaccard"),trymax = 200) 
 
-pdf("figures/figure3/beta.MTG.DS1.pdf",height = 5,width = 5)
+pdf("figures/figure3/beta.MTG.DS1.pdf",height = 5,width = 5,bg = "transparent")
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
      xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1),ylab="",xlab="")
+rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
+points(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,)
 for (i in 1:(length(out$points[,1])-1)) {
   arrows(out$points[i,1],
          out$points[i,2],
@@ -394,6 +468,7 @@ text(out$points[,1],
      out$points[,2]+0.1,
      labels = rownames(out$points),
      col="darkblue")
+box()
 dev.off()
 MTG.DS1.nMDS <- out
 
@@ -408,6 +483,8 @@ par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
      xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1),ylab="",xlab="")
+rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
+points(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,)
 for (i in 1:(length(out$points[,1])-1)) {
   arrows(out$points[i,1],
          out$points[i,2],
@@ -419,6 +496,7 @@ text(out$points[,1],
      out$points[,2]+0.1,
      labels = rownames(out$points),
      col="darkblue")
+box()
 dev.off()
 MTG.DS2.nMDS <- out
 
@@ -433,6 +511,8 @@ par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
      xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1),ylab="",xlab="")
+rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
+points(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,)
 for (i in 1:(length(out$points[,1])-1)) {
   arrows(out$points[i,1],
          out$points[i,2],
@@ -444,6 +524,7 @@ text(out$points[,1],
      out$points[,2]+0.1,
      labels = rownames(out$points),
      col="darkblue")
+box()
 dev.off()
 MTG.DS3.nMDS <- out
 
@@ -458,6 +539,8 @@ par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
      xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1),ylab="",xlab="")
+rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
+points(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,)
 for (i in 1:(length(out$points[,1])-1)) {
   arrows(out$points[i,1],
          out$points[i,2],
@@ -469,6 +552,7 @@ text(out$points[,1],
      out$points[,2]+0.1,
      labels = rownames(out$points),
      col="darkblue")
+box()
 dev.off()
 MTG.DS4.nMDS <- out
 
@@ -486,6 +570,8 @@ par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
      xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1),ylab="",xlab="")
+rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
+points(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,)
 for (i in 1:(length(out$points[,1])-1)) {
   arrows(out$points[i,1],
          out$points[i,2],
@@ -514,6 +600,8 @@ par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
      xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1),ylab="",xlab="")
+rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
+points(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,)
 for (i in 1:(length(out$points[,1])-1)) {
   arrows(out$points[i,1],
          out$points[i,2],
@@ -538,6 +626,9 @@ proc.t <- protest(MTB.DS1.nMDS$points,MTG.DS1.nMDS$points, scores = "sites", per
 pdf("figures/figure3/beta.MTB.DS1-MTG.DS1.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(proc,type = "text",cex = 0.8)
+rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
+par(new = TRUE)
+plot(proc,type = "text",cex = 0.8)
 legend("topleft",legend=c(paste0("SS = ",round(proc.t$ss,3)),
                           paste0("p = ",round(proc.t$signif,3))),text.col = "red",bty="n")
 dev.off()
@@ -550,6 +641,9 @@ proc.t <- protest(MTB.DS1.nMDS$points[2:11,],MTG.DS2.nMDS$points, scores = "site
 pdf("figures/figure3/beta.MTB.DS1-MTG.DS2.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(proc,type = "text",cex = 0.8)
+rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
+par(new = TRUE)
+plot(proc,type = "text",cex = 0.8,add=TRUE)
 legend("topleft",legend=c(paste0("SS = ",round(proc.t$ss,3)),
                           paste0("p = ",round(proc.t$signif,3))),text.col = "red",bty="n")
 dev.off()
@@ -562,6 +656,9 @@ proc.t <- protest(MTB.DS2.nMDS$points,MTG.DS1.nMDS$points, scores = "sites", per
 pdf("figures/figure3/beta.MTB.DS2-MTG.DS1.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(proc,type = "text",cex = 0.8)
+rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
+par(new = TRUE)
+plot(proc,type = "text",cex = 0.8,add=TRUE)
 legend("topleft",legend=c(paste0("SS = ",round(proc.t$ss,3)),
                           paste0("p = ",round(proc.t$signif,3))),text.col = "red",bty="n")
 dev.off()
@@ -574,6 +671,9 @@ proc.t <- protest(MTB.DS2.nMDS$points[2:11,],MTG.DS2.nMDS$points, scores = "site
 pdf("figures/figure3/beta.MTB.DS2-MTG.DS2.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(proc,type = "text",cex = 0.8)
+rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
+par(new = TRUE)
+plot(proc,type = "text",cex = 0.8,add=TRUE)
 legend("topleft",legend=c(paste0("SS = ",round(proc.t$ss,3)),
                           paste0("p = ",round(proc.t$signif,3))),text.col = "red",bty="n")
 dev.off()
