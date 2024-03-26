@@ -187,16 +187,16 @@ plot(dates$Median[match(MTB.com$Sample,dates$sampleID)],
 
 points(dates$Median[match(MTG.com$Sample,dates$sampleID)],
        as.numeric(factor(MTG.com$ID,levels=c("Zostera" ,"Gadus","Oikopleura","Clupea")))-0.1,
-       pch=16,cex=MTG.com$Value,col="pink")
+       pch=16,cex=MTG.com$Value,col="#f7b988")
 points(dates$Median[match(MTG.com.a.plot$variable,dates$sampleID)],
        as.numeric(factor(MTG.com.a.plot$tax_name,levels=c("Zostera" ,"Gadus","Oikopleura","Clupea")))-0.1,
-       pch=16,cex=as.numeric(as.character(MTG.com.a.plot$values)),col="darkred")
+       pch=16,cex=as.numeric(as.character(MTG.com.a.plot$values)),col="#d55e00")
 
 axis(2,labels=c("Zostera" ,"Gadus","Oikopleura","Clupea"),1:4,las=1)
 
-legend(9100,4.5,col = "dodgerblue",pch=16,
+legend(8800,4.5,col = "dodgerblue",pch=16,
        pt.cex=c(0.5,1.5,4),legend=c("  1 rep","  3 reps","  8 reps"),bty="n",y.intersp=1.5)
-legend(9100,2.5,col = "darkred",pch=16,
+legend(8800,2.5,col = "#d55e00",pch=16,
        pt.cex=c(2,3,4),legend=c(" 100-1k reads"," 1k-5k reads"," 5k+ reads"),bty="n",y.intersp=1.5)
 
 dev.off()
@@ -221,17 +221,61 @@ MTB.binary.DS2 <- make_binary(MTB.wide.DS2,3)
 
 ### test both plot
 
+#colour test 
+
+col1 <- c("#d55e00","#4583C4")
+col2 <- c("#009e73","#4583C4")
+col3 <- c("#d55e00","#4583C4")
+col4 <- c("#FFA500","#4583C4")
+
+counter <- 1
+for (colours in list(col1,col2,col3,col4)){
+  
+  pdf(paste0("figures/figure2/Col",counter,"richness.MTG.DS1.MTB.DS1.pdf"),width = 4.5,height = 4)
+  par(mar=c(4.1, 4.1, 1.1, 4.1))
+  plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS1),1,8)),dates$sampleID)],
+       colSums(MTG.binary.DS1),
+       pch=16,
+       cex=2,
+       col=colours[1],
+       xlab="CalYrBP",
+       ylab="",
+       xlim=c(0,8600))
+  axis(side = 2,col.axis = colours[1],col=colours[1])
+  mtext("Metagenomic Genus Richness", side = 2, line = 3,col=colours[1])
+  par(new = TRUE)
+  plot(dates$Median[match(as.factor(substr(names(MTB.binary.DS1),1,8)),dates$sampleID)],
+       colSums(MTB.binary.DS1),
+       axes=FALSE,
+       ylim=c(0,max(colSums(MTB.binary.DS1))),
+       pch=16,
+       cex=2,
+       col=colours[2],
+       xlab="CalYrBP",
+       ylab="",
+       xlim=c(0,8600))
+  axis(side = 4,col.axis = colours[2],col=colours[2])
+  mtext("Metabarcoding ASV Richness", side = 4, line = 3,col=colours[2])
+  dev.off()
+  counter <- counter+1
+}
+
+
+## actual plots
+
+
 pdf("figures/figure2/richness.MTG.DS1.MTB.DS1.pdf",width = 4.5,height = 4)
 par(mar=c(4.1, 4.1, 1.1, 4.1))
 plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS1),1,8)),dates$sampleID)],
      colSums(MTG.binary.DS1),
      pch=16,
      cex=2,
-     col="#941914",
+     col="#d55e00",
      xlab="CalYrBP",
-     ylab="Metagenomic Genus Richness",
+     ylab="",
      xlim=c(0,8600))
-axis(side = 2,col.axis = "#941914",col="#941914")
+axis(side = 2,col.axis = "#d55e00",col="#d55e00")
+mtext("Metagenomic Genus Richness", side = 2, line = 3,col="#d55e00")
 par(new = TRUE)
 plot(dates$Median[match(as.factor(substr(names(MTB.binary.DS1),1,8)),dates$sampleID)],
      colSums(MTB.binary.DS1),
@@ -244,7 +288,7 @@ plot(dates$Median[match(as.factor(substr(names(MTB.binary.DS1),1,8)),dates$sampl
      ylab="",
      xlim=c(0,8600))
 axis(side = 4,col.axis = "#4583C4",col="#4583C4")
-mtext("Metabarcoding ASV Richness", side = 4, line = 3)
+mtext("Metabarcoding ASV Richness", side = 4, line = 3,col="#4583C4")
 dev.off()
 
 
@@ -254,11 +298,12 @@ plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS2),1,8)),dates$sampl
      colSums(MTG.binary.DS2),
      pch=16,
      cex=2,
-     col="#941914",
+     col="#d55e00",
      xlab="CalYrBP",
-     ylab="Metagenomic Metazoan Genus Richness",
+     ylab="",
      xlim=c(0,8600))
-axis(side = 2,col.axis = "#941914",col="#941914")
+axis(side = 2,col.axis = "#d55e00",col="#d55e00")
+mtext("Metagenomic Metazoan Genus Richness", side = 2, line = 3,col="#d55e00")
 par(new = TRUE)
 plot(dates$Median[match(as.factor(substr(names(MTB.binary.DS2),1,8)),dates$sampleID)],
      colSums(MTB.binary.DS2),
@@ -271,7 +316,7 @@ plot(dates$Median[match(as.factor(substr(names(MTB.binary.DS2),1,8)),dates$sampl
      ylab="",
      xlim=c(0,8600))
 axis(side = 4,col.axis = "#4583C4",col="#4583C4")
-mtext("Metabarcoding Metazoan ASV Richness", side = 4, line = 3)
+mtext("Metabarcoding Metazoan ASV Richness", side = 4, line = 3,col="#4583C4")
 dev.off()
 
 
@@ -285,7 +330,7 @@ plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS1),1,8)),dates$sampl
      colSums(MTG.binary.DS1),
      pch=16,
      cex=2,
-     col="#941914",
+     col="#d55e00",
      xlab="CalYrBP",
      ylab="Metagenomic Genus Richness",
      xlim=c(0,8600))
@@ -298,7 +343,7 @@ plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS2),1,8)),dates$sampl
      colSums(MTG.binary.DS2),
      pch=16,
      cex=2,
-     col="#941914",
+     col="#d55e00",
      xlab="CalYrBP",
      ylab="Metagenomic Metazoa Genus Richness",
      xlim=c(0,8600))
@@ -310,7 +355,7 @@ plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS3),1,8)),dates$sampl
      colSums(MTG.binary.DS3),
      pch=16,
      cex=2,
-     col="#941914",
+     col="#d55e00",
      xlab="CalYrBP",
      ylab="MTG.DS3 Genus Richness",
      xlim=c(0,8600))
@@ -322,7 +367,7 @@ plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS4),1,8)),dates$sampl
      colSums(MTG.binary.DS4),
      pch=16,
      cex=2,
-     col="#941914",
+     col="#d55e00",
      xlab="CalYrBP",
      ylab="MTG.DS4 Genus Richness",
      xlim=c(0,8600))
@@ -459,22 +504,23 @@ PCOA.j <- pcoa(vegdist(t(prop.table(as.matrix(datain),2)),binary = TRUE,method =
 #bray
 pdf("figures/figure3/beta.MTG.DS1.NM.b.pdf",height = 5,width = 5,bg = "transparent")
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,
+plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
      xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1),ylab="",xlab="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
-points(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,)
+points(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,)
 for (i in 1:(length(out$points[,1])-1)) {
   arrows(out$points[i,1],
          out$points[i,2],
          out$points[i+1,1],
          out$points[i+1,2],
          length = 0.1,lwd = 1.5,col = "grey40")}
-points(out$points[,1],out$points[,2],col="#941914",cex=1.4,pch=16,)
+points(out$points[,1],out$points[,2],col="#d55e00",cex=1.4,pch=16,)
 text(out$points[,1],
      out$points[,2]+0.1,
      labels = rownames(out$points),
      col="darkblue")
+legend("bottomleft",paste0("stress = ",round(out$stress,3)),bty="n")
 box()
 dev.off()
 MTG.DS1.nMDS.b <- out
@@ -483,22 +529,23 @@ MTG.DS1.nMDS.b <- out
 out <- out.j
 pdf("figures/figure3/beta.MTG.DS1.NM.j.pdf",height = 5,width = 5,bg = "transparent")
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,
+plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
      xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1),ylab="",xlab="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
-points(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,)
+points(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,)
 for (i in 1:(length(out$points[,1])-1)) {
   arrows(out$points[i,1],
          out$points[i,2],
          out$points[i+1,1],
          out$points[i+1,2],
          length = 0.1,lwd = 1.5,col = "grey40")}
-points(out$points[,1],out$points[,2],col="#941914",cex=1.4,pch=16,)
+points(out$points[,1],out$points[,2],col="#d55e00",cex=1.4,pch=16,)
 text(out$points[,1],
      out$points[,2]+0.1,
      labels = rownames(out$points),
      col="darkblue")
+legend("bottomleft",paste0("stress = ",round(out$stress,3)),bty="n")
 box()
 dev.off()
 MTG.DS1.nMDS.j <- out
@@ -507,22 +554,23 @@ MTG.DS1.nMDS.j <- out
 
 pdf("figures/figure3/beta.MTG.DS1.M.b.pdf",height = 5,width = 5,bg = "transparent")
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="darkred",cex=1.3,pch=16,
+plot(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(PCOA.b$vectors[,2])-0.1,max(PCOA.b$vectors[,2])+0.1),
      xlim=c(min(PCOA.b$vectors[,1])-0.1,max(PCOA.b$vectors[,1])+0.1),ylab="",xlab="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
-points(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="darkred",cex=1.3,pch=16,)
+points(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="#d55e00",cex=1.3,pch=16,)
 for (i in 1:(length(PCOA.b$vectors[,1])-1)) {
   arrows(PCOA.b$vectors[i,1],
          PCOA.b$vectors[i,2],
          PCOA.b$vectors[i+1,1],
          PCOA.b$vectors[i+1,2],
          length = 0.1,lwd = 1.5,col = "grey40")}
-points(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="#941914",cex=1.4,pch=16,)
+points(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="#d55e00",cex=1.4,pch=16,)
 text(PCOA.b$vectors[,1],
      PCOA.b$vectors[,2]+0.1,
      labels = rownames(PCOA.b$vectors),
      col="darkblue")
+legend("bottomleft",c(paste0("X=",round(PCOA.b$values$Relative_eig[1]*100,1),"%"),paste0("Y=",round(PCOA.b$values$Relative_eig[2]*100,1),"%")),bty="n")
 box()
 dev.off()
 MTG.DS1.MDS.b <- PCOA.b
@@ -531,22 +579,23 @@ MTG.DS1.MDS.b <- PCOA.b
 
 pdf("figures/figure3/beta.MTG.DS1.M.j.pdf",height = 5,width = 5,bg = "transparent")
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="darkred",cex=1.3,pch=16,
+plot(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(PCOA.j$vectors[,2])-0.1,max(PCOA.j$vectors[,2])+0.1),
      xlim=c(min(PCOA.j$vectors[,1])-0.1,max(PCOA.j$vectors[,1])+0.1),ylab="",xlab="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
-points(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="darkred",cex=1.3,pch=16,)
+points(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="#d55e00",cex=1.3,pch=16,)
 for (i in 1:(length(PCOA.j$vectors[,1])-1)) {
   arrows(PCOA.j$vectors[i,1],
          PCOA.j$vectors[i,2],
          PCOA.j$vectors[i+1,1],
          PCOA.j$vectors[i+1,2],
          length = 0.1,lwd = 1.5,col = "grey40")}
-points(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="#941914",cex=1.4,pch=16,)
+points(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="#d55e00",cex=1.4,pch=16,)
 text(PCOA.j$vectors[,1],
      PCOA.j$vectors[,2]+0.1,
      labels = rownames(PCOA.j$vectors),
      col="darkblue")
+legend("bottomleft",c(paste0("X=",round(PCOA.j$values$Relative_eig[1]*100,1),"%"),paste0("Y=",round(PCOA.j$values$Relative_eig[2]*100,1),"%")),bty="n")
 box()
 dev.off()
 MTG.DS1.MDS.j <- PCOA.j
@@ -563,22 +612,23 @@ PCOA.j <- pcoa(vegdist(t(prop.table(as.matrix(datain),2)),binary = TRUE,method =
 #bray
 pdf("figures/figure3/beta.MTG.DS2.NM.b.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,
+plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
      xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1),ylab="",xlab="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
-points(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,)
+points(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,)
 for (i in 1:(length(out$points[,1])-1)) {
   arrows(out$points[i,1],
          out$points[i,2],
          out$points[i+1,1],
          out$points[i+1,2],
          length = 0.1,lwd = 1.5,col = "grey40")}
-points(out$points[,1],out$points[,2],col="#941914",cex=1.4,pch=16,)
+points(out$points[,1],out$points[,2],col="#d55e00",cex=1.4,pch=16,)
 text(out$points[,1],
      out$points[,2]+0.1,
      labels = rownames(out$points),
      col="darkblue")
+legend("bottomleft",paste0("stress = ",round(out$stress,3)),bty="n")
 box()
 dev.off()
 MTG.DS2.nMDS.b <- out
@@ -588,22 +638,23 @@ MTG.DS2.nMDS.b <- out
 out <- out.j
 pdf("figures/figure3/beta.MTG.DS2.NM.j.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,
+plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
      xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1),ylab="",xlab="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
-points(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,)
+points(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,)
 for (i in 1:(length(out$points[,1])-1)) {
   arrows(out$points[i,1],
          out$points[i,2],
          out$points[i+1,1],
          out$points[i+1,2],
          length = 0.1,lwd = 1.5,col = "grey40")}
-points(out$points[,1],out$points[,2],col="#941914",cex=1.4,pch=16,)
+points(out$points[,1],out$points[,2],col="#d55e00",cex=1.4,pch=16,)
 text(out$points[,1],
      out$points[,2]+0.1,
      labels = rownames(out$points),
      col="darkblue")
+legend("bottomleft",paste0("stress = ",round(out$stress,3)),bty="n")
 box()
 dev.off()
 MTG.DS2.nMDS.j <- out
@@ -612,22 +663,23 @@ MTG.DS2.nMDS.j <- out
 
 pdf("figures/figure3/beta.MTG.DS2.M.b.pdf",height = 5,width = 5,bg = "transparent")
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="darkred",cex=1.3,pch=16,
+plot(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(PCOA.b$vectors[,2])-0.1,max(PCOA.b$vectors[,2])+0.1),
      xlim=c(min(PCOA.b$vectors[,1])-0.1,max(PCOA.b$vectors[,1])+0.1),ylab="",xlab="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
-points(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="darkred",cex=1.3,pch=16,)
+points(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="#d55e00",cex=1.3,pch=16,)
 for (i in 1:(length(PCOA.b$vectors[,1])-1)) {
   arrows(PCOA.b$vectors[i,1],
          PCOA.b$vectors[i,2],
          PCOA.b$vectors[i+1,1],
          PCOA.b$vectors[i+1,2],
          length = 0.1,lwd = 1.5,col = "grey40")}
-points(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="#941914",cex=1.4,pch=16,)
+points(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="#d55e00",cex=1.4,pch=16,)
 text(PCOA.b$vectors[,1],
      PCOA.b$vectors[,2]+0.1,
      labels = rownames(PCOA.b$vectors),
      col="darkblue")
+legend("bottomleft",c(paste0("X=",round(PCOA.b$values$Relative_eig[1]*100,1),"%"),paste0("Y=",round(PCOA.b$values$Relative_eig[2]*100,1),"%")),bty="n")
 box()
 dev.off()
 MTG.DS2.MDS.b <- PCOA.b
@@ -636,22 +688,23 @@ MTG.DS2.MDS.b <- PCOA.b
 
 pdf("figures/figure3/beta.MTG.DS2.M.j.pdf",height = 5,width = 5,bg = "transparent")
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="darkred",cex=1.3,pch=16,
+plot(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(PCOA.j$vectors[,2])-0.1,max(PCOA.j$vectors[,2])+0.1),
      xlim=c(min(PCOA.j$vectors[,1])-0.1,max(PCOA.j$vectors[,1])+0.1),ylab="",xlab="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
-points(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="darkred",cex=1.3,pch=16,)
+points(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="#d55e00",cex=1.3,pch=16,)
 for (i in 1:(length(PCOA.j$vectors[,1])-1)) {
   arrows(PCOA.j$vectors[i,1],
          PCOA.j$vectors[i,2],
          PCOA.j$vectors[i+1,1],
          PCOA.j$vectors[i+1,2],
          length = 0.1,lwd = 1.5,col = "grey40")}
-points(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="#941914",cex=1.4,pch=16,)
+points(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="#d55e00",cex=1.4,pch=16,)
 text(PCOA.j$vectors[,1],
      PCOA.j$vectors[,2]+0.1,
      labels = rownames(PCOA.j$vectors),
      col="darkblue")
+legend("bottomleft",c(paste0("X=",round(PCOA.j$values$Relative_eig[1]*100,1),"%"),paste0("Y=",round(PCOA.j$values$Relative_eig[2]*100,1),"%")),bty="n")
 box()
 dev.off()
 MTG.DS2.MDS.j <- PCOA.j
@@ -669,22 +722,23 @@ PCOA.j <- pcoa(vegdist(t(prop.table(as.matrix(datain),2)),binary = TRUE,method =
 #bray
 pdf("figures/figure3/beta.MTG.DS3.NM.b.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,
+plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
      xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1),ylab="",xlab="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
-points(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,)
+points(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,)
 for (i in 1:(length(out$points[,1])-1)) {
   arrows(out$points[i,1],
          out$points[i,2],
          out$points[i+1,1],
          out$points[i+1,2],
          length = 0.1,lwd = 1.5,col = "grey40")}
-points(out$points[,1],out$points[,2],col="#941914",cex=1.4,pch=16,)
+points(out$points[,1],out$points[,2],col="#d55e00",cex=1.4,pch=16,)
 text(out$points[,1],
      out$points[,2]+0.1,
      labels = rownames(out$points),
      col="darkblue")
+legend("bottomleft",paste0("stress = ",round(out$stress,3)),bty="n")
 box()
 dev.off()
 MTG.DS3.nMDS.b <- out
@@ -693,22 +747,23 @@ MTG.DS3.nMDS.b <- out
 out <- out.j
 pdf("figures/figure3/beta.MTG.DS3.NM.j.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,
+plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
      xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1),ylab="",xlab="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
-points(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,)
+points(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,)
 for (i in 1:(length(out$points[,1])-1)) {
   arrows(out$points[i,1],
          out$points[i,2],
          out$points[i+1,1],
          out$points[i+1,2],
          length = 0.1,lwd = 1.5,col = "grey40")}
-points(out$points[,1],out$points[,2],col="#941914",cex=1.4,pch=16,)
+points(out$points[,1],out$points[,2],col="#d55e00",cex=1.4,pch=16,)
 text(out$points[,1],
      out$points[,2]+0.1,
      labels = rownames(out$points),
      col="darkblue")
+legend("bottomleft",paste0("stress = ",round(out$stress,3)),bty="n")
 box()
 dev.off()
 MTG.DS3.nMDS.j <- out
@@ -717,22 +772,23 @@ MTG.DS3.nMDS.j <- out
 
 pdf("figures/figure3/beta.MTG.DS3.M.b.pdf",height = 5,width = 5,bg = "transparent")
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="darkred",cex=1.3,pch=16,
+plot(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(PCOA.b$vectors[,2])-0.1,max(PCOA.b$vectors[,2])+0.1),
      xlim=c(min(PCOA.b$vectors[,1])-0.1,max(PCOA.b$vectors[,1])+0.1),ylab="",xlab="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
-points(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="darkred",cex=1.3,pch=16,)
+points(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="#d55e00",cex=1.3,pch=16,)
 for (i in 1:(length(PCOA.b$vectors[,1])-1)) {
   arrows(PCOA.b$vectors[i,1],
          PCOA.b$vectors[i,2],
          PCOA.b$vectors[i+1,1],
          PCOA.b$vectors[i+1,2],
          length = 0.1,lwd = 1.5,col = "grey40")}
-points(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="#941914",cex=1.4,pch=16,)
+points(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="#d55e00",cex=1.4,pch=16,)
 text(PCOA.b$vectors[,1],
      PCOA.b$vectors[,2]+0.1,
      labels = rownames(PCOA.b$vectors),
      col="darkblue")
+legend("bottomleft",c(paste0("X=",round(PCOA.b$values$Relative_eig[1]*100,1),"%"),paste0("Y=",round(PCOA.b$values$Relative_eig[2]*100,1),"%")),bty="n")
 box()
 dev.off()
 MTG.DS3.MDS.b <- PCOA.b
@@ -741,22 +797,23 @@ MTG.DS3.MDS.b <- PCOA.b
 
 pdf("figures/figure3/beta.MTG.DS3.M.j.pdf",height = 5,width = 5,bg = "transparent")
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="darkred",cex=1.3,pch=16,
+plot(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(PCOA.j$vectors[,2])-0.1,max(PCOA.j$vectors[,2])+0.1),
      xlim=c(min(PCOA.j$vectors[,1])-0.1,max(PCOA.j$vectors[,1])+0.1),ylab="",xlab="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
-points(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="darkred",cex=1.3,pch=16,)
+points(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="#d55e00",cex=1.3,pch=16,)
 for (i in 1:(length(PCOA.j$vectors[,1])-1)) {
   arrows(PCOA.j$vectors[i,1],
          PCOA.j$vectors[i,2],
          PCOA.j$vectors[i+1,1],
          PCOA.j$vectors[i+1,2],
          length = 0.1,lwd = 1.5,col = "grey40")}
-points(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="#941914",cex=1.4,pch=16,)
+points(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="#d55e00",cex=1.4,pch=16,)
 text(PCOA.j$vectors[,1],
      PCOA.j$vectors[,2]+0.1,
      labels = rownames(PCOA.j$vectors),
      col="darkblue")
+legend("bottomleft",c(paste0("X=",round(PCOA.j$values$Relative_eig[1]*100,1),"%"),paste0("Y=",round(PCOA.j$values$Relative_eig[2]*100,1),"%")),bty="n")
 box()
 dev.off()
 MTG.DS3.MDS.j <- PCOA.j
@@ -774,22 +831,23 @@ PCOA.j <- pcoa(vegdist(t(prop.table(as.matrix(datain),2)),binary = TRUE,method =
 #bray
 pdf("figures/figure3/beta.MTG.DS4.NM.b.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,
+plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
      xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1),ylab="",xlab="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
-points(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,)
+points(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,)
 for (i in 1:(length(out$points[,1])-1)) {
   arrows(out$points[i,1],
          out$points[i,2],
          out$points[i+1,1],
          out$points[i+1,2],
          length = 0.1,lwd = 1.5,col = "grey40")}
-points(out$points[,1],out$points[,2],col="#941914",cex=1.4,pch=16,)
+points(out$points[,1],out$points[,2],col="#d55e00",cex=1.4,pch=16,)
 text(out$points[,1],
      out$points[,2]+0.1,
      labels = rownames(out$points),
      col="darkblue")
+legend("bottomleft",paste0("stress = ",round(out$stress,3)),bty="n")
 box()
 dev.off()
 MTG.DS4.nMDS.b <- out
@@ -798,22 +856,23 @@ MTG.DS4.nMDS.b <- out
 out <- out.j
 pdf("figures/figure3/beta.MTG.DS4.NM.j.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,
+plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
      xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1),ylab="",xlab="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
-points(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,)
+points(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,)
 for (i in 1:(length(out$points[,1])-1)) {
   arrows(out$points[i,1],
          out$points[i,2],
          out$points[i+1,1],
          out$points[i+1,2],
          length = 0.1,lwd = 1.5,col = "grey40")}
-points(out$points[,1],out$points[,2],col="#941914",cex=1.4,pch=16,)
+points(out$points[,1],out$points[,2],col="#d55e00",cex=1.4,pch=16,)
 text(out$points[,1],
      out$points[,2]+0.1,
      labels = rownames(out$points),
      col="darkblue")
+legend("bottomleft",paste0("stress = ",round(out$stress,3)),bty="n")
 box()
 dev.off()
 MTG.DS4.nMDS.j <- out
@@ -822,22 +881,23 @@ MTG.DS4.nMDS.j <- out
 
 pdf("figures/figure3/beta.MTG.DS4.M.b.pdf",height = 5,width = 5,bg = "transparent")
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="darkred",cex=1.3,pch=16,
+plot(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(PCOA.b$vectors[,2])-0.1,max(PCOA.b$vectors[,2])+0.1),
      xlim=c(min(PCOA.b$vectors[,1])-0.1,max(PCOA.b$vectors[,1])+0.1),ylab="",xlab="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
-points(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="darkred",cex=1.3,pch=16,)
+points(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="#d55e00",cex=1.3,pch=16,)
 for (i in 1:(length(PCOA.b$vectors[,1])-1)) {
   arrows(PCOA.b$vectors[i,1],
          PCOA.b$vectors[i,2],
          PCOA.b$vectors[i+1,1],
          PCOA.b$vectors[i+1,2],
          length = 0.1,lwd = 1.5,col = "grey40")}
-points(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="#941914",cex=1.4,pch=16,)
+points(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="#d55e00",cex=1.4,pch=16,)
 text(PCOA.b$vectors[,1],
      PCOA.b$vectors[,2]+0.1,
      labels = rownames(PCOA.b$vectors),
      col="darkblue")
+legend("bottomleft",c(paste0("X=",round(PCOA.b$values$Relative_eig[1]*100,1),"%"),paste0("Y=",round(PCOA.b$values$Relative_eig[2]*100,1),"%")),bty="n")
 box()
 dev.off()
 MTG.DS4.MDS.b <- PCOA.b
@@ -846,22 +906,23 @@ MTG.DS4.MDS.b <- PCOA.b
 
 pdf("figures/figure3/beta.MTG.DS4.M.j.pdf",height = 5,width = 5,bg = "transparent")
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="darkred",cex=1.3,pch=16,
+plot(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(PCOA.j$vectors[,2])-0.1,max(PCOA.j$vectors[,2])+0.1),
      xlim=c(min(PCOA.j$vectors[,1])-0.1,max(PCOA.j$vectors[,1])+0.1),ylab="",xlab="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
-points(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="darkred",cex=1.3,pch=16,)
+points(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="#d55e00",cex=1.3,pch=16,)
 for (i in 1:(length(PCOA.j$vectors[,1])-1)) {
   arrows(PCOA.j$vectors[i,1],
          PCOA.j$vectors[i,2],
          PCOA.j$vectors[i+1,1],
          PCOA.j$vectors[i+1,2],
          length = 0.1,lwd = 1.5,col = "grey40")}
-points(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="#941914",cex=1.4,pch=16,)
+points(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="#d55e00",cex=1.4,pch=16,)
 text(PCOA.j$vectors[,1],
      PCOA.j$vectors[,2]+0.1,
      labels = rownames(PCOA.j$vectors),
      col="darkblue")
+legend("bottomleft",c(paste0("X=",round(PCOA.j$values$Relative_eig[1]*100,1),"%"),paste0("Y=",round(PCOA.j$values$Relative_eig[2]*100,1),"%")),bty="n")
 box()
 dev.off()
 MTG.DS4.MDS.j <- PCOA.j
@@ -887,11 +948,11 @@ MTB.DS1.MDS.j.sm <- pcoa(vegdist(t(prop.table(as.matrix(datain)[,-1],2)),binary 
 #bray
 pdf("figures/figure3/beta.MTB.DS1.NM.b.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,
+plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
      xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1),ylab="",xlab="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
-points(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,)
+points(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,)
 for (i in 1:(length(out$points[,1])-1)) {
   arrows(out$points[i,1],
          out$points[i,2],
@@ -903,6 +964,7 @@ text(out$points[,1],
      out$points[,2]+0.1,
      labels = rownames(out$points),
      col="darkblue")
+legend("bottomleft",paste0("stress = ",round(out$stress,3)),bty="n")
 box()
 dev.off()
 MTB.DS1.nMDS.b <- out
@@ -911,11 +973,11 @@ MTB.DS1.nMDS.b <- out
 out <- out.j
 pdf("figures/figure3/beta.MTB.DS1.NM.j.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,
+plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
      xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1),ylab="",xlab="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
-points(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,)
+points(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,)
 for (i in 1:(length(out$points[,1])-1)) {
   arrows(out$points[i,1],
          out$points[i,2],
@@ -927,6 +989,7 @@ text(out$points[,1],
      out$points[,2]+0.1,
      labels = rownames(out$points),
      col="darkblue")
+legend("bottomleft",paste0("stress = ",round(out$stress,3)),bty="n")
 box()
 dev.off()
 MTB.DS1.nMDS.j <- out
@@ -935,11 +998,11 @@ MTB.DS1.nMDS.j <- out
 
 pdf("figures/figure3/beta.MTB.DS1.M.b.pdf",height = 5,width = 5,bg = "transparent")
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="darkred",cex=1.3,pch=16,
+plot(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(PCOA.b$vectors[,2])-0.1,max(PCOA.b$vectors[,2])+0.1),
      xlim=c(min(PCOA.b$vectors[,1])-0.1,max(PCOA.b$vectors[,1])+0.1),ylab="",xlab="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
-points(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="darkred",cex=1.3,pch=16,)
+points(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="#d55e00",cex=1.3,pch=16,)
 for (i in 1:(length(PCOA.b$vectors[,1])-1)) {
   arrows(PCOA.b$vectors[i,1],
          PCOA.b$vectors[i,2],
@@ -951,6 +1014,7 @@ text(PCOA.b$vectors[,1],
      PCOA.b$vectors[,2]+0.1,
      labels = rownames(PCOA.b$vectors),
      col="darkblue")
+legend("bottomleft",c(paste0("X=",round(PCOA.b$values$Relative_eig[1]*100,1),"%"),paste0("Y=",round(PCOA.b$values$Relative_eig[2]*100,1),"%")),bty="n")
 box()
 dev.off()
 MTB.DS1.MDS.b <- PCOA.b
@@ -959,11 +1023,11 @@ MTB.DS1.MDS.b <- PCOA.b
 
 pdf("figures/figure3/beta.MTB.DS1.M.j.pdf",height = 5,width = 5,bg = "transparent")
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="darkred",cex=1.3,pch=16,
+plot(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(PCOA.j$vectors[,2])-0.1,max(PCOA.j$vectors[,2])+0.1),
      xlim=c(min(PCOA.j$vectors[,1])-0.1,max(PCOA.j$vectors[,1])+0.1),ylab="",xlab="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
-points(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="darkred",cex=1.3,pch=16,)
+points(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="#d55e00",cex=1.3,pch=16,)
 for (i in 1:(length(PCOA.j$vectors[,1])-1)) {
   arrows(PCOA.j$vectors[i,1],
          PCOA.j$vectors[i,2],
@@ -975,6 +1039,7 @@ text(PCOA.j$vectors[,1],
      PCOA.j$vectors[,2]+0.1,
      labels = rownames(PCOA.j$vectors),
      col="darkblue")
+legend("bottomleft",c(paste0("X=",round(PCOA.j$values$Relative_eig[1]*100,1),"%"),paste0("Y=",round(PCOA.j$values$Relative_eig[2]*100,1),"%")),bty="n")
 box()
 dev.off()
 MTB.DS1.MDS.j <- PCOA.j
@@ -999,11 +1064,11 @@ MTB.DS2.MDS.j.sm <- pcoa(vegdist(t(prop.table(as.matrix(datain)[,-1],2)),binary 
 #bray
 pdf("figures/figure3/beta.MTB.DS2.NM.b.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,
+plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
      xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1),ylab="",xlab="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
-points(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,)
+points(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,)
 for (i in 1:(length(out$points[,1])-1)) {
   arrows(out$points[i,1],
          out$points[i,2],
@@ -1015,6 +1080,7 @@ text(out$points[,1],
      out$points[,2]+0.1,
      labels = rownames(out$points),
      col="darkblue")
+legend("bottomleft",paste0("stress = ",round(out$stress,3)),bty="n")
 box()
 dev.off()
 MTB.DS2.nMDS.b <- out
@@ -1023,11 +1089,11 @@ MTB.DS2.nMDS.b <- out
 out <- out.j
 pdf("figures/figure3/beta.MTB.DS2.NM.j.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,
+plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
      xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1),ylab="",xlab="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
-points(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,)
+points(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,)
 for (i in 1:(length(out$points[,1])-1)) {
   arrows(out$points[i,1],
          out$points[i,2],
@@ -1039,6 +1105,7 @@ text(out$points[,1],
      out$points[,2]+0.1,
      labels = rownames(out$points),
      col="darkblue")
+legend("bottomleft",paste0("stress = ",round(out$stress,3)),bty="n")
 box()
 dev.off()
 MTB.DS2.nMDS.j <- out
@@ -1047,11 +1114,11 @@ MTB.DS2.nMDS.j <- out
 
 pdf("figures/figure3/beta.MTB.DS2.M.b.pdf",height = 5,width = 5,bg = "transparent")
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="darkred",cex=1.3,pch=16,
+plot(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(PCOA.b$vectors[,2])-0.1,max(PCOA.b$vectors[,2])+0.1),
      xlim=c(min(PCOA.b$vectors[,1])-0.1,max(PCOA.b$vectors[,1])+0.1),ylab="",xlab="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
-points(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="darkred",cex=1.3,pch=16,)
+points(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="#d55e00",cex=1.3,pch=16,)
 for (i in 1:(length(PCOA.b$vectors[,1])-1)) {
   arrows(PCOA.b$vectors[i,1],
          PCOA.b$vectors[i,2],
@@ -1063,6 +1130,7 @@ text(PCOA.b$vectors[,1],
      PCOA.b$vectors[,2]+0.1,
      labels = rownames(PCOA.b$vectors),
      col="darkblue")
+legend("bottomleft",c(paste0("X=",round(PCOA.b$values$Relative_eig[1]*100,1),"%"),paste0("Y=",round(PCOA.b$values$Relative_eig[2]*100,1),"%")),bty="n")
 box()
 dev.off()
 MTB.DS2.MDS.b <- PCOA.b
@@ -1071,11 +1139,11 @@ MTB.DS2.MDS.b <- PCOA.b
 
 pdf("figures/figure3/beta.MTB.DS2.M.j.pdf",height = 5,width = 5,bg = "transparent")
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="darkred",cex=1.3,pch=16,
+plot(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(PCOA.j$vectors[,2])-0.1,max(PCOA.j$vectors[,2])+0.1),
      xlim=c(min(PCOA.j$vectors[,1])-0.1,max(PCOA.j$vectors[,1])+0.1),ylab="",xlab="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
-points(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="darkred",cex=1.3,pch=16,)
+points(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="#d55e00",cex=1.3,pch=16,)
 for (i in 1:(length(PCOA.j$vectors[,1])-1)) {
   arrows(PCOA.j$vectors[i,1],
          PCOA.j$vectors[i,2],
@@ -1087,6 +1155,7 @@ text(PCOA.j$vectors[,1],
      PCOA.j$vectors[,2]+0.1,
      labels = rownames(PCOA.j$vectors),
      col="darkblue")
+legend("bottomleft",c(paste0("X=",round(PCOA.j$values$Relative_eig[1]*100,1),"%"),paste0("Y=",round(PCOA.j$values$Relative_eig[2]*100,1),"%")),bty="n")
 box()
 dev.off()
 MTB.DS2.MDS.j <- PCOA.j
@@ -1108,7 +1177,7 @@ par(new = TRUE)
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 lines(proc,type="segments",col="grey")
 points(proc,pch=16,col="#4583C4",display = "target")
-points(proc,pch=16,col="#941914",display = "rotated")
+points(proc,pch=16,col="#d55e00",display = "rotated")
 text(((proc$Yrot[,1]+proc$X[,1])/2),((proc$Yrot[,2]+proc$X[,2])/2),labels=rownames(proc$Yrot),adj=c(0.5,-0.5))
 legend("topleft",legend=c(paste0("SS = ",round(proc.t$ss,3)),
                           paste0("p = ",round(proc.t$signif,3))),text.col = "red",bty="n")
@@ -1127,7 +1196,7 @@ par(new = TRUE)
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 lines(proc,type="segments",col="grey")
 points(proc,pch=16,col="#4583C4",display = "target")
-points(proc,pch=16,col="#941914",display = "rotated")
+points(proc,pch=16,col="#d55e00",display = "rotated")
 text(((proc$Yrot[,1]+proc$X[,1])/2),((proc$Yrot[,2]+proc$X[,2])/2),labels=rownames(proc$Yrot),adj=c(0.5,-0.5))
 legend("topleft",legend=c(paste0("SS = ",round(proc.t$ss,3)),
                           paste0("p = ",round(proc.t$signif,3))),text.col = "red",bty="n")
@@ -1146,7 +1215,7 @@ par(new = TRUE)
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 lines(proc,type="segments",col="grey")
 points(proc,pch=16,col="#4583C4",display = "target")
-points(proc,pch=16,col="#941914",display = "rotated")
+points(proc,pch=16,col="#d55e00",display = "rotated")
 text(((proc$Yrot[,1]+proc$X[,1])/2),((proc$Yrot[,2]+proc$X[,2])/2),labels=rownames(proc$Yrot),adj=c(0.5,-0.5))
 legend("topleft",legend=c(paste0("SS = ",round(proc.t$ss,3)),
                           paste0("p = ",round(proc.t$signif,3))),text.col = "red",bty="n")
@@ -1165,7 +1234,7 @@ par(new = TRUE)
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 lines(proc,type="segments",col="grey")
 points(proc,pch=16,col="#4583C4",display = "target")
-points(proc,pch=16,col="#941914",display = "rotated")
+points(proc,pch=16,col="#d55e00",display = "rotated")
 text(((proc$Yrot[,1]+proc$X[,1])/2),((proc$Yrot[,2]+proc$X[,2])/2),labels=rownames(proc$Yrot),adj=c(0.5,-0.5))
 legend("topleft",legend=c(paste0("SS = ",round(proc.t$ss,3)),
                           paste0("p = ",round(proc.t$signif,3))),text.col = "red",bty="n")
@@ -1186,7 +1255,7 @@ par(new = TRUE)
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 lines(proc,type="segments",col="grey")
 points(proc,pch=16,col="#4583C4",display = "target")
-points(proc,pch=16,col="#941914",display = "rotated")
+points(proc,pch=16,col="#d55e00",display = "rotated")
 text(((proc$Yrot[,1]+proc$X[,1])/2),((proc$Yrot[,2]+proc$X[,2])/2),labels=rownames(proc$Yrot),adj=c(0.5,-0.5))
 legend("topleft",legend=c(paste0("SS = ",round(proc.t$ss,3)),
                           paste0("p = ",round(proc.t$signif,3))),text.col = "red",bty="n")
@@ -1205,7 +1274,7 @@ par(new = TRUE)
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 lines(proc,type="segments",col="grey")
 points(proc,pch=16,col="#4583C4",display = "target")
-points(proc,pch=16,col="#941914",display = "rotated")
+points(proc,pch=16,col="#d55e00",display = "rotated")
 text(((proc$Yrot[,1]+proc$X[,1])/2),((proc$Yrot[,2]+proc$X[,2])/2),labels=rownames(proc$Yrot),adj=c(0.5,-0.5))
 legend("topleft",legend=c(paste0("SS = ",round(proc.t$ss,3)),
                           paste0("p = ",round(proc.t$signif,3))),text.col = "red",bty="n")
@@ -1224,7 +1293,7 @@ par(new = TRUE)
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 lines(proc,type="segments",col="grey")
 points(proc,pch=16,col="#4583C4",display = "target")
-points(proc,pch=16,col="#941914",display = "rotated")
+points(proc,pch=16,col="#d55e00",display = "rotated")
 text(((proc$Yrot[,1]+proc$X[,1])/2),((proc$Yrot[,2]+proc$X[,2])/2),labels=rownames(proc$Yrot),adj=c(0.5,-0.5))
 legend("topleft",legend=c(paste0("SS = ",round(proc.t$ss,3)),
                           paste0("p = ",round(proc.t$signif,3))),text.col = "red",bty="n")
@@ -1243,7 +1312,7 @@ par(new = TRUE)
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 lines(proc,type="segments",col="grey")
 points(proc,pch=16,col="#4583C4",display = "target")
-points(proc,pch=16,col="#941914",display = "rotated")
+points(proc,pch=16,col="#d55e00",display = "rotated")
 text(((proc$Yrot[,1]+proc$X[,1])/2),((proc$Yrot[,2]+proc$X[,2])/2),labels=rownames(proc$Yrot),adj=c(0.5,-0.5))
 legend("topleft",legend=c(paste0("SS = ",round(proc.t$ss,3)),
                           paste0("p = ",round(proc.t$signif,3))),text.col = "red",bty="n")
@@ -1264,7 +1333,7 @@ par(new = TRUE)
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 lines(proc,type="segments",col="grey")
 points(proc,pch=16,col="#4583C4",display = "target")
-points(proc,pch=16,col="#941914",display = "rotated")
+points(proc,pch=16,col="#d55e00",display = "rotated")
 text(((proc$Yrot[,1]+proc$X[,1])/2),((proc$Yrot[,2]+proc$X[,2])/2),labels=rownames(proc$Yrot),adj=c(0.5,-0.5))
 legend("topleft",legend=c(paste0("SS = ",round(proc.t$ss,3)),
                           paste0("p = ",round(proc.t$signif,3))),text.col = "red",bty="n")
@@ -1283,7 +1352,7 @@ par(new = TRUE)
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 lines(proc,type="segments",col="grey")
 points(proc,pch=16,col="#4583C4",display = "target")
-points(proc,pch=16,col="#941914",display = "rotated")
+points(proc,pch=16,col="#d55e00",display = "rotated")
 text(((proc$Yrot[,1]+proc$X[,1])/2),((proc$Yrot[,2]+proc$X[,2])/2),labels=rownames(proc$Yrot),adj=c(0.5,-0.5))
 legend("topleft",legend=c(paste0("SS = ",round(proc.t$ss,3)),
                           paste0("p = ",round(proc.t$signif,3))),text.col = "red",bty="n")
@@ -1302,7 +1371,7 @@ par(new = TRUE)
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 lines(proc,type="segments",col="grey")
 points(proc,pch=16,col="#4583C4",display = "target")
-points(proc,pch=16,col="#941914",display = "rotated")
+points(proc,pch=16,col="#d55e00",display = "rotated")
 text(((proc$Yrot[,1]+proc$X[,1])/2),((proc$Yrot[,2]+proc$X[,2])/2),labels=rownames(proc$Yrot),adj=c(0.5,-0.5))
 legend("topleft",legend=c(paste0("SS = ",round(proc.t$ss,3)),
                           paste0("p = ",round(proc.t$signif,3))),text.col = "red",bty="n")
@@ -1322,7 +1391,7 @@ par(new = TRUE)
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 lines(proc,type="segments",col="grey")
 points(proc,pch=16,col="#4583C4",display = "target")
-points(proc,pch=16,col="#941914",display = "rotated")
+points(proc,pch=16,col="#d55e00",display = "rotated")
 text(((proc$Yrot[,1]+proc$X[,1])/2),((proc$Yrot[,2]+proc$X[,2])/2),labels=rownames(proc$Yrot),adj=c(0.5,-0.5))
 legend("topleft",legend=c(paste0("SS = ",round(proc.t$ss,3)),
                           paste0("p = ",round(proc.t$signif,3))),text.col = "red",bty="n")
@@ -1344,7 +1413,7 @@ par(new = TRUE)
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 lines(proc,type="segments",col="grey")
 points(proc,pch=16,col="#4583C4",display = "target")
-points(proc,pch=16,col="#941914",display = "rotated")
+points(proc,pch=16,col="#d55e00",display = "rotated")
 text(((proc$Yrot[,1]+proc$X[,1])/2),((proc$Yrot[,2]+proc$X[,2])/2),labels=rownames(proc$Yrot),adj=c(0.5,-0.5))
 legend("topleft",legend=c(paste0("SS = ",round(proc.t$ss,3)),
                           paste0("p = ",round(proc.t$signif,3))),text.col = "red",bty="n")
@@ -1363,7 +1432,7 @@ par(new = TRUE)
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 lines(proc,type="segments",col="grey")
 points(proc,pch=16,col="#4583C4",display = "target")
-points(proc,pch=16,col="#941914",display = "rotated")
+points(proc,pch=16,col="#d55e00",display = "rotated")
 text(((proc$Yrot[,1]+proc$X[,1])/2),((proc$Yrot[,2]+proc$X[,2])/2),labels=rownames(proc$Yrot),adj=c(0.5,-0.5))
 legend("topleft",legend=c(paste0("SS = ",round(proc.t$ss,3)),
                           paste0("p = ",round(proc.t$signif,3))),text.col = "red",bty="n")
@@ -1382,7 +1451,7 @@ par(new = TRUE)
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 lines(proc,type="segments",col="grey")
 points(proc,pch=16,col="#4583C4",display = "target")
-points(proc,pch=16,col="#941914",display = "rotated")
+points(proc,pch=16,col="#d55e00",display = "rotated")
 text(((proc$Yrot[,1]+proc$X[,1])/2),((proc$Yrot[,2]+proc$X[,2])/2),labels=rownames(proc$Yrot),adj=c(0.5,-0.5))
 legend("topleft",legend=c(paste0("SS = ",round(proc.t$ss,3)),
                           paste0("p = ",round(proc.t$signif,3))),text.col = "red",bty="n")
@@ -1402,7 +1471,7 @@ par(new = TRUE)
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 lines(proc,type="segments",col="grey")
 points(proc,pch=16,col="#4583C4",display = "target")
-points(proc,pch=16,col="#941914",display = "rotated")
+points(proc,pch=16,col="#d55e00",display = "rotated")
 text(((proc$Yrot[,1]+proc$X[,1])/2),((proc$Yrot[,2]+proc$X[,2])/2),labels=rownames(proc$Yrot),adj=c(0.5,-0.5))
 legend("topleft",legend=c(paste0("SS = ",round(proc.t$ss,3)),
                           paste0("p = ",round(proc.t$signif,3))),text.col = "red",bty="n")
@@ -1425,8 +1494,8 @@ par(new = TRUE)
 plot(proc,type = "n",cex = 0.8,pch=16,main="",add=TRUE)
 #lines(((proc$Yrot[,1]+proc$X[,1])/2),((proc$Yrot[,2]+proc$X[,2])/2),col="grey80",lwd=3)
 lines(proc,type="segments",col="grey")
-points(proc,pch=16,col="#4583C4",display = "target",cex=1.5)
-points(proc,pch=16,col="#941914",display = "rotated",cex=1.5)
+points(proc,pch=16,col="#4583C4",display = "target",cex=2)
+points(proc,pch=16,col="#d55e00",display = "rotated",cex=2)
 shadowtext(((proc$Yrot[,1]+proc$X[,1])/2),((proc$Yrot[,2]+proc$X[,2])/2),labels=rownames(proc$Yrot),adj=c(0.5,-0.5),cex=0.7,col="black",bg="white")
 #text(((proc$Yrot[,1]+proc$X[,1])/2),((proc$Yrot[,2]+proc$X[,2])/2),labels=rownames(proc$Yrot),adj=c(0.5,-0.5),cex=0.7)
 legend("topleft",legend=c(paste0("SS = ",round(proc.t$ss,3)),
@@ -1448,8 +1517,8 @@ par(new = TRUE)
 plot(proc,type = "n",cex = 0.8,pch=16,main="",add=TRUE)
 #lines(((proc$Yrot[,1]+proc$X[,1])/2),((proc$Yrot[,2]+proc$X[,2])/2),col="grey80",lwd=3)
 lines(proc,type="segments",col="grey")
-points(proc,pch=16,col="#4583C4",display = "target",cex=1.5)
-points(proc,pch=16,col="#941914",display = "rotated",cex=1.5)
+points(proc,pch=16,col="#4583C4",display = "target",cex=2)
+points(proc,pch=16,col="#d55e00",display = "rotated",cex=2)
 shadowtext(((proc$Yrot[,1]+proc$X[,1])/2),((proc$Yrot[,2]+proc$X[,2])/2),labels=rownames(proc$Yrot),adj=c(0.5,-0.5),cex=0.7,col="black",bg="white")
 #text(((proc$Yrot[,1]+proc$X[,1])/2),((proc$Yrot[,2]+proc$X[,2])/2),labels=rownames(proc$Yrot),adj=c(0.5,-0.5),cex=0.7)
 legend("topleft",legend=c(paste0("SS = ",round(proc.t$ss,3)),
@@ -1545,11 +1614,11 @@ rownames(euk.Nreps) %in% taxPR2.f$X.1[taxPR2.f$tax.Family=="Cephaloidophoridae"]
 ####====5.1 Rarefaction  ====####
 pdf("figures/rarefaction.big.pdf",width = 20,height = 13)
 rarecurve(t(euk[,1:88]),label=FALSE,step = 1000)
-ordilabel(cbind(rowSums(t(euk[,1:88])), specnumber(t(euk[,1:88])))+5, labels=rownames(t(euk[,1:88])),cex=0.5, border = NA,fill=NULL,col="Darkred")
+ordilabel(cbind(rowSums(t(euk[,1:88])), specnumber(t(euk[,1:88])))+5, labels=rownames(t(euk[,1:88])),cex=0.5, border = NA,fill=NULL,col="#d55e00")
 dev.off()
 pdf("figures/rarefaction.small.pdf",width = 9,height = 6.5)
 rarecurve(t(euk[,1:88]),label=FALSE,step = 1000)
-ordilabel(cbind(rowSums(t(euk[,1:88])), specnumber(t(euk[,1:88])))+5, labels=rownames(t(euk[,1:88])),cex=0.5, border = NA,fill=NULL,col="Darkred")
+ordilabel(cbind(rowSums(t(euk[,1:88])), specnumber(t(euk[,1:88])))+5, labels=rownames(t(euk[,1:88])),cex=0.5, border = NA,fill=NULL,col="#d55e00")
 dev.off()
 
 ####====5.1 ASV richness by reps  ====####
@@ -1735,13 +1804,13 @@ dev.off()
 out <- metaMDS(vegdist(t(euk.Nreps.high.binary.3rep[1:11])),trymax = 200) 
 out.j <- metaMDS(vegdist(t(euk.Nreps.high.binary.3rep[1:11]),binary = TRUE,method = "jaccard"),trymax = 200) 
 pdf("figures/betadiv.BC.3reps.pdf",height = 6,width = 6)
-plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,ylab="",xlab="",
+plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,ylab="",xlab="",
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
      xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1))
 text(out$points[,1],out$points[,2]+0.02,labels = dates$Median[match(rownames(out$points),dates$sampleID)])
 dev.off()
 pdf("figures/betadiv.JC.3reps.pdf",height = 6,width = 6)
-plot(out.j$points[,1],out.j$points[,2],col="darkred",cex=1.3,pch=16,ylab="",xlab="",
+plot(out.j$points[,1],out.j$points[,2],col="#d55e00",cex=1.3,pch=16,ylab="",xlab="",
      ylim=c(min(out.j$points[,2])-0.1,max(out.j$points[,2])+0.1),
      xlim=c(min(out.j$points[,1])-0.1,max(out.j$points[,1])+0.1))
 text(out.j$points[,1],out.j$points[,2]+0.02,labels = dates$Median[match(rownames(out.j$points),dates$sampleID)])
@@ -1752,12 +1821,12 @@ dev.off()
 out <- metaMDS(vegdist(t(euk[1:88])))
 out.j <- metaMDS(vegdist(t(euk[1:88]),binary = TRUE,method = "jaccard"),trymax = 200) 
 pdf("figures/betadiv.BC.allreps.pdf",height = 8,width = 8)
-plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,
+plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
      xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1),ylab="",xlab="")
 ordihull(out,substr(colnames(euk[1:88]),1,8),draw = "polygon",col="darkgrey",lty=0)
 ordispider(out,substr(colnames(euk[1:88]),1,8),lty=1,lwd=2,col="grey2")
-points(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16)
+points(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16)
 for (i in 1:(length(tapply(out$points[,1],FUN=mean,INDEX = substr(colnames(euk[1:88]),1,8)))-1)) {
          arrows(tapply(out$points[,1],FUN=mean,INDEX = substr(colnames(euk[1:88]),1,8))[[i]],
                 tapply(out$points[,2],FUN=mean,INDEX = substr(colnames(euk[1:88]),1,8))[[i]],
@@ -1771,12 +1840,12 @@ text(tapply(out$points[,1],FUN=mean,INDEX = substr(colnames(euk[1:88]),1,8)),
 dev.off()
 
 pdf("figures/betadiv.JC.allreps.pdf",height = 8,width = 8)
-plot(out.j$points[,1],out.j$points[,2],col="darkred",cex=1.3,pch=16,
+plot(out.j$points[,1],out.j$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out.j$points[,2])-0.1,max(out.j$points[,2])+0.1),
      xlim=c(min(out.j$points[,1])-0.1,max(out.j$points[,1])+0.1),ylab="",xlab="")
 ordihull(out.j,substr(colnames(euk[1:88]),1,8),draw = "polygon",col="darkgrey",lty=0)
 ordispider(out.j,substr(colnames(euk[1:88]),1,8),lty=1,lwd=2,col="grey2")
-points(out.j$points[,1],out.j$points[,2],col="darkred",cex=1.3,pch=16)
+points(out.j$points[,1],out.j$points[,2],col="#d55e00",cex=1.3,pch=16)
 for (i in 1:(length(tapply(out$points[,1],FUN=mean,INDEX = substr(colnames(euk[1:88]),1,8)))-1)) {
   arrows(tapply(out.j$points[,1],FUN=mean,INDEX = substr(colnames(euk[1:88]),1,8))[[i]],
          tapply(out.j$points[,2],FUN=mean,INDEX = substr(colnames(euk[1:88]),1,8))[[i]],
@@ -1839,13 +1908,13 @@ plot(dates$Median[match(MTB.com$Sample,dates$sampleID)],
 
 points(dates$Median[match(MTG.com$Sample,dates$sampleID)],
        as.numeric(factor(MTG.com$ID,levels=c("Zostera" ,"Gadus","Oikopleura","Clupea")))-0.1,
-       pch=16,cex=MTG.com$Value,col="darkred")
+       pch=16,cex=MTG.com$Value,col="#d55e00")
 
 axis(2,labels=c("Zostera" ,"Gadus","Oikopleura","Clupea"),1:4,las=1)
 
 legend(9000,4.5,col = "dodgerblue",pch=16,
        pt.cex=c(0.5,1.5,4),legend=c("  1 rep","  3 reps","  8 reps"),bty="n",y.intersp=1.5)
-legend(9000,2.5,col = "darkred",pch=16,
+legend(9000,2.5,col = "#d55e00",pch=16,
        pt.cex=c(2,3,4),legend=c(" 100-1k reads"," 1k-5k reads"," 5k+ reads"),bty="n",y.intersp=1.5)
 
 
@@ -2088,7 +2157,7 @@ out.j <- metaMDS(vegdist(t(prop.table(as.matrix(datain),2)),binary = TRUE,method
 
 pdf("figures/figure1/beta.MTG.DS1.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,
+plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
      xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1),ylab="",xlab="")
 for (i in 1:(length(out$points[,1])-1)) {
@@ -2097,7 +2166,7 @@ for (i in 1:(length(out$points[,1])-1)) {
          out$points[i+1,1],
          out$points[i+1,2],
          length = 0.1,lwd = 1.5,col = "red3")}
-points(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,)
+points(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,)
 text(out$points[,1],
      out$points[,2]+0.1,
      labels = rownames(out$points),
@@ -2113,7 +2182,7 @@ out.j <- metaMDS(vegdist(t(prop.table(as.matrix(datain),2)),binary = TRUE,method
 
 pdf("figures/figure1/beta.MTG.DS2.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,
+plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
      xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1),ylab="",xlab="")
 for (i in 1:(length(out$points[,1])-1)) {
@@ -2122,7 +2191,7 @@ for (i in 1:(length(out$points[,1])-1)) {
          out$points[i+1,1],
          out$points[i+1,2],
          length = 0.1,lwd = 1.5,col = "red3")}
-points(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,)
+points(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,)
 text(out$points[,1],
      out$points[,2]+0.1,
      labels = rownames(out$points),
@@ -2138,7 +2207,7 @@ out.j <- metaMDS(vegdist(t(prop.table(as.matrix(datain),2)),binary = TRUE,method
 
 pdf("figures/figure1/beta.MTG.DS3.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,
+plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
      xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1),ylab="",xlab="")
 for (i in 1:(length(out$points[,1])-1)) {
@@ -2147,7 +2216,7 @@ for (i in 1:(length(out$points[,1])-1)) {
          out$points[i+1,1],
          out$points[i+1,2],
          length = 0.1,lwd = 1.5,col = "red3")}
-points(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,)
+points(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,)
 text(out$points[,1],
      out$points[,2]+0.1,
      labels = rownames(out$points),
@@ -2163,7 +2232,7 @@ out.j <- metaMDS(vegdist(t(prop.table(as.matrix(datain),2)),binary = TRUE,method
 
 pdf("figures/figure1/beta.MTG.DS4.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,
+plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
      xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1),ylab="",xlab="")
 for (i in 1:(length(out$points[,1])-1)) {
@@ -2172,7 +2241,7 @@ for (i in 1:(length(out$points[,1])-1)) {
          out$points[i+1,1],
          out$points[i+1,2],
          length = 0.1,lwd = 1.5,col = "red3")}
-points(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,)
+points(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,)
 text(out$points[,1],
      out$points[,2]+0.1,
      labels = rownames(out$points),
@@ -2191,7 +2260,7 @@ out.s
 
 pdf("figures/figure1/beta.MTB.DS1.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,
+plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
      xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1),ylab="",xlab="")
 for (i in 1:(length(out$points[,1])-1)) {
@@ -2200,7 +2269,7 @@ for (i in 1:(length(out$points[,1])-1)) {
          out$points[i+1,1],
          out$points[i+1,2],
          length = 0.1,lwd = 1.5,col = "red3")}
-points(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,)
+points(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,)
 text(out$points[,1],
      out$points[,2]+0.1,
      labels = rownames(out$points),
@@ -2219,7 +2288,7 @@ out.j <- metaMDS(vegdist(t(prop.table(as.matrix(datain),2)),binary = TRUE,method
 
 pdf("figures/figure1/beta.MTB.DS2.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
-plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,
+plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
      xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1),ylab="",xlab="")
 for (i in 1:(length(out$points[,1])-1)) {
@@ -2228,7 +2297,7 @@ for (i in 1:(length(out$points[,1])-1)) {
          out$points[i+1,1],
          out$points[i+1,2],
          length = 0.1,lwd = 1.5,col = "red3")}
-points(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,)
+points(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,)
 text(out$points[,1],
      out$points[,2]+0.1,
      labels = rownames(out$points),
@@ -2343,16 +2412,16 @@ plot(dates$Median[match(MTB.com$Sample,dates$sampleID)],
 
 points(dates$Median[match(MTG.com$Sample,dates$sampleID)],
        as.numeric(factor(MTG.com$ID,levels=c("Zostera" ,"Gadus","Oikopleura","Clupea")))-0.1,
-       pch=16,cex=MTG.com$Value,col="pink")
+       pch=16,cex=MTG.com$Value,col="#f7b988")
 points(dates$Median[match(MTG.com.a.plot$variable,dates$sampleID)],
        as.numeric(factor(MTG.com.a.plot$tax_name,levels=c("Zostera" ,"Gadus","Oikopleura","Clupea")))-0.1,
-       pch=16,cex=as.numeric(as.character(MTG.com.a.plot$values)),col="darkred")
+       pch=16,cex=as.numeric(as.character(MTG.com.a.plot$values)),col="#d55e00")
 
 axis(2,labels=c("Zostera" ,"Gadus","Oikopleura","Clupea"),1:4,las=1)
 
-legend(9000,4.5,col = "dodgerblue",pch=16,
+legend(8700,4.5,col = "dodgerblue",pch=16,
        pt.cex=c(0.5,1.5,4),legend=c("  1 rep","  3 reps","  8 reps"),bty="n",y.intersp=1.5)
-legend(9000,2.5,col = "darkred",pch=16,
+legend(8700,2.5,col = "#d55e00",pch=16,
        pt.cex=c(2,3,4),legend=c(" 100-1k reads"," 1k-5k reads"," 5k+ reads"),bty="n",y.intersp=1.5)
 
 dev.off()
@@ -2383,16 +2452,16 @@ plot(dates$Median[match(MTB.com$Sample,dates$sampleID)],
 
 points(dates$Median[match(MTG.com$Sample,dates$sampleID)],
        as.numeric(factor(MTG.com$ID,levels=c("Zostera" ,"Gadus","Oikopleura","Clupea")))-0.1,
-       pch=16,cex=MTG.com$Value,col="pink")
+       pch=16,cex=MTG.com$Value,col="#f7b988")
 points(dates$Median[match(MTG.com.a.plot$variable,dates$sampleID)],
        as.numeric(factor(MTG.com.a.plot$tax_name,levels=c("Zostera" ,"Gadus","Oikopleura","Clupea")))-0.1,
-       pch=16,cex=as.numeric(as.character(MTG.com.a.plot$values)),col="darkred")
+       pch=16,cex=as.numeric(as.character(MTG.com.a.plot$values)),col="#d55e00")
 
 axis(2,labels=c("Zostera" ,"Gadus","Oikopleura","Clupea"),1:4,las=1)
 
 legend(9000,4.5,col = "dodgerblue",pch=16,
        pt.cex=c(0.5,1.5,4),legend=c("  1 rep","  3 reps","  8 reps"),bty="n",y.intersp=1.5)
-legend(9000,2.5,col = "darkred",pch=16,
+legend(9000,2.5,col = "#d55e00",pch=16,
        pt.cex=c(2,3,4),legend=c(" 100-1k reads"," 1k-5k reads"," 5k+ reads"),bty="n",y.intersp=1.5)
 
 dev.off()
@@ -2469,7 +2538,7 @@ out <- metaMDS(vegdist(t(euk.Nreps.high[1:11])))
 
 
 pdf("figures/betadiv.pdf",height = 6,width = 6)
-plot(out$points[,1],out$points[,2],col="darkred",cex=1.3,pch=16,
+plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
      xlim=c(min(out$points[,1])-0.1,max(out$points[,1])+0.1))
 text(out$points[,1],out$points[,2]+0.02,labels = metadata$Mean[match(rownames(out$points),metadata$SampleID.2)])
