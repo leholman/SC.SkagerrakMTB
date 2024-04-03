@@ -488,9 +488,53 @@ MTB.wide.DS1 <- euk.Nreps[,0:11]
 MTB.wide.DS2 <- euk.Nreps[rownames(euk.Nreps) %in% taxPR2.f$X.1[taxPR2.f$tax.Subdivision=="Metazoa"],0:11]
 
 
+### Mantel tests
+
+# bray
+
+MTG.DS1.b <- vegdist(t(prop.table(as.matrix(MTG.wide.DS1[,4:14]),2)))
+MTG.DS2.b <- vegdist(t(prop.table(as.matrix(MTG.wide.DS2[,-1]),2)))
+MTB.DS1.b <- vegdist(t(prop.table(as.matrix(MTB.wide.DS1),2)))
+MTB.DS2.b <- vegdist(t(prop.table(as.matrix(MTB.wide.DS2),2)))
+MTG.DS1.b.s <- vegdist(t(prop.table(as.matrix(MTG.wide.DS1[,4:14][,-1]),2)))
+MTB.DS1.b.s <- vegdist(t(prop.table(as.matrix(MTB.wide.DS1[,-1]),2)))
+MTB.DS2.b.s <- vegdist(t(prop.table(as.matrix(MTB.wide.DS2[,-1]),2)))
+
+# jaccard
+
+MTG.DS1.j <- vegdist(t(prop.table(as.matrix(MTG.wide.DS1[,4:14]),2)),method = "jaccard",binary = TRUE)
+MTG.DS2.j <- vegdist(t(prop.table(as.matrix(MTG.wide.DS2[,-1]),2)),method = "jaccard",binary = TRUE)
+MTB.DS1.j <- vegdist(t(prop.table(as.matrix(MTB.wide.DS1),2)),method = "jaccard",binary = TRUE)
+MTB.DS2.j <- vegdist(t(prop.table(as.matrix(MTB.wide.DS2),2)),method = "jaccard",binary = TRUE)
+MTG.DS1.j.s <- vegdist(t(prop.table(as.matrix(MTG.wide.DS1[,4:14][,-1]),2)),method = "jaccard",binary = TRUE)
+MTB.DS1.j.s <- vegdist(t(prop.table(as.matrix(MTB.wide.DS1[,-1]),2)),method = "jaccard",binary = TRUE)
+MTB.DS2.j.s <- vegdist(t(prop.table(as.matrix(MTB.wide.DS2[,-1]),2)),method = "jaccard",binary = TRUE)
+
+# tests
+comp1 <- mantel(MTG.DS1.b,MTB.DS1.b,permutations = 10000)
+comp2 <- mantel(MTG.DS1.b,MTB.DS2.b,permutations = 10000)
+comp3 <- mantel(MTG.DS2.b,MTB.DS1.b.s,permutations = 10000)
+comp4 <- mantel(MTG.DS2.b,MTB.DS2.b.s,permutations = 10000)
+comp5 <- mantel(MTG.DS1.j,MTB.DS1.j,permutations = 10000)
+comp6 <- mantel(MTG.DS1.j,MTB.DS2.j,permutations = 10000)
+comp7 <- mantel(MTG.DS2.j,MTB.DS1.j.s,permutations = 10000)
+comp8 <- mantel(MTG.DS2.j,MTB.DS2.j.s,permutations = 10000)
+
+sink(file="cleanedData/mantel.out.txt")
+comp1
+comp2
+comp3
+comp4
+comp5
+comp6
+comp7
+comp8
+sink()
+
+
+
+
 ##MTG DS1
-
-
 
 datain <- MTG.wide.DS1[,4:14]
 colnames(datain) <- as.character(dates$Median[match(colnames(datain),dates$sampleID)])
@@ -1644,7 +1688,7 @@ plot(colSums(euk.Nreps.high.binary.8rep),pch=16,cex=1.5,xaxt="n",ylab="ASV Richn
 axis(1,at=1:11,labels = colnames(euk.Nreps.high.binary.8rep),las=2,cex.axis=1)
 dev.off()
 
-pdf("figures/richness.date.pdf",width = 8,height = 5)
+pdf("figures/richness.date.pdf",width = 8,height = 3)
 par(mar=c(5.1,4.1,1.1,1.1),mfrow=c(1,3))
 plot(dates$Median[match(colnames(euk.Nreps.high.binary.1rep),dates$sampleID)],
      colSums(euk.Nreps.high.binary.1rep),
@@ -1673,7 +1717,7 @@ richEstimateCIupr <- unlist(lapply(richEst,FUN = function(x){x[["ci"]][2]}))
 
 
 
-pdf("figures/richness.freqEst.pdf",width = 8,height = 5)
+pdf("figures/richness.freqEst.pdf",width = 6,height = 6)
 plot(dates$Median[match(as.factor(substr(names(richEstimate),1,8)),dates$sampleID)],
      richEstimate,pch=16,
      xlab="CalYrBP",
@@ -1715,7 +1759,7 @@ plot(dates$Median[match(gsub("\\.","-",substr(names(richEstimate.rare),8,15)),da
      ylab="EstimatedRichness rare norm")
 dev.off()
 
-pdf("figures/richness.rarefaction.scaled.pdf",width = 8,height = 5)
+pdf("figures/richness.rarefaction.scaled.pdf",width = 8,height = 3)
 par(mar=c(5.1,4.1,1.1,1.1),mfrow=c(1,3))
 plot(dates$Median[match(as.factor(substr(names(richEstimate),1,8)),dates$sampleID)],
      richEstimate,pch=16,
@@ -1746,7 +1790,7 @@ m3 <- lm(colSums(euk.Nreps.high.binary.8rep)~tapply(richEstimate,FUN=mean,INDEX 
 
 
 
-pdf("figures/breakaway-richness.comp.pdf",width = 8,height = 6.5)
+pdf("figures/breakaway-richness.comp.pdf",width = 6,height = 6)
 plot(tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8)),
      colSums(euk.Nreps.high.binary.1rep),pch=16,cex=1.5,col="lightblue",ylim=c(0,2200),xlim=c(0,1100),
      xlab="Breakaway Estimate",ylab="Observed Richness")
@@ -1762,7 +1806,7 @@ legend("topleft",border=NA,legend=c("1 rep","3 rep","8 rep"),col=c("lightblue","
 
 text(800,1800,round(summary(lm(tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8))~colSums(euk.Nreps.high.binary.1rep)))$adj.r.squared,4),col="lightblue",adj=0)
 text(800,700,round(summary(lm(tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8))~colSums(euk.Nreps.high.binary.3rep)))$adj.r.squared,4),col="dodgerblue",adj=0)
-text(800,200,round(summary(lm(tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8))~colSums(euk.Nreps.high.binary.8rep)))$adj.r.squared,4),col="darkblue",adj=0)
+text(800,180,round(summary(lm(tapply(richEstimate,FUN=mean,INDEX = substr(names(richEstimate),1,8))~colSums(euk.Nreps.high.binary.8rep)))$adj.r.squared,4),col="darkblue",adj=0)
 
 dev.off()
 
