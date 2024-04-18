@@ -532,6 +532,21 @@ comp8
 sink()
 
 
+# Define the list of component objects
+components <- list(comp1, comp2, comp3, comp4, comp5, comp6, comp7, comp8)
+
+# Extract data from each component and create a row in the data frame
+results <- do.call(rbind, lapply(components, function(x) {
+  data.frame(
+    Description = deparse(x$call),  # Convert the call object to a character string
+    Statistic = x$statistic,
+    P_value = x$signif
+  )
+}))
+
+write.csv(results,"cleanedData/mantelout.csv")
+
+
 
 
 ##MTG DS1
