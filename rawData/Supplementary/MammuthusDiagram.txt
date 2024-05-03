@@ -1,0 +1,584 @@
+HiC_scaffold_1 (172.82Mbp)
+>   0.01% │           █              █                                   ▄                                 │ Number of reads: 11
+>   0.00% │           █              █                                   █                                 │ 
+>   0.00% │           █        ▄     █                                   █                                 │ Covered bases:   590bp
+>   0.00% │           █        █     █                                   █                                 │ Percent covered: 0.0003414%
+>   0.00% │           █        █ █   █                                   █                                 │ Mean coverage:   3.41e-06x
+>   0.00% │           █        █ █   █                 █                 █                 ▄               │ Mean baseQ:      36.5
+>   0.00% │           █        █ █   █                 █   █             █                 █               │ Mean mapQ:       31.4
+>   0.00% │           █        █ █   █                 █   █             █                 █               │ 
+>   0.00% │           █        █ █   █                 █   █             █                 █               │ Histo bin width: 1.80Mbp
+>   0.00% │           █        █ █   █                 █   █             █                 █               │ Histo max bin:   0.0058883%
+          1       18.00M    36.00M    54.01M    72.01M    90.01M   108.01M   126.01M   144.01M         172.82M 
+
+HiC_scaffold_113 (64.43Mbp)
+>   0.01% │                                                                     █                          │ Number of reads: 1
+>   0.01% │                                                                     █                          │ 
+>   0.01% │                                                                     █                          │ Covered bases:   62bp
+>   0.01% │                                                                     █                          │ Percent covered: 9.624e-05%
+>   0.00% │                                                                     █                          │ Mean coverage:   9.62e-07x
+>   0.00% │                                                                     █                          │ Mean baseQ:      37
+>   0.00% │                                                                     █                          │ Mean mapQ:       42
+>   0.00% │                                                                     █                          │ 
+>   0.00% │                                                                     █                          │ Histo bin width: 671.1Kbp
+>   0.00% │                                                                     █                          │ Histo max bin:   0.0092386%
+          1       6.71M     13.42M    20.13M    26.84M    33.55M    40.27M    46.98M    53.69M          64.43M 
+
+HiC_scaffold_224 (78.26Mbp)
+>   0.01% │          █                       █                                                             │ Number of reads: 7
+>   0.01% │          █                       █                                                             │ 
+>   0.01% │          █                       █                                                             │ Covered bases:   461bp
+>   0.01% │          █                       █                                                             │ Percent covered: 0.0005891%
+>   0.01% │          █                       █                         ▄                                   │ Mean coverage:   5.89e-06x
+>   0.01% │          █                       █                         █                      ▄            │ Mean baseQ:      36
+>   0.00% │          █              ▄        █                         █                      █            │ Mean mapQ:       33.1
+>   0.00% │      █   █              █        █                         █                      █            │ 
+>   0.00% │      █   █              █        █                         █                      █            │ Histo bin width: 815.2Kbp
+>   0.00% │      █   █              █        █                         █                      █            │ Histo max bin:   0.015579%
+          1       8.15M     16.30M    24.46M    32.61M    40.76M    48.91M    57.06M    65.21M          78.26M 
+
+HiC_scaffold_274 (5.5Kbp)
+>  44.21% │                                                                     █                          │ Number of reads: 1
+>  39.30% │                                                                     █                          │ 
+>  34.39% │                                                                     █                          │ Covered bases:   48bp
+>  29.47% │                                                                     ██                         │ Percent covered: 0.8661%
+>  24.56% │                                                                     ██                         │ Mean coverage:   0.00866x
+>  19.65% │                                                                     ██                         │ Mean baseQ:      37
+>  14.74% │                                                                     ██                         │ Mean mapQ:       42
+>   9.82% │                                                                     ██                         │ 
+>   4.91% │                                                                     ██                         │ Histo bin width: 57bp
+>   0.00% │                                                                     ██                         │ Histo max bin:   49.123%
+          1        570       1.1K      1.7K      2.3K      2.9K      3.4K      4.0K      4.6K            5.5K  
+
+HiC_scaffold_335 (103.96Mbp)
+>   0.01% │                                                  █                                             │ Number of reads: 16
+>   0.01% │                                                  █                                             │ 
+>   0.01% │                  ▄                               █                                             │ Covered bases:   797bp
+>   0.01% │                  █                               █                  █                          │ Percent covered: 0.0007667%
+>   0.01% │             ▄    █                               █                  █                          │ Mean coverage:   8.44e-06x
+>   0.00% │             █    █               ▄      █        █                 ▄█                          │ Mean baseQ:      36.3
+>   0.00% │             █  █ █   █           ██     █        █                 ██    ▄          █          │ Mean mapQ:       38.8
+>   0.00% │             █  █ █   █  █        ██     █        █   █             ██    █          █          │ 
+>   0.00% │             █  █ █   █  █        ██     █        █   █             ██    █          █          │ Histo bin width: 1.08Mbp
+>   0.00% │             █  █ █   █  █        ██     █        █   █             ██    █          █          │ Histo max bin:   0.01062%
+          1       10.83M    21.66M    32.49M    43.32M    54.14M    64.97M    75.80M    86.63M         103.96M 
+
+HiC_scaffold_446 (80.81Mbp)
+>   0.01% │                        ▄                                                     █                 │ Number of reads: 9
+>   0.01% │                        █                                                     █                 │ 
+>   0.01% │                        █             ▄                                       █                 │ Covered bases:   580bp
+>   0.01% │                        █             █                                       █                 │ Percent covered: 0.0007178%
+>   0.01% │                        █             █                          ▄            █                 │ Mean coverage:   7.18e-06x
+>   0.01% │                        █             █▄                         █            █                 │ Mean baseQ:      36.6
+>   0.00% │                        █             ██              ▄█         █           ▄█                 │ Mean mapQ:       37.4
+>   0.00% │                        █             ██              ██         █           ██               █ │ 
+>   0.00% │                        █             ██              ██         █           ██               █ │ Histo bin width: 841.7Kbp
+>   0.00% │                        █             ██              ██         █           ██               █ │ Histo max bin:   0.013781%
+          1       8.42M     16.83M    25.25M    33.67M    42.09M    50.50M    58.92M    67.34M          80.81M 
+
+HiC_scaffold_557 (63.85Mbp)
+>   0.01% │                                                            █                                   │ Number of reads: 4
+>   0.01% │                                              ▄             █                                   │ 
+>   0.01% │                                           ▄  █             █                                   │ Covered bases:   184bp
+>   0.01% │                                           █  █             █                                   │ Percent covered: 0.0002882%
+>   0.00% │                                           █  █           ▄ █                                   │ Mean coverage:   2.88e-06x
+>   0.00% │                                           █  █           █ █                                   │ Mean baseQ:      36.8
+>   0.00% │                                           █  █           █ █                                   │ Mean mapQ:       21.5
+>   0.00% │                                           █  █           █ █                                   │ 
+>   0.00% │                                           █  █           █ █                                   │ Histo bin width: 665.1Kbp
+>   0.00% │                                           █  █           █ █                                   │ Histo max bin:   0.0088705%
+          1       6.65M     13.30M    19.95M    26.61M    33.26M    39.91M    46.56M    53.21M          63.85M 
+
+HiC_scaffold_593 (33.9Kbp)
+>  14.06% │                      █                                                                         │ Number of reads: 1
+>  12.50% │                      █                                                                         │ 
+>  10.94% │                      █                                                                         │ Covered bases:   55bp
+>   9.38% │                      █                                                                         │ Percent covered: 0.1623%
+>   7.81% │                      █                                                                         │ Mean coverage:   0.00162x
+>   6.25% │                      █                                                                         │ Mean baseQ:      37
+>   4.69% │                      █                                                                         │ Mean mapQ:       1
+>   3.12% │                      █                                                                         │ 
+>   1.56% │                      █                                                                         │ Histo bin width: 352bp
+>   0.00% │                      █                                                                         │ Histo max bin:   15.625%
+          1        3.5K      7.0K     10.6K     14.1K     17.6K     21.1K     24.6K     28.2K           33.9K  
+
+HiC_scaffold_638 (285.9Kbp)
+>   2.15% │                                                                   █                            │ Number of reads: 1
+>   1.91% │                                                                   █                            │ 
+>   1.67% │                                                                   █                            │ Covered bases:   71bp
+>   1.43% │                                                                   █                            │ Percent covered: 0.02484%
+>   1.19% │                                                                   █                            │ Mean coverage:   0.000248x
+>   0.95% │                                                                   █                            │ Mean baseQ:      36.5
+>   0.72% │                                                                   █                            │ Mean mapQ:       1
+>   0.48% │                                                                   █                            │ 
+>   0.24% │                                                                   █                            │ Histo bin width: 3.0Kbp
+>   0.00% │                                                                   █                            │ Histo max bin:   2.385%
+          1       29.8K     59.5K     89.3K     119.1K    148.8K    178.6K    208.4K    238.2K          285.9K 
+
+HiC_scaffold_655 (127.9Kbp)
+>   2.16% │      █                                                                                         │ Number of reads: 1
+>   1.92% │      █                                                                                         │ 
+>   1.68% │      █                                                                                         │ Covered bases:   32bp
+>   1.44% │      █                                                                                         │ Percent covered: 0.02502%
+>   1.20% │      █                                                                                         │ Mean coverage:   0.00025x
+>   0.96% │      █                                                                                         │ Mean baseQ:      36.2
+>   0.72% │      █                                                                                         │ Mean mapQ:       42
+>   0.48% │      █                                                                                         │ 
+>   0.24% │      █                                                                                         │ Histo bin width: 1.3Kbp
+>   0.00% │      █                                                                                         │ Histo max bin:   2.4024%
+          1       13.3K     26.6K     40.0K     53.3K     66.6K     79.9K     93.2K     106.6K          127.9K 
+
+HiC_scaffold_663 (72.3Kbp)
+>   9.34% │                         █                                                                      │ Number of reads: 1
+>   8.30% │                         █                                                                      │ 
+>   7.26% │                         █                                                                      │ Covered bases:   78bp
+>   6.22% │                         █                                                                      │ Percent covered: 0.1079%
+>   5.19% │                         █                                                                      │ Mean coverage:   0.00108x
+>   4.15% │                         █                                                                      │ Mean baseQ:      36.8
+>   3.11% │                         █                                                                      │ Mean mapQ:       24
+>   2.07% │                         █                                                                      │ 
+>   1.04% │                         █                                                                      │ Histo bin width: 752bp
+>   0.00% │                         █                                                                      │ Histo max bin:   10.372%
+          1        7.5K     15.0K     22.6K     30.1K     37.6K     45.1K     52.6K     60.2K           72.3K  
+
+HiC_scaffold_668 (78.62Mbp)
+>   0.01% │                                ▄█                    ▄                                         │ Number of reads: 6
+>   0.01% │                                ██                    █                                ▄        │ 
+>   0.00% │                                ██                    █                      ▄         █        │ Covered bases:   277bp
+>   0.00% │                                ██                    █                   ▄  █         █        │ Percent covered: 0.0003523%
+>   0.00% │                                ██                    █                   █  █         █        │ Mean coverage:   3.52e-06x
+>   0.00% │                                ██                    █                   █  █         █        │ Mean baseQ:      35.6
+>   0.00% │                                ██                    █                   █  █         █        │ Mean mapQ:       37.3
+>   0.00% │                                ██                    █                   █  █         █        │ 
+>   0.00% │                                ██                    █                   █  █         █        │ Histo bin width: 818.9Kbp
+>   0.00% │                                ██                    █                   █  █         █        │ Histo max bin:   0.006594%
+          1       8.19M     16.38M    24.57M    32.76M    40.95M    49.14M    57.33M    65.51M          78.62M 
+
+HiC_scaffold_687 (441.2Kbp)
+>   0.86% │                              █                                                                 │ Number of reads: 1
+>   0.77% │                              █                                                                 │ 
+>   0.67% │                              █                                                                 │ Covered bases:   44bp
+>   0.57% │                              █                                                                 │ Percent covered: 0.009973%
+>   0.48% │                              █                                                                 │ Mean coverage:   9.97e-05x
+>   0.38% │                              █                                                                 │ Mean baseQ:      37
+>   0.29% │                              █                                                                 │ Mean mapQ:       1
+>   0.19% │                              █                                                                 │ 
+>   0.10% │                              █                                                                 │ Histo bin width: 4.6Kbp
+>   0.00% │                              █                                                                 │ Histo max bin:   0.95756%
+          1       46.0K     91.9K     137.8K    183.8K    229.8K    275.7K    321.6K    367.6K          441.2K 
+
+HiC_scaffold_755 (65.7Kbp)
+>   6.19% │                                                                                          █     │ Number of reads: 1
+>   5.51% │                                                                                          █     │ 
+>   4.82% │                                                                                          █     │ Covered bases:   47bp
+>   4.13% │                                                                                          █     │ Percent covered: 0.07159%
+>   3.44% │                                                                                          █     │ Mean coverage:   0.000716x
+>   2.75% │                                                                                          █     │ Mean baseQ:      37
+>   2.06% │                                                                                          █     │ Mean mapQ:       42
+>   1.38% │                                                                                          █     │ 
+>   0.69% │                                                                                          █     │ Histo bin width: 683bp
+>   0.00% │                                                                                          █     │ Histo max bin:   6.8814%
+          1        6.8K     13.7K     20.5K     27.3K     34.1K     41.0K     47.8K     54.6K           65.7K  
+
+HiC_scaffold_772 (91.5Kbp)
+>   5.38% │                                                                                           █    │ Number of reads: 1
+>   4.78% │                                                                                           █    │ 
+>   4.19% │                                                                                           █    │ Covered bases:   57bp
+>   3.59% │                                                                                           █    │ Percent covered: 0.06229%
+>   2.99% │                                                                                           █    │ Mean coverage:   0.000623x
+>   2.39% │                                                                                           █    │ Mean baseQ:      36.8
+>   1.79% │                                                                                           █    │ Mean mapQ:       42
+>   1.20% │                                                                                           █    │ 
+>   0.60% │                                                                                           █    │ Histo bin width: 953bp
+>   0.00% │                                                                                           █    │ Histo max bin:   5.9811%
+          1        9.5K     19.1K     28.6K     38.1K     47.6K     57.2K     66.7K     76.2K           91.5K  
+
+HiC_scaffold_779 (73.81Mbp)
+>   0.01% │                                          █                                                     │ Number of reads: 10
+>   0.01% │                                          █                     ▄                               │ 
+>   0.01% │                                          █                     █                               │ Covered bases:   632bp
+>   0.01% │                                          █             ▄       █                               │ Percent covered: 0.0008562%
+>   0.01% │            █          ▄       █          █           █ █       █                               │ Mean coverage:   8.56e-06x
+>   0.01% │            █ █        █       █          ██          █ █       █                               │ Mean baseQ:      36.5
+>   0.00% │            █ █        █       █          ██          █ █       █                               │ Mean mapQ:       32.6
+>   0.00% │            █ █        █       █          ██          █ █       █                               │ 
+>   0.00% │            █ █        █       █          ██          █ █       █                               │ Histo bin width: 768.9Kbp
+>   0.00% │            █ █        █       █          ██          █ █       █                               │ Histo max bin:   0.014176%
+          1       7.69M     15.38M    23.07M    30.76M    38.44M    46.13M    53.82M    61.51M          73.81M 
+
+HiC_scaffold_804 (30.4Kbp)
+>  11.39% │            █                                                                                   │ Number of reads: 1
+>  10.13% │            █                                                                                   │ 
+>   8.86% │            █                                                                                   │ Covered bases:   61bp
+>   7.59% │            █                                                                                   │ Percent covered: 0.2009%
+>   6.33% │            █                                                                                   │ Mean coverage:   0.00201x
+>   5.06% │            ██                                                                                  │ Mean baseQ:      36.6
+>   3.80% │            ██                                                                                  │ Mean mapQ:       0
+>   2.53% │            ██                                                                                  │ 
+>   1.27% │            ██                                                                                  │ Histo bin width: 316bp
+>   0.00% │            ██                                                                                  │ Histo max bin:   12.658%
+          1        3.2K      6.3K      9.5K     12.6K     15.8K     19.0K     22.1K     25.3K           30.4K  
+
+HiC_scaffold_812 (18.8Kbp)
+>  19.38% │          █                                                                                     │ Number of reads: 1
+>  17.23% │          █                                                                                     │ 
+>  15.08% │          █                                                                                     │ Covered bases:   42bp
+>  12.92% │          █                                                                                     │ Percent covered: 0.2238%
+>  10.77% │          █                                                                                     │ Mean coverage:   0.00224x
+>   8.62% │          █                                                                                     │ Mean baseQ:      37
+>   6.46% │          █                                                                                     │ Mean mapQ:       1
+>   4.31% │          █                                                                                     │ 
+>   2.15% │          █                                                                                     │ Histo bin width: 195bp
+>   0.00% │          █                                                                                     │ Histo max bin:   21.538%
+          1        1.9K      3.9K      5.8K      7.8K      9.8K     11.7K     13.7K     15.6K           18.8K  
+
+HiC_scaffold_829 (64.4Kbp)
+>   6.04% │                   █                                                                            │ Number of reads: 1
+>   5.37% │                   █                                                                            │ 
+>   4.70% │                   █                                                                            │ Covered bases:   45bp
+>   4.03% │                   █                                                                            │ Percent covered: 0.06992%
+>   3.36% │                   █                                                                            │ Mean coverage:   0.000699x
+>   2.69% │                   █                                                                            │ Mean baseQ:      35.6
+>   2.01% │                   █                                                                            │ Mean mapQ:       16
+>   1.34% │                   █                                                                            │ 
+>   0.67% │                   █                                                                            │ Histo bin width: 670bp
+>   0.00% │                   █                                                                            │ Histo max bin:   6.7164%
+          1        6.7K     13.4K     20.1K     26.8K     33.5K     40.2K     46.9K     53.6K           64.4K  
+
+HiC_scaffold_842 (81.5Kbp)
+>   4.46% │                                                                                            █   │ Number of reads: 1
+>   3.96% │                                                                                            █   │ 
+>   3.47% │                                                                                            █   │ Covered bases:   42bp
+>   2.97% │                                                                                            █   │ Percent covered: 0.05155%
+>   2.48% │                                                                                            █   │ Mean coverage:   0.000515x
+>   1.98% │                                                                                            █   │ Mean baseQ:      37
+>   1.49% │                                                                                            █   │ Mean mapQ:       30
+>   0.99% │                                                                                            █   │ 
+>   0.50% │                                                                                            █   │ Histo bin width: 848bp
+>   0.00% │                                                                                            █   │ Histo max bin:   4.9528%
+          1        8.5K     17.0K     25.4K     33.9K     42.4K     50.9K     59.4K     67.8K           81.5K  
+
+HiC_scaffold_855 (434.5Kbp)
+>   1.37% │                                                 █                                              │ Number of reads: 1
+>   1.22% │                                                 █                                              │ 
+>   1.07% │                                                 █                                              │ Covered bases:   69bp
+>   0.91% │                                                 █                                              │ Percent covered: 0.01588%
+>   0.76% │                                                 █                                              │ Mean coverage:   0.000159x
+>   0.61% │                                                 █                                              │ Mean baseQ:      36.7
+>   0.46% │                                                 █                                              │ Mean mapQ:       31
+>   0.30% │                                                 █                                              │ 
+>   0.15% │                                                 █                                              │ Histo bin width: 4.5Kbp
+>   0.00% │                                                 █                                              │ Histo max bin:   1.5245%
+          1       45.3K     90.5K     135.8K    181.0K    226.3K    271.6K    316.8K    362.1K          434.5K 
+
+HiC_scaffold_890 (117.61Mbp)
+>   0.01% │                                                                                   █  ▄         │ Number of reads: 13
+>   0.01% │                                                                                   █  █         │ 
+>   0.01% │                                                                                   █  █         │ Covered bases:   510bp
+>   0.01% │                 █                                                     ▄           █  █         │ Percent covered: 0.0004337%
+>   0.00% │                 █                                                     █           █  █         │ Mean coverage:   4.94e-06x
+>   0.00% │                 █                   ▄     ▄                           █           █  █         │ Mean baseQ:      35.5
+>   0.00% │                 █   ▄               █     █                           █           █  █         │ Mean mapQ:       40.8
+>   0.00% │                 █   █               █     █                   █       █           █  █         │ 
+>   0.00% │                 █   █               █     █                   █       █           █  █         │ Histo bin width: 1.23Mbp
+>   0.00% │                 █   █               █     █                   █       █           █  █         │ Histo max bin:   0.0086526%
+          1       12.25M    24.50M    36.75M    49.00M    61.25M    73.50M    85.75M    98.00M         117.61M 
+
+HiC_scaffold_974 (85.38Mbp)
+>   0.01% │                                                       █                                        │ Number of reads: 12
+>   0.01% │                                       ▄               █                                        │ 
+>   0.01% │                                       █               █                                        │ Covered bases:   651bp
+>   0.01% │                                       █               █                                        │ Percent covered: 0.0007625%
+>   0.01% │                                       █               █                                        │ Mean coverage:   9.28e-06x
+>   0.01% │        ▄                              █               █                                        │ Mean baseQ:      35.7
+>   0.00% │        █   █       ▄        ▄         █               █         █                              │ Mean mapQ:       31.5
+>   0.00% │        █   █       █   ▄    █         █               █         █              ▄           █   │ 
+>   0.00% │        █   █       █   █    █         █               █         █              █           █   │ Histo bin width: 889.3Kbp
+>   0.00% │        █   █       █   █    █         █               █         █              █           █   │ Histo max bin:   0.015854%
+          1       8.89M     17.79M    26.68M    35.57M    44.47M    53.36M    62.25M    71.15M          85.38M 
+
+HiC_scaffold_983 (11.5Kbp)
+>  24.20% │                                                       █                                        │ Number of reads: 1
+>  21.51% │                                                       █                                        │ 
+>  18.82% │                                                      ██                                        │ Covered bases:   57bp
+>  16.13% │                                                      ██                                        │ Percent covered: 0.4962%
+>  13.45% │                                                      ██                                        │ Mean coverage:   0.00496x
+>  10.76% │                                                      ██                                        │ Mean baseQ:      37
+>   8.07% │                                                      ██                                        │ Mean mapQ:       37
+>   5.38% │                                                      ██                                        │ 
+>   2.69% │                                                      ██                                        │ Histo bin width: 119bp
+>   0.00% │                                                      ██                                        │ Histo max bin:   26.891%
+          1        1.2K      2.4K      3.6K      4.8K      6.0K      7.1K      8.3K      9.5K           11.5K  
+
+HiC_scaffold_985 (231.96Mbp)
+>   0.00% │                     █                                                                          │ Number of reads: 8
+>   0.00% │                     █             █                                                            │ 
+>   0.00% │                     █      █      █       █                                                    │ Covered bases:   427bp
+>   0.00% │                     █      █      █       █                                                    │ Percent covered: 0.0001841%
+>   0.00% │    █                █      █      █       █                                            █       │ Mean coverage:   1.84e-06x
+>   0.00% │    █                █     ▄█      █       █                                            █       │ Mean baseQ:      36.2
+>   0.00% │    █                █     ██      █       █           █                                █       │ Mean mapQ:       40
+>   0.00% │    █                █     ██      █       █           █                                █       │ 
+>   0.00% │    █                █     ██      █       █           █                                █       │ Histo bin width: 2.42Mbp
+>   0.00% │    █                █     ██      █       █           █                                █       │ Histo max bin:   0.0031867%
+          1       24.16M    48.33M    72.49M    96.65M   120.81M   144.98M   169.14M   193.30M         231.96M 
+
+HiC_scaffold_986 (76.25Mbp)
+>   0.00% │                                                         ▄                            █         │ Number of reads: 2
+>   0.00% │                                                         █                            █         │ 
+>   0.00% │                                                         █                            █         │ Covered bases:   86bp
+>   0.00% │                                                         █                            █         │ Percent covered: 0.0001128%
+>   0.00% │                                                         █                            █         │ Mean coverage:   1.13e-06x
+>   0.00% │                                                         █                            █         │ Mean baseQ:      36.6
+>   0.00% │                                                         █                            █         │ Mean mapQ:       27
+>   0.00% │                                                         █                            █         │ 
+>   0.00% │                                                         █                            █         │ Histo bin width: 794.3Kbp
+>   0.00% │                                                         █                            █         │ Histo max bin:   0.0055397%
+          1       7.94M     15.89M    23.83M    31.77M    39.71M    47.66M    55.60M    63.54M          76.25M 
+
+HiC_scaffold_997 (107.87Mbp)
+>   0.01% │              █                                                                                 │ Number of reads: 11
+>   0.01% │              █                                                                                 │ 
+>   0.01% │              █                                                                                 │ Covered bases:   664bp
+>   0.01% │              █                                            ▄                  ▄                 │ Percent covered: 0.0006156%
+>   0.01% │              █   █         ▄                              █                  █                 │ Mean coverage:   7.31e-06x
+>   0.00% │              █   █         █                      ▄▄      █                  █                 │ Mean baseQ:      36.5
+>   0.00% │              █   █         █                      ██      █                  █     █           │ Mean mapQ:       37.3
+>   0.00% │       █      █   █         █               ▄      ██      █                  █     █           │ 
+>   0.00% │       █      █   █         █               █      ██      █                  █     █           │ Histo bin width: 1.12Mbp
+>   0.00% │       █      █   █         █               █      ██      █                  █     █           │ Histo max bin:   0.011125%
+          1       11.24M    22.47M    33.71M    44.94M    56.18M    67.42M    78.65M    89.89M         107.87M 
+
+HiC_scaffold_1008 (112.95Mbp)
+>   0.01% │                         █                                                                      │ Number of reads: 10
+>   0.00% │                         █                ▄                                                 ▄   │ 
+>   0.00% │      █                  █                █                                                 █   │ Covered bases:   480bp
+>   0.00% │      █              █   █                █                                                 █   │ Percent covered: 0.000425%
+>   0.00% │      █  ▄           █   █      █         █                                                 █▄  │ Mean coverage:   4.25e-06x
+>   0.00% │      █  █           █   █      █         █                      █     █                    ██  │ Mean baseQ:      36.7
+>   0.00% │      █  █           █   █      █         █                      █     █                    ██  │ Mean mapQ:       29.5
+>   0.00% │      █  █           █   █      █         █                      █     █                    ██  │ 
+>   0.00% │      █  █           █   █      █         █                      █     █                    ██  │ Histo bin width: 1.18Mbp
+>   0.00% │      █  █           █   █      █         █                      █     █                    ██  │ Histo max bin:   0.0058647%
+          1       11.77M    23.53M    35.30M    47.06M    58.83M    70.59M    82.36M    94.12M         112.95M 
+
+HiC_scaffold_1019 (120.05Mbp)
+>   0.01% │         █                                                                                      │ Number of reads: 19
+>   0.01% │   █     █                                                                                      │ 
+>   0.01% │   █     █                              █      ▄                                                │ Covered bases:   916bp
+>   0.00% │   █    ▄█                              █      █                                                │ Percent covered: 0.000763%
+>   0.00% │  ▄█    ██          █      ▄            █      █                    ▄               ▄           │ Mean coverage:   8.45e-06x
+>   0.00% │  ██    ██          █      █            █    ▄ █▄      █            █               █           │ Mean baseQ:      36
+>   0.00% │  ██    ██          █      █            █    █ ██      █    █       █         ▄     █     ▄     │ Mean mapQ:       34.7
+>   0.00% │  ██    ██          █      █            █    █ ██      █    █       █         █     █     █     │ 
+>   0.00% │  ██    ██          █      █            █    █ ██      █    █       █         █     █     █     │ Histo bin width: 1.25Mbp
+>   0.00% │  ██    ██          █      █            █    █ ██      █    █       █         █     █     █     │ Histo max bin:   0.0078369%
+          1       12.51M    25.01M    37.52M    50.02M    62.53M    75.03M    87.54M   100.04M         120.05M 
+
+HiC_scaffold_1030 (81.93Mbp)
+>   0.01% │                                                                                   █            │ Number of reads: 19
+>   0.01% │                                   ▄                                               █            │ 
+>   0.01% │               ▄                   █  █                                   ▄     █  █      ▄     │ Covered bases:   936bp
+>   0.01% │               █                   █  █                                   █     █  █      █     │ Percent covered: 0.001142%
+>   0.01% │               █                   █  ██                ▄                 █     █  █      █     │ Mean coverage:   1.51e-05x
+>   0.00% │    ▄   ▄      █             █     █  ██                █   █             █     █  █      █     │ Mean baseQ:      35.4
+>   0.00% │    █   █      █             █     █  ██                █   █             █     █  █      █     │ Mean mapQ:       39.7
+>   0.00% │    █   █      █             █     █  ██                █   █             █     █  █      █   █ │ 
+>   0.00% │    █   █      █             █     █  ██                █   █             █     █  █      █   █ │ Histo bin width: 853.4Kbp
+>   0.00% │    █   █      █             █     █  ██                █   █             █     █  █      █   █ │ Histo max bin:   0.012187%
+          1       8.53M     17.07M    25.60M    34.14M    42.67M    51.20M    59.74M    68.27M          81.93M 
+
+HiC_scaffold_1041 (204.32Mbp)
+>   0.01% │                                                                      █                         │ Number of reads: 24
+>   0.01% │                                                                      █                         │ 
+>   0.01% │                                                                      █                         │ Covered bases:   1.5Kbp
+>   0.00% │▄                                                                     █          █              │ Percent covered: 0.0007488%
+>   0.00% │█                                                                     █          █              │ Mean coverage:   7.49e-06x
+>   0.00% │█                                               █         █ █         ██         █          █   │ Mean baseQ:      36.4
+>   0.00% │█     █                                  █      █   █   █ █ █        ▄███        █          █   │ Mean mapQ:       40.1
+>   0.00% │█     █                 ▄         ▄      █   █  █ ▄ █   █ █ █        ████        █   █  ▄   █   │ 
+>   0.00% │█     █                 █         █      █   █  █ █ █   █ █ █        ████        █   █  █   █   │ Histo bin width: 2.13Mbp
+>   0.00% │█     █                 █         █      █   █  █ █ █   █ █ █        ████        █   █  █   █   │ Histo max bin:   0.0081754%
+          1       21.28M    42.57M    63.85M    85.13M   106.42M   127.70M   148.98M   170.27M         204.32M 
+
+HiC_scaffold_1052 (140.27Mbp)
+>   0.01% │                                                                              █                 │ Number of reads: 14
+>   0.01% │                                                                              █                 │ 
+>   0.01% │                                                                              █                 │ Covered bases:   780bp
+>   0.01% │                                                                              █                 │ Percent covered: 0.0005561%
+>   0.01% │                                                                              █                 │ Mean coverage:   5.95e-06x
+>   0.00% │                                                              ▄               █                 │ Mean baseQ:      36.1
+>   0.00% │                           █▄                               █ █               █               ▄▄│ Mean mapQ:       40
+>   0.00% │                █          ██                               █ █               █  █            ██│ 
+>   0.00% │                █          ██                    █          █ █        █      █  █            ██│ Histo bin width: 1.46Mbp
+>   0.00% │                █          ██                    █          █ █        █      █  █            ██│ Histo max bin:   0.012456%
+          1       14.61M    29.22M    43.83M    58.44M    73.06M    87.67M   102.28M   116.89M         140.27M 
+
+HiC_scaffold_1062 (10.5Kbp)
+>  35.50% │            █                                                                                   │ Number of reads: 1
+>  31.56% │            █                                                                                   │ 
+>  27.61% │            █                                                                                   │ Covered bases:   43bp
+>  23.67% │            █                                                                                   │ Percent covered: 0.4087%
+>  19.72% │            █                                                                                   │ Mean coverage:   0.00409x
+>  15.78% │            █                                                                                   │ Mean baseQ:      36.7
+>  11.83% │            █                                                                                   │ Mean mapQ:       34
+>   7.89% │            █                                                                                   │ 
+>   3.94% │            █                                                                                   │ Histo bin width: 109bp
+>   0.00% │            █                                                                                   │ Histo max bin:   39.45%
+          1        1.1K      2.2K      3.3K      4.4K      5.5K      6.5K      7.6K      8.7K           10.5K  
+
+HiC_scaffold_1063 (189.22Mbp)
+>   0.00% │                              █                                                                 │ Number of reads: 11
+>   0.00% │                              █                                                       █         │ 
+>   0.00% │                              █                                                       █ ▄       │ Covered bases:   618bp
+>   0.00% │ ▄                            █                                             ▄         █ █       │ Percent covered: 0.0003266%
+>   0.00% │ █                            █          ▄                                ▄ █         █ █       │ Mean coverage:   3.27e-06x
+>   0.00% │ █                            █          █                                █ █         █ █       │ Mean baseQ:      36.6
+>   0.00% │ █ █                          █          █                            █   █ █         ███       │ Mean mapQ:       37.5
+>   0.00% │ █ █                          █          █                            █   █ █         ███       │ 
+>   0.00% │ █ █                          █          █                            █   █ █         ███       │ Histo bin width: 1.97Mbp
+>   0.00% │ █ █                          █          █                            █   █ █         ███       │ Histo max bin:   0.0050228%
+          1       19.71M    39.42M    59.13M    78.84M    98.55M   118.26M   137.97M   157.68M         189.22M 
+
+HiC_scaffold_1074 (236.52Mbp)
+>   0.00% │                                                                                             █  │ Number of reads: 16
+>   0.00% │                                                                                             █  │ 
+>   0.00% │     ▄                                                                                       █  │ Covered bases:   1.1Kbp
+>   0.00% │     █   ▄                               ▄                                                   █  │ Percent covered: 0.0004524%
+>   0.00% │ ▄   █  ▄█              ▄  ▄             █                                                   █  │ Mean coverage:   4.52e-06x
+>   0.00% │ █   █  ██              █  █   ▄▄        █                                            █      █  │ Mean baseQ:      36.5
+>   0.00% │ █   █  ██      ▄       █  █   ██        █                                            █      █ █│ Mean mapQ:       29.3
+>   0.00% │ █   █  ██      █    ▄  █  █  ███        █                                            █      █ █│ 
+>   0.00% │ █   █  ██      █    █  █  █  ███        █                                            █      █ █│ Histo bin width: 2.46Mbp
+>   0.00% │ █   █  ██      █    █  █  █  ███        █                                            █      █ █│ Histo max bin:   0.0054794%
+          1       24.64M    49.28M    73.91M    98.55M   123.19M   147.83M   172.46M   197.10M         236.52M 
+
+HiC_scaffold_1096 (162.32Mbp)
+>   0.00% │        █                                                                                       │ Number of reads: 9
+>   0.00% │        █                  █                                                                    │ 
+>   0.00% │        █                  █                   ▄                                     █          │ Covered bases:   459bp
+>   0.00% │        █                  █                   █                                     █          │ Percent covered: 0.0002828%
+>   0.00% │        █                  █                   █              ▄                      █          │ Mean coverage:   3.2e-06x
+>   0.00% │        █   ▄              █  █          █     █              █                      █          │ Mean baseQ:      35.6
+>   0.00% │        █   █              █  █          █     █              █                      █          │ Mean mapQ:       32.8
+>   0.00% │        █   █              █  █          █     █              █                      █          │ 
+>   0.00% │        █   █              █  █          █     █              █                      █          │ Histo bin width: 1.69Mbp
+>   0.00% │        █   █              █  █          █     █              █                      █          │ Histo max bin:   0.0049679%
+          1       16.91M    33.82M    50.73M    67.63M    84.54M   101.45M   118.36M   135.27M         162.32M 
+
+HiC_scaffold_1097 (58.0Kbp)
+>   6.11% │ █                                                                                              │ Number of reads: 1
+>   5.43% │ █                                                                                              │ 
+>   4.75% │ █                                                                                              │ Covered bases:   41bp
+>   4.07% │ █                                                                                              │ Percent covered: 0.07065%
+>   3.39% │ █                                                                                              │ Mean coverage:   0.000706x
+>   2.72% │ █                                                                                              │ Mean baseQ:      36.4
+>   2.04% │ █                                                                                              │ Mean mapQ:       42
+>   1.36% │ █                                                                                              │ 
+>   0.68% │ █                                                                                              │ Histo bin width: 604bp
+>   0.00% │ █                                                                                              │ Histo max bin:   6.7881%
+          1        6.0K     12.1K     18.1K     24.2K     30.2K     36.2K     42.3K     48.3K           58.0K  
+
+HiC_scaffold_1121 (9.7Kbp)
+>  39.21% │        █                                                                                       │ Number of reads: 1
+>  34.85% │        █                                                                                       │ 
+>  30.50% │        █                                                                                       │ Covered bases:   44bp
+>  26.14% │        █                                                                                       │ Percent covered: 0.4517%
+>  21.78% │        █                                                                                       │ Mean coverage:   0.00452x
+>  17.43% │        █                                                                                       │ Mean baseQ:      37
+>  13.07% │        █                                                                                       │ Mean mapQ:       42
+>   8.71% │        █                                                                                       │ 
+>   4.36% │        █                                                                                       │ Histo bin width: 101bp
+>   0.00% │        █                                                                                       │ Histo max bin:   43.564%
+          1        1.0K      2.0K      3.0K      4.0K      5.0K      6.1K      7.1K      8.1K            9.7K  
+
+HiC_scaffold_1207 (132.40Mbp)
+>   0.01% │                                               █                                                │ Number of reads: 8
+>   0.01% │                                               █                                                │ 
+>   0.00% │  ▄                                            █   █                                            │ Covered bases:   497bp
+>   0.00% │  █                                            █   █                        █                   │ Percent covered: 0.0003754%
+>   0.00% │  █                                            █   █                    █   █       ▄           │ Mean coverage:   3.75e-06x
+>   0.00% │  █                                            █   █                    █   █   █   █           │ Mean baseQ:      35.1
+>   0.00% │█ █                                            █   █                    █   █   █   █           │ Mean mapQ:       33.9
+>   0.00% │█ █                                            █   █                    █   █   █   █           │ 
+>   0.00% │█ █                                            █   █                    █   █   █   █           │ Histo bin width: 1.38Mbp
+>   0.00% │█ █                                            █   █                    █   █   █   █           │ Histo max bin:   0.0067431%
+          1       13.79M    27.58M    41.38M    55.17M    68.96M    82.75M    96.54M   110.33M         132.40M 
+
+HiC_scaffold_1318 (92.35Mbp)
+>   0.01% │                                                                        ▄       █               │ Number of reads: 3
+>   0.01% │                                           █                            █       █               │ 
+>   0.00% │                                           █                            █       █               │ Covered bases:   191bp
+>   0.00% │                                           █                            █       █               │ Percent covered: 0.0002068%
+>   0.00% │                                           █                            █       █               │ Mean coverage:   2.07e-06x
+>   0.00% │                                           █                            █       █               │ Mean baseQ:      36.4
+>   0.00% │                                           █                            █       █               │ Mean mapQ:       21
+>   0.00% │                                           █                            █       █               │ 
+>   0.00% │                                           █                            █       █               │ Histo bin width: 962.0Kbp
+>   0.00% │                                           █                            █       █               │ Histo max bin:   0.0069649%
+          1       9.62M     19.24M    28.86M    38.48M    48.10M    57.72M    67.34M    76.96M          92.35M 
+
+HiC_scaffold_1361 (8.2Kbp)
+>  48.71% │                                      ██                                                        │ Number of reads: 1
+>  43.29% │                                      ██                                                        │ 
+>  37.88% │                                      ██                                                        │ Covered bases:   91bp
+>  32.47% │                                      ██                                                        │ Percent covered: 1.104%
+>  27.06% │                                      ██                                                        │ Mean coverage:   0.011x
+>  21.65% │                                      ██                                                        │ Mean baseQ:      36.7
+>  16.24% │                                      ██                                                        │ Mean mapQ:       42
+>  10.82% │                                      ██                                                        │ 
+>   5.41% │                                      ██                                                        │ Histo bin width: 85bp
+>   0.00% │                                      ██                                                        │ Histo max bin:   54.118%
+          1        850       1.7K      2.5K      3.4K      4.2K      5.1K      6.0K      6.8K            8.2K  
+
+HiC_scaffold_1429 (92.05Mbp)
+>   0.01% │                                           █                                                    │ Number of reads: 8
+>   0.01% │                                           █                                                    │ 
+>   0.01% │                                           █                                                    │ Covered bases:   501bp
+>   0.01% │                                           █                                ▄   ▄               │ Percent covered: 0.0005443%
+>   0.01% │               █                           █                                █   █               │ Mean coverage:   5.44e-06x
+>   0.01% │               █                           █                              █ █▄  █               │ Mean baseQ:      36.3
+>   0.00% │               █              ▄            █                              █ ██  █               │ Mean mapQ:       40.1
+>   0.00% │               █              █            █                              █ ██  █               │ 
+>   0.00% │               █              █            █                              █ ██  █               │ Histo bin width: 958.9Kbp
+>   0.00% │               █              █            █                              █ ██  █               │ Histo max bin:   0.012619%
+          1       9.59M     19.18M    28.77M    38.35M    47.94M    57.53M    67.12M    76.71M          92.05M 
+
+HiC_scaffold_1540 (75.82Mbp)
+>   0.01% │                                                               █                                │ Number of reads: 6
+>   0.01% │               ▄                                               █                                │ 
+>   0.01% │               █          █                                    █                                │ Covered bases:   375bp
+>   0.01% │               █   █      █                                    █                                │ Percent covered: 0.0004946%
+>   0.01% │    ▄          █   █      █                                    █                                │ Mean coverage:   4.95e-06x
+>   0.00% │    █          █   █      █                      █             █                                │ Mean baseQ:      36.9
+>   0.00% │    █          █   █      █                      █             █                                │ Mean mapQ:       35
+>   0.00% │    █          █   █      █                      █             █                                │ 
+>   0.00% │    █          █   █      █                      █             █                                │ Histo bin width: 789.8Kbp
+>   0.00% │    █          █   █      █                      █             █                                │ Histo max bin:   0.010889%
+          1       7.90M     15.80M    23.69M    31.59M    39.49M    47.39M    55.29M    63.19M          75.82M 
+
+HiC_scaffold_1651 (84.38Mbp)
+>   0.01% │                                                                              █       ▄         │ Number of reads: 6
+>   0.01% │              █                                                               █       █         │ 
+>   0.01% │              █                                             █                 █       █         │ Covered bases:   384bp
+>   0.01% │              █                                             █                 █       █      ▄  │ Percent covered: 0.0004551%
+>   0.00% │              █                                             █                 █       █      █  │ Mean coverage:   4.55e-06x
+>   0.00% │              █                                             █                 ██      █      █  │ Mean baseQ:      36.6
+>   0.00% │              █                                             █                 ██      █      █  │ Mean mapQ:       42
+>   0.00% │              █                                             █                 ██      █      █  │ 
+>   0.00% │              █                                             █                 ██      █      █  │ Histo bin width: 879.0Kbp
+>   0.00% │              █                                             █                 ██      █      █  │ Histo max bin:   0.0091016%
+          1       8.79M     17.58M    26.37M    35.16M    43.95M    52.74M    61.53M    70.32M          84.38M 
+
+HiC_scaffold_1762 (47.23Mbp)
+>   0.01% │                              █                                                                 │ Number of reads: 1
+>   0.01% │                              █                                                                 │ 
+>   0.01% │                              █                                                                 │ Covered bases:   132bp
+>   0.01% │        █                     █                                                                 │ Percent covered: 0.0002795%
+>   0.01% │        █                     █                  ▄                                              │ Mean coverage:   2.79e-06x
+>   0.00% │        █                     █                  █                                              │ Mean baseQ:      33.7
+>   0.00% │        █                     █                  █                                              │ Mean mapQ:       40
+>   0.00% │        █                     █                  █                                              │ 
+>   0.00% │        █                     █                  █                                              │ Histo bin width: 492.0Kbp
+>   0.00% │        █                     █                  █                                              │ Histo max bin:   0.011992%
+          1       4.92M     9.84M     14.76M    19.68M    24.60M    29.52M    34.44M    39.36M          47.23M 
