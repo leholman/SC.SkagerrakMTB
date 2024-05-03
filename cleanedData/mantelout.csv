@@ -1,9 +1,9 @@
 "","Description","Statistic","P_value"
-"1","mantel(xdis = MTG.DS1.b, ydis = MTB.DS1.b, permutations = 10000)",0.631177160527668,0.0015998400159984
-"2","mantel(xdis = MTG.DS1.b, ydis = MTB.DS2.b, permutations = 10000)",0.337476825451649,0.0695930406959304
-"3","mantel(xdis = MTG.DS2.b, ydis = MTB.DS1.b.s, permutations = 10000)",0.0445717996089414,0.383161683831617
-"4","mantel(xdis = MTG.DS2.b, ydis = MTB.DS2.b.s, permutations = 10000)",-0.0936588334884781,0.574642535746425
-"5","mantel(xdis = MTG.DS1.j, ydis = MTB.DS1.j, permutations = 10000)",0.522916102367437,0.0001999800019998
-"6","mantel(xdis = MTG.DS1.j, ydis = MTB.DS2.j, permutations = 10000)",0.29977950023296,0.11028897110289
-"7","mantel(xdis = MTG.DS2.j, ydis = MTB.DS1.j.s, permutations = 10000)",0.172219764082462,0.240775922407759
-"8","mantel(xdis = MTG.DS2.j, ydis = MTB.DS2.j.s, permutations = 10000)",0.0288659794105587,0.432056794320568
+"1","mantel(xdis = MTG.DS1.b, ydis = MTB.DS1.b, permutations = 10000)",0.631,9e-04
+"2","mantel(xdis = MTG.DS1.b, ydis = MTB.DS2.b, permutations = 10000)",0.337,0.0716
+"3","mantel(xdis = MTG.DS2.b, ydis = MTB.DS1.b.s, permutations = 10000)",0.045,0.3881
+"4","mantel(xdis = MTG.DS2.b, ydis = MTB.DS2.b.s, permutations = 10000)",-0.094,0.5818
+"5","mantel(xdis = MTG.DS1.j, ydis = MTB.DS1.j, permutations = 10000)",0.523,4e-04
+"6","mantel(xdis = MTG.DS1.j, ydis = MTB.DS2.j, permutations = 10000)",0.3,0.1179
+"7","mantel(xdis = MTG.DS2.j, ydis = MTB.DS1.j.s, permutations = 10000)",0.172,0.2374
+"8","mantel(xdis = MTG.DS2.j, ydis = MTB.DS2.j.s, permutations = 10000)",0.029,0.4294

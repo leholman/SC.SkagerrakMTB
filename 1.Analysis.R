@@ -135,6 +135,9 @@ MTB.wide.DS3 <- make_binary(MTB.wide.DS3[-1,],1)
 MTB.wide.DS3 <- MTB.wide.DS3[,-1]
 
 
+plot(dates$Mean[match(MTG.raw.DS2$sample2,dates$sampleID)],MTG.raw.DS2$mean_L,pch=16)
+
+
 ####====1.0 Comparison Figure ====####
 
 ## Pull selected taxa
@@ -273,8 +276,10 @@ plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS1),1,8)),dates$sampl
      col="#d55e00",
      xlab="CalYrBP",
      ylab="",
+     yaxt='n',
+     ylim = c(0,max(colSums(MTG.binary.DS1))),
      xlim=c(0,8600))
-axis(side = 2,col.axis = "#d55e00",col="#d55e00")
+axis(side = 2,col.axis = "#d55e00",col="#d55e00",cex.axis=0.8)
 mtext("Metagenomic Genus Richness", side = 2, line = 3,col="#d55e00")
 par(new = TRUE)
 plot(dates$Median[match(as.factor(substr(names(MTB.binary.DS1),1,8)),dates$sampleID)],
@@ -287,7 +292,7 @@ plot(dates$Median[match(as.factor(substr(names(MTB.binary.DS1),1,8)),dates$sampl
      xlab="CalYrBP",
      ylab="",
      xlim=c(0,8600))
-axis(side = 4,col.axis = "#4583C4",col="#4583C4")
+axis(side = 4,col.axis = "#4583C4",col="#4583C4",cex.axis=0.8)
 mtext("Metabarcoding ASV Richness", side = 4, line = 3,col="#4583C4")
 dev.off()
 
@@ -301,8 +306,10 @@ plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS2),1,8)),dates$sampl
      col="#d55e00",
      xlab="CalYrBP",
      ylab="",
+     yaxt='n',
+     ylim = c(0,max(colSums(MTG.binary.DS2))),
      xlim=c(0,8600))
-axis(side = 2,col.axis = "#d55e00",col="#d55e00")
+axis(side = 2,col.axis = "#d55e00",col="#d55e00",cex.axis=0.8)
 mtext("Metagenomic Metazoan Genus Richness", side = 2, line = 3,col="#d55e00")
 par(new = TRUE)
 plot(dates$Median[match(as.factor(substr(names(MTB.binary.DS2),1,8)),dates$sampleID)],
@@ -315,11 +322,9 @@ plot(dates$Median[match(as.factor(substr(names(MTB.binary.DS2),1,8)),dates$sampl
      xlab="CalYrBP",
      ylab="",
      xlim=c(0,8600))
-axis(side = 4,col.axis = "#4583C4",col="#4583C4")
+axis(side = 4,col.axis = "#4583C4",col="#4583C4",cex.axis=0.8)
 mtext("Metabarcoding Metazoan ASV Richness", side = 4, line = 3,col="#4583C4")
 dev.off()
-
-
 
 
 
@@ -474,6 +479,20 @@ legend("topright",legend=c(paste0("Corr = ",round(unname(test$estimate),3)),
 
 dev.off()
 
+### evenness
+
+H <- diversity(BCI)
+J <- H/log(specnumber(BCI))
+
+MTB.div <- diversity(t(euk.rare[,1:72]))
+MTB.eveness <- MTB.div/log(specnumber(t(euk.rare[,1:72])))
+
+MTG.div <- diversity(t(MTG.wide.DS1[,4:14]))
+MTG.eveness <- MTG.div/log(specnumber(t(MTG.wide.DS1[,4:14])))
+
+
+
+
 
 ####====2.0 Beta Diversity Comparison  ====####
 
@@ -539,8 +558,8 @@ components <- list(comp1, comp2, comp3, comp4, comp5, comp6, comp7, comp8)
 results <- do.call(rbind, lapply(components, function(x) {
   data.frame(
     Description = deparse(x$call),  # Convert the call object to a character string
-    Statistic = x$statistic,
-    P_value = x$signif
+    Statistic = round(x$statistic,digits = 3),
+    P_value = round(x$signif,digits=4)
   )
 }))
 
@@ -2531,6 +2550,8 @@ dev.off()
 ### Extra stuff
 #length age relationship
 
+#metabarcdoing 
+
 euk$ASV_len <- nchar(euk$unname.rawSeqs..match.row.names.expSamples...names.rawSeqs...) 
 
 test <- melt(euk, measure.vars=1:88, variable.name="Sample", value.name="nReads")
@@ -2549,13 +2570,6 @@ test3 <- melt(euk.Nreps, measure.vars=1:11, variable.name="Sample", value.name="
 test4 <- test3[test3$nReps>0,]
 test5 <- test4[test4$phylum=="Chordata",]
 
-pdf("figures/lengthAge.nReps.pdf",width=11,height=7)
-plot(jitter(dates$Median[match(test4$Sample,dates$sampleID)],amount = 150),
-     jitter(test4$ASV_len,amount = 0.15),pch=16,cex=0.3,
-     xlab="CalYrBP",
-     ylab="ASV Length")
-dev.off()
-
 
 pdf("figures/lengthAge.nReps.cols.pdf",width=11,height=7)
 par(mar=c(5.1, 4.1, 2.1, 4.1), xpd=TRUE)
@@ -2569,6 +2583,27 @@ points(jitter(dates$Median[match(test5$Sample,dates$sampleID)],amount = 150),
        jitter(test5$ASV_len,amount = 0.15),pch=16,cex=0.5,col="purple")
 legend(9000,130,legend = c("Eukaryotes","Bacteria","Archaea","Chordata","No Assign"),pch=15,col=c("red","darkgreen","blue","purple","grey"),cex=0.5, bty='n')
 dev.off()
+
+
+pdf("figures/lengthAge.nReps.pdf",width=6.5,height=5)
+plot(jitter(dates$Median[match(test4$Sample,dates$sampleID)],amount = 75),
+     jitter(test4$ASV_len,amount = 0.15),pch=16,cex=0.3,col="#4583C4",
+     xlab="CalYrBP",
+     ylab="ASV Length (bp)")
+dev.off()
+
+points(dates$Mean[match(MTG.raw.DS2$sample2,dates$sampleID)],MTG.raw.DS2$mean_L,pch=16,col="#d55e00")
+
+points(proc,pch=16,col="#4583C4",display = "target")
+points(proc,pch=16,col="#d55e00",display = "rotated")
+
+##metagenomics
+
+pdf("figures/lengthAge.MTG.pdf",width=6.5,height=5)
+plot(dates$Mean[match(MTG.raw.DS2$sample2,dates$sampleID)],MTG.raw.DS2$mean_L,pch=16,col="#d55e00",xlab="CalYrBP",ylab="Average Sequence Length Per Taxa (bp)",cex=0.8)
+dev.off()
+
+
 
 
 
