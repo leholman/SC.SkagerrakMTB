@@ -2342,7 +2342,7 @@ datain <- MTB.wide.DS1
 colnames(datain) <- as.character(dates$Median[match(colnames(datain),dates$sampleID)])
 out <- metaMDS(vegdist(t(prop.table(as.matrix(datain),2))),trymax = 200)
 out.j <- metaMDS(vegdist(t(prop.table(as.matrix(datain),2)),binary = TRUE,method = "jaccard"),trymax = 200) 
-out.s
+
 
 pdf("figures/figure2/beta.MTB.DS1.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
@@ -2629,8 +2629,8 @@ MTB.len.median.met <- tapply(test2$ASV_len, test2$Sample, median)
 MTB.len.mean.met <- tapply(test2$ASV_len, test2$Sample, mean)
 
 #predictions
-year <- dates$Mean[match(test4$Sample,dates$sampleID)]
-len <- test4$ASV_len
+year <- dates$Mean[match(test2$Sample,dates$sampleID)]
+len <- test2$ASV_len
 
 predictions <- data.frame("year"=seq(min(MTB.year),max(MTB.year),10))
 predictions <- cbind(predictions,predict(lm(len~year),predictions,se.fit = TRUE))
@@ -2659,11 +2659,12 @@ points(predictions$year,predictions$fit,type="l",col="black",lwd=3)
 dev.off()
 
 
-year <- dates$Mean[match(test4$Sample,dates$sampleID)]
+year <- dates$Mean[match(test2$Sample,dates$sampleID)]
 len <- test2$ASV_len
 
 predictions <- data.frame("year"=seq(min(MTB.year),max(MTB.year),10))
-predictions <- cbind(predictions,predict(lm(len~year),predictions,se.fit = TRUE))
+l1 <- lm(len~year)
+predictions <- cbind(predictions,predict(l1,predictions,se.fit = TRUE))
 predictions$uppCI <- predictions$fit+predictions$se.fit*1.96
 predictions$lwrCI <- predictions$fit-predictions$se.fit*1.96
 
@@ -2713,6 +2714,11 @@ sink(file="figures/suppl.len/MTG.len_year.lm.out.txt")
 summary(lm(len~year))
 sink()
 
+MTG.len.mean <- tapply(MTG.raw.DS1$mean_L, MTG.raw.DS1$sample2, mean)
+
+
+
+
 #metagenomics metazoa
 
 year <- dates$Mean[match(MTG.raw.DS2$sample2,dates$sampleID)]
@@ -2737,6 +2743,105 @@ dev.off()
 sink(file="figures/suppl.len/MTG.met.len_year.lm.out.txt")
 summary(lm(len~year))
 sink()
+
+MTG.len.mean.met <- tapply(MTG.raw.DS2$mean_L, MTG.raw.DS2$sample2, mean)
+
+
+
+#### compare richness to length
+pdf("figures/suppl.len/Richness.compare.pdf",height = 6,width = 6)
+par(mfrow=c(2,2),mar=c(4.1, 4.1, 2.1, 2.1))
+## MTB all
+lm1.summary <- summary(lm(colSums(MTB.binary.DS1)~MTB.len.median))
+plot(MTB.len.median,colSums(MTB.binary.DS1),pch=16,xlab="Median ASV length",ylab="ASV richness")
+legend("topright",legend=c(paste0("R2 = ",round(lm1.summary$adj.r.squared,3)),
+                          paste0("p = ",round(lm1.summary$coefficients[2, 4],3))),text.col = "red",bty="n")
+
+
+colSums(MTB.binary.DS2)
+
+## MTB met
+lm1.summary <- summary(lm(colSums(MTB.binary.DS2)~MTB.len.median.met))
+plot(MTB.len.median.met,colSums(MTB.binary.DS2),pch=16,xlab="Median ASV length",ylab="ASV richness")
+legend("topright",legend=c(paste0("R2 = ",round(lm1.summary$adj.r.squared,3)),
+                           paste0("p = ",round(lm1.summary$coefficients[2, 4],3))),text.col = "red",bty="n")
+
+
+## MTG all
+lm1.summary <- summary(lm(colSums(MTG.binary.DS1)~MTG.len.mean[match(names(MTG.binary.DS1),names(MTG.len.mean))]))
+plot(MTG.len.mean[match(names(MTG.binary.DS1),names(MTG.len.mean))],colSums(MTG.binary.DS1),pch=16,xlab="Mean read length",ylab="Genus richness")
+legend("topright",legend=c(paste0("R2 = ",round(lm1.summary$adj.r.squared,3)),
+                           paste0("p = ",round(lm1.summary$coefficients[2, 4],3))),text.col = "red",bty="n")
+
+
+## MTG met
+lm1.summary <- summary(lm(colSums(MTG.binary.DS2)~MTG.len.mean.met[match(names(MTG.binary.DS2),names(MTG.len.mean.met))]))
+plot(MTG.len.mean.met[match(names(MTG.binary.DS2),names(MTG.len.mean.met))],colSums(MTG.binary.DS2),pch=16,xlab="Mean read length",ylab="Genus richness")
+legend("topright",legend=c(paste0("R2 = ",round(lm1.summary$adj.r.squared,3)),
+                           paste0("p = <0.001")),text.col = "red",bty="n")
+
+dev.off()
+
+
+## now we test each variable using a distance based redundancy analysis to see if we can explain variation in the data 
+
+
+length_dat <- data.frame(MTB.len=MTB.len.median,
+                         MTB.m.len=MTB.len.median.met,
+                         MTG.len=MTG.len.mean[match(names(MTB.len.median),names(MTG.len.mean))],
+                         MTG.m.len=MTG.len.mean.met[match(names(MTB.len.median),names(MTG.len.mean.met))])
+
+
+
+## MTB
+community_data <- t(prop.table(as.matrix(MTB.wide.DS1),2))
+dist.b <- vegdist(community_data, method = "bray")
+dist.j <- vegdist(community_data, method = "jaccard",binary = TRUE)
+
+dbrda.b<- capscale(dist.b ~ MTB.len, data = length_dat)
+dbrda.j<- capscale(dist.j ~ MTB.len, data = length_dat)
+
+anova(dbrda.b, permutations = 999)
+anova(dbrda.j, permutations = 999)
+
+
+## MTB met
+community_data <- t(prop.table(as.matrix(MTB.wide.DS2),2))
+dist.b <- vegdist(community_data, method = "bray")
+dist.j <- vegdist(community_data, method = "jaccard",binary = TRUE)
+
+dbrda.b<- capscale(dist.b ~ MTB.len, data = length_dat)
+dbrda.j<- capscale(dist.j ~ MTB.len, data = length_dat)
+
+anova(dbrda.b, permutations = 999)
+anova(dbrda.j, permutations = 999)
+
+
+## MTG
+community_data <- t(prop.table(as.matrix(MTG.wide.DS1[,4:14]),2))
+dist.b <- vegdist(community_data, method = "bray")
+dist.j <- vegdist(community_data, method = "jaccard",binary = TRUE)
+
+dbrda.b<- capscale(dist.b ~ MTB.len, data = length_dat)
+dbrda.j<- capscale(dist.j ~ MTB.len, data = length_dat)
+
+anova(dbrda.b, permutations = 999)
+anova(dbrda.j, permutations = 999)
+
+
+## MTG met
+community_data <- t(prop.table(as.matrix(MTG.wide.DS2[,-1]),2))
+dist.b <- vegdist(community_data, method = "bray")
+dist.j <- vegdist(community_data, method = "jaccard",binary = TRUE)
+
+dbrda.b<- capscale(dist.b ~ MTB.len[-1], data = length_dat)
+dbrda.j<- capscale(dist.j ~ MTB.len[-1], data = length_dat)
+
+anova(dbrda.b, permutations = 999)
+anova(dbrda.j, permutations = 999)
+
+
+##### Other/annex
 
 
 #plot high quality assignments

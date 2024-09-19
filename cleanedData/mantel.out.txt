@@ -5,11 +5,11 @@ Call:
 mantel(xdis = MTG.DS1.b, ydis = MTB.DS1.b, permutations = 10000) 
 
 Mantel statistic r: 0.6312 
-      Significance: 0.0011999 
+      Significance: 0.0013999 
 
 Upper quantiles of permutations (null model):
   90%   95% 97.5%   99% 
-0.238 0.304 0.366 0.456 
+0.242 0.306 0.376 0.462 
 Permutation: free
 Number of permutations: 10000
 
@@ -20,11 +20,11 @@ Call:
 mantel(xdis = MTG.DS1.b, ydis = MTB.DS2.b, permutations = 10000) 
 
 Mantel statistic r: 0.295 
-      Significance: 0.10509 
+      Significance: 0.10739 
 
 Upper quantiles of permutations (null model):
   90%   95% 97.5%   99% 
-0.301 0.374 0.432 0.496 
+0.304 0.377 0.432 0.493 
 Permutation: free
 Number of permutations: 10000
 
@@ -35,11 +35,11 @@ Call:
 mantel(xdis = MTG.DS2.b, ydis = MTB.DS1.b.s, permutations = 10000) 
 
 Mantel statistic r: 0.04457 
-      Significance: 0.39576 
+      Significance: 0.39036 
 
 Upper quantiles of permutations (null model):
   90%   95% 97.5%   99% 
-0.226 0.294 0.352 0.402 
+0.224 0.294 0.345 0.397 
 Permutation: free
 Number of permutations: 10000
 
@@ -50,11 +50,11 @@ Call:
 mantel(xdis = MTG.DS2.b, ydis = MTB.DS2.b.s, permutations = 10000) 
 
 Mantel statistic r: -0.0708 
-      Significance: 0.54925 
+      Significance: 0.55864 
 
 Upper quantiles of permutations (null model):
   90%   95% 97.5%   99% 
-0.415 0.554 0.614 0.669 
+0.385 0.546 0.604 0.667 
 Permutation: free
 Number of permutations: 10000
 
@@ -65,11 +65,11 @@ Call:
 mantel(xdis = MTG.DS1.j, ydis = MTB.DS1.j, permutations = 10000) 
 
 Mantel statistic r: 0.5229 
-      Significance: 0.00049995 
+      Significance: 0.00059994 
 
 Upper quantiles of permutations (null model):
   90%   95% 97.5%   99% 
-0.260 0.306 0.343 0.391 
+0.262 0.310 0.350 0.402 
 Permutation: free
 Number of permutations: 10000
 
@@ -80,11 +80,11 @@ Call:
 mantel(xdis = MTG.DS1.j, ydis = MTB.DS2.j, permutations = 10000) 
 
 Mantel statistic r: 0.2753 
-      Significance: 0.11029 
+      Significance: 0.11189 
 
 Upper quantiles of permutations (null model):
   90%   95% 97.5%   99% 
-0.313 0.467 0.512 0.559 
+0.320 0.468 0.518 0.565 
 Permutation: free
 Number of permutations: 10000
 
@@ -95,11 +95,11 @@ Call:
 mantel(xdis = MTG.DS2.j, ydis = MTB.DS1.j.s, permutations = 10000) 
 
 Mantel statistic r: 0.1722 
-      Significance: 0.24388 
+      Significance: 0.23728 
 
 Upper quantiles of permutations (null model):
   90%   95% 97.5%   99% 
-0.321 0.394 0.445 0.491 
+0.314 0.393 0.446 0.492 
 Permutation: free
 Number of permutations: 10000
 
@@ -110,11 +110,11 @@ Call:
 mantel(xdis = MTG.DS2.j, ydis = MTB.DS2.j.s, permutations = 10000) 
 
 Mantel statistic r: -0.01135 
-      Significance: 0.44566 
+      Significance: 0.45555 
 
 Upper quantiles of permutations (null model):
   90%   95% 97.5%   99% 
-0.350 0.455 0.533 0.593 
+0.365 0.462 0.534 0.600 
 Permutation: free
 Number of permutations: 10000
 

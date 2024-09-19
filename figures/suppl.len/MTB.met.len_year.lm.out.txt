@@ -1,15 +1,15 @@
 
 Call:
-lm(formula = test2$ASV_len ~ dates$Mean[match(test2$Sample, dates$sampleID)])
+lm(formula = len ~ year)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
 -6.3899 -1.6605  0.6101  1.5114  5.1030 
 
 Coefficients:
-                                                  Estimate Std. Error t value Pr(>|t|)    
-(Intercept)                                      1.315e+02  2.705e-01 486.194   <2e-16 ***
-dates$Mean[match(test2$Sample, dates$sampleID)] -2.363e-04  1.002e-04  -2.359   0.0198 *  
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  1.315e+02  2.705e-01 486.194   <2e-16 ***
+year        -2.363e-04  1.002e-04  -2.359   0.0198 *  
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
