@@ -35,6 +35,7 @@ hist(taxPR2.f$Subdivision,breaks=1000)
 taxPR2.f$tax.Domain[taxPR2.f$Domain<70] <- ""
 taxPR2.f$tax.Supergroup[taxPR2.f$Supergroup<40] <- ""
 taxPR2.f$tax.Division[taxPR2.f$Division<40] <- ""
+taxPR2.f$tax.Subdivision[taxPR2.f$Subdivision<80] <- ""
 taxPR2.f$tax.Family[taxPR2.f$Family<40] <- ""
 
 
@@ -84,6 +85,13 @@ make_binary <- function (df,threshold){
 #getPalette = colorRampPalette(brewer.pal(9, "Pastel1"))
 getPalette = colorRampPalette(brewer.pal(9, "Set3"))
 
+add.alpha <- function(col, alpha=1){
+  if(missing(col))
+    stop("Please provide a vector of colours.")
+  apply(sapply(col, col2rgb)/255, 2, 
+        function(x) 
+          rgb(x[1], x[2], x[3], alpha=alpha))  
+}
 
 
 
@@ -179,7 +187,7 @@ MTG.com.a.plot$values <- cut(MTG.com.a.plot$value,breaks = c(50,100,1000,5000,10
 
 
 
-pdf("figures/figure1/ComparisonMTBMTG.pdf",height = 4,width = 11)
+pdf("figures/figure2/ComparisonMTBMTG.pdf",height = 4,width = 11)
 par(mar=c(5.1, 7.1, 2.1, 9.1), xpd=TRUE)
 plot(dates$Median[match(MTB.com$Sample,dates$sampleID)],
      as.numeric(factor(MTB.com$ID,levels=c("Zostera" ,"Gadus","Oikopleura","Clupea")))+0.1,
@@ -234,7 +242,7 @@ col4 <- c("#FFA500","#4583C4")
 counter <- 1
 for (colours in list(col1,col2,col3,col4)){
   
-  pdf(paste0("figures/figure2/Col",counter,"richness.MTG.DS1.MTB.DS1.pdf"),width = 4.5,height = 4)
+  pdf(paste0("figures/figure3/Col",counter,"richness.MTG.DS1.MTB.DS1.pdf"),width = 4.5,height = 4)
   par(mar=c(4.1, 4.1, 1.1, 4.1))
   plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS1),1,8)),dates$sampleID)],
        colSums(MTG.binary.DS1),
@@ -267,7 +275,7 @@ for (colours in list(col1,col2,col3,col4)){
 ## actual plots
 
 
-pdf("figures/figure2/richness.MTG.DS1.MTB.DS1.pdf",width = 4.5,height = 4)
+pdf("figures/figure3/richness.MTG.DS1.MTB.DS1.pdf",width = 4.5,height = 4)
 par(mar=c(4.1, 4.1, 1.1, 4.1))
 plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS1),1,8)),dates$sampleID)],
      colSums(MTG.binary.DS1),
@@ -297,7 +305,7 @@ mtext("Metabarcoding ASV Richness", side = 4, line = 3,col="#4583C4")
 dev.off()
 
 
-pdf("figures/figure2/richness.MTG.DS2.MTB.DS2.pdf",width = 4.5,height = 4)
+pdf("figures/figure3/richness.MTG.DS2.MTB.DS2.pdf",width = 4.5,height = 4)
 par(mar=c(4.1, 4.1, 1.1, 4.1))
 plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS2),1,8)),dates$sampleID)],
      colSums(MTG.binary.DS2),
@@ -329,7 +337,7 @@ dev.off()
 
 
 
-pdf("figures/figure2/richness.MTG.DS1.pdf",width = 4,height = 4)
+pdf("figures/figure3/richness.MTG.DS1.pdf",width = 4,height = 4)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS1),1,8)),dates$sampleID)],
      colSums(MTG.binary.DS1),
@@ -342,7 +350,7 @@ plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS1),1,8)),dates$sampl
 dev.off()
 
 
-pdf("figures/figure2/richness.MTG.DS2.pdf",width = 4,height = 4)
+pdf("figures/figure3/richness.MTG.DS2.pdf",width = 4,height = 4)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS2),1,8)),dates$sampleID)],
      colSums(MTG.binary.DS2),
@@ -354,7 +362,7 @@ plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS2),1,8)),dates$sampl
      xlim=c(0,8600))
 dev.off()
 
-pdf("figures/figure2/richness.MTG.DS3.pdf",width = 4,height = 4)
+pdf("figures/figure3/richness.MTG.DS3.pdf",width = 4,height = 4)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS3),1,8)),dates$sampleID)],
      colSums(MTG.binary.DS3),
@@ -366,7 +374,7 @@ plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS3),1,8)),dates$sampl
      xlim=c(0,8600))
 dev.off()
 
-pdf("figures/figure2/richness.MTG.DS4.pdf",width = 4,height = 4)
+pdf("figures/figure3/richness.MTG.DS4.pdf",width = 4,height = 4)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS4),1,8)),dates$sampleID)],
      colSums(MTG.binary.DS4),
@@ -378,7 +386,7 @@ plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS4),1,8)),dates$sampl
      xlim=c(0,8600))
 dev.off()
 
-pdf("figures/figure2/richness.MTB.DS1.pdf",width = 4,height = 4)
+pdf("figures/figure3/richness.MTB.DS1.pdf",width = 4,height = 4)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(dates$Median[match(as.factor(substr(names(MTB.binary.DS1),1,8)),dates$sampleID)],
      colSums(MTB.binary.DS1),
@@ -390,7 +398,7 @@ plot(dates$Median[match(as.factor(substr(names(MTB.binary.DS1),1,8)),dates$sampl
      xlim=c(0,8600))
 dev.off()
 
-pdf("figures/figure2/richness.MTB.DS2.pdf",width = 4,height = 4)
+pdf("figures/figure3/richness.MTB.DS2.pdf",width = 4,height = 4)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(dates$Median[match(as.factor(substr(names(MTB.binary.DS2),1,8)),dates$sampleID)],
      colSums(MTB.binary.DS2),
@@ -407,7 +415,7 @@ dev.off()
 colSums(MTG.binary.DS1)
 colSums(MTB.binary.DS1)
 
-pdf("figures/figure2/richness.comp.MTG.DS1-MTB.DS1.pdf",width = 4,height = 4)
+pdf("figures/figure3/richness.comp.MTG.DS1-MTB.DS1.pdf",width = 4,height = 4)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(colSums(MTG.binary.DS1),
      colSums(MTB.binary.DS1),
@@ -424,7 +432,7 @@ legend("topright",legend=c(paste0("Corr = ",round(unname(test$estimate),3)),
 dev.off()
 
 
-pdf("figures/figure2/richness.comp.MTG.DS1-MTB.DS2.pdf",width = 4,height = 4)
+pdf("figures/figure3/richness.comp.MTG.DS1-MTB.DS2.pdf",width = 4,height = 4)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(colSums(MTG.binary.DS1),
      colSums(MTB.binary.DS2),
@@ -444,7 +452,7 @@ dev.off()
 
 index <- match(names(colSums(MTG.binary.DS2)),names(colSums(MTB.binary.DS1)))
 
-pdf("figures/figure2/richness.comp.MTG.DS2-MTB.DS1.pdf",width = 4,height = 4)
+pdf("figures/figure3/richness.comp.MTG.DS2-MTB.DS1.pdf",width = 4,height = 4)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(colSums(MTG.binary.DS2),
      colSums(MTB.binary.DS1)[index],
@@ -463,7 +471,7 @@ dev.off()
 
 index <- match(names(colSums(MTG.binary.DS2)),names(colSums(MTB.binary.DS2)))
 
-pdf("figures/figure2/richness.comp.MTG.DS2-MTB.DS2.pdf",width = 4,height = 4)
+pdf("figures/figure3/richness.comp.MTG.DS2-MTB.DS2.pdf",width = 4,height = 4)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(colSums(MTG.binary.DS2),
      colSums(MTB.binary.DS2)[index],
@@ -481,8 +489,8 @@ dev.off()
 
 ### evenness
 
-H <- diversity(BCI)
-J <- H/log(specnumber(BCI))
+#H <- diversity(BCI)
+#J <- H/log(specnumber(BCI))
 
 MTB.div <- diversity(t(euk.rare[,1:72]))
 MTB.eveness <- MTB.div/log(specnumber(t(euk.rare[,1:72])))
@@ -580,7 +588,7 @@ PCOA.j <- pcoa(vegdist(t(prop.table(as.matrix(datain),2)),binary = TRUE,method =
 
 
 #bray
-pdf("figures/figure3/beta.MTG.DS1.NM.b.pdf",height = 5,width = 5,bg = "transparent")
+pdf("figures/figure4/beta.MTG.DS1.NM.b.pdf",height = 5,width = 5,bg = "transparent")
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
@@ -605,7 +613,7 @@ MTG.DS1.nMDS.b <- out
 
 #jacc
 out <- out.j
-pdf("figures/figure3/beta.MTG.DS1.NM.j.pdf",height = 5,width = 5,bg = "transparent")
+pdf("figures/figure4/beta.MTG.DS1.NM.j.pdf",height = 5,width = 5,bg = "transparent")
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
@@ -630,7 +638,7 @@ MTG.DS1.nMDS.j <- out
 
 ##PCOA bray
 
-pdf("figures/figure3/beta.MTG.DS1.M.b.pdf",height = 5,width = 5,bg = "transparent")
+pdf("figures/figure4/beta.MTG.DS1.M.b.pdf",height = 5,width = 5,bg = "transparent")
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(PCOA.b$vectors[,2])-0.1,max(PCOA.b$vectors[,2])+0.1),
@@ -655,7 +663,7 @@ MTG.DS1.MDS.b <- PCOA.b
 
 ##PCOA jaccard
 
-pdf("figures/figure3/beta.MTG.DS1.M.j.pdf",height = 5,width = 5,bg = "transparent")
+pdf("figures/figure4/beta.MTG.DS1.M.j.pdf",height = 5,width = 5,bg = "transparent")
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(PCOA.j$vectors[,2])-0.1,max(PCOA.j$vectors[,2])+0.1),
@@ -688,7 +696,7 @@ PCOA.j <- pcoa(vegdist(t(prop.table(as.matrix(datain),2)),binary = TRUE,method =
 
 
 #bray
-pdf("figures/figure3/beta.MTG.DS2.NM.b.pdf",height = 5,width = 5)
+pdf("figures/figure4/beta.MTG.DS2.NM.b.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
@@ -714,7 +722,7 @@ MTG.DS2.nMDS.b <- out
 
 #jacc
 out <- out.j
-pdf("figures/figure3/beta.MTG.DS2.NM.j.pdf",height = 5,width = 5)
+pdf("figures/figure4/beta.MTG.DS2.NM.j.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
@@ -739,7 +747,7 @@ MTG.DS2.nMDS.j <- out
 
 ##PCOA bray
 
-pdf("figures/figure3/beta.MTG.DS2.M.b.pdf",height = 5,width = 5,bg = "transparent")
+pdf("figures/figure4/beta.MTG.DS2.M.b.pdf",height = 5,width = 5,bg = "transparent")
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(PCOA.b$vectors[,2])-0.1,max(PCOA.b$vectors[,2])+0.1),
@@ -764,7 +772,7 @@ MTG.DS2.MDS.b <- PCOA.b
 
 ##PCOA jaccard
 
-pdf("figures/figure3/beta.MTG.DS2.M.j.pdf",height = 5,width = 5,bg = "transparent")
+pdf("figures/figure4/beta.MTG.DS2.M.j.pdf",height = 5,width = 5,bg = "transparent")
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(PCOA.j$vectors[,2])-0.1,max(PCOA.j$vectors[,2])+0.1),
@@ -798,7 +806,7 @@ PCOA.j <- pcoa(vegdist(t(prop.table(as.matrix(datain),2)),binary = TRUE,method =
 
 
 #bray
-pdf("figures/figure3/beta.MTG.DS3.NM.b.pdf",height = 5,width = 5)
+pdf("figures/figure4/beta.MTG.DS3.NM.b.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
@@ -823,7 +831,7 @@ MTG.DS3.nMDS.b <- out
 
 #jacc
 out <- out.j
-pdf("figures/figure3/beta.MTG.DS3.NM.j.pdf",height = 5,width = 5)
+pdf("figures/figure4/beta.MTG.DS3.NM.j.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
@@ -848,7 +856,7 @@ MTG.DS3.nMDS.j <- out
 
 ##PCOA bray
 
-pdf("figures/figure3/beta.MTG.DS3.M.b.pdf",height = 5,width = 5,bg = "transparent")
+pdf("figures/figure4/beta.MTG.DS3.M.b.pdf",height = 5,width = 5,bg = "transparent")
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(PCOA.b$vectors[,2])-0.1,max(PCOA.b$vectors[,2])+0.1),
@@ -873,7 +881,7 @@ MTG.DS3.MDS.b <- PCOA.b
 
 ##PCOA jaccard
 
-pdf("figures/figure3/beta.MTG.DS3.M.j.pdf",height = 5,width = 5,bg = "transparent")
+pdf("figures/figure4/beta.MTG.DS3.M.j.pdf",height = 5,width = 5,bg = "transparent")
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(PCOA.j$vectors[,2])-0.1,max(PCOA.j$vectors[,2])+0.1),
@@ -907,7 +915,7 @@ PCOA.j <- pcoa(vegdist(t(prop.table(as.matrix(datain),2)),binary = TRUE,method =
 
 
 #bray
-pdf("figures/figure3/beta.MTG.DS4.NM.b.pdf",height = 5,width = 5)
+pdf("figures/figure4/beta.MTG.DS4.NM.b.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
@@ -932,7 +940,7 @@ MTG.DS4.nMDS.b <- out
 
 #jacc
 out <- out.j
-pdf("figures/figure3/beta.MTG.DS4.NM.j.pdf",height = 5,width = 5)
+pdf("figures/figure4/beta.MTG.DS4.NM.j.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
@@ -957,7 +965,7 @@ MTG.DS4.nMDS.j <- out
 
 ##PCOA bray
 
-pdf("figures/figure3/beta.MTG.DS4.M.b.pdf",height = 5,width = 5,bg = "transparent")
+pdf("figures/figure4/beta.MTG.DS4.M.b.pdf",height = 5,width = 5,bg = "transparent")
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(PCOA.b$vectors[,2])-0.1,max(PCOA.b$vectors[,2])+0.1),
@@ -982,7 +990,7 @@ MTG.DS4.MDS.b <- PCOA.b
 
 ##PCOA jaccard
 
-pdf("figures/figure3/beta.MTG.DS4.M.j.pdf",height = 5,width = 5,bg = "transparent")
+pdf("figures/figure4/beta.MTG.DS4.M.j.pdf",height = 5,width = 5,bg = "transparent")
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(PCOA.j$vectors[,2])-0.1,max(PCOA.j$vectors[,2])+0.1),
@@ -1024,7 +1032,7 @@ MTB.DS1.MDS.j.sm <- pcoa(vegdist(t(prop.table(as.matrix(datain)[,-1],2)),binary 
 
 
 #bray
-pdf("figures/figure3/beta.MTB.DS1.NM.b.pdf",height = 5,width = 5)
+pdf("figures/figure4/beta.MTB.DS1.NM.b.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
@@ -1049,7 +1057,7 @@ MTB.DS1.nMDS.b <- out
 
 #jacc
 out <- out.j
-pdf("figures/figure3/beta.MTB.DS1.NM.j.pdf",height = 5,width = 5)
+pdf("figures/figure4/beta.MTB.DS1.NM.j.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
@@ -1074,7 +1082,7 @@ MTB.DS1.nMDS.j <- out
 
 ##PCOA bray
 
-pdf("figures/figure3/beta.MTB.DS1.M.b.pdf",height = 5,width = 5,bg = "transparent")
+pdf("figures/figure4/beta.MTB.DS1.M.b.pdf",height = 5,width = 5,bg = "transparent")
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(PCOA.b$vectors[,2])-0.1,max(PCOA.b$vectors[,2])+0.1),
@@ -1099,7 +1107,7 @@ MTB.DS1.MDS.b <- PCOA.b
 
 ##PCOA jaccard
 
-pdf("figures/figure3/beta.MTB.DS1.M.j.pdf",height = 5,width = 5,bg = "transparent")
+pdf("figures/figure4/beta.MTB.DS1.M.j.pdf",height = 5,width = 5,bg = "transparent")
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(PCOA.j$vectors[,2])-0.1,max(PCOA.j$vectors[,2])+0.1),
@@ -1140,7 +1148,7 @@ MTB.DS2.MDS.j.sm <- pcoa(vegdist(t(prop.table(as.matrix(datain)[,-1],2)),binary 
 
 
 #bray
-pdf("figures/figure3/beta.MTB.DS2.NM.b.pdf",height = 5,width = 5)
+pdf("figures/figure4/beta.MTB.DS2.NM.b.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
@@ -1165,7 +1173,7 @@ MTB.DS2.nMDS.b <- out
 
 #jacc
 out <- out.j
-pdf("figures/figure3/beta.MTB.DS2.NM.j.pdf",height = 5,width = 5)
+pdf("figures/figure4/beta.MTB.DS2.NM.j.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
@@ -1190,7 +1198,7 @@ MTB.DS2.nMDS.j <- out
 
 ##PCOA bray
 
-pdf("figures/figure3/beta.MTB.DS2.M.b.pdf",height = 5,width = 5,bg = "transparent")
+pdf("figures/figure4/beta.MTB.DS2.M.b.pdf",height = 5,width = 5,bg = "transparent")
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(PCOA.b$vectors[,1],PCOA.b$vectors[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(PCOA.b$vectors[,2])-0.1,max(PCOA.b$vectors[,2])+0.1),
@@ -1215,7 +1223,7 @@ MTB.DS2.MDS.b <- PCOA.b
 
 ##PCOA jaccard
 
-pdf("figures/figure3/beta.MTB.DS2.M.j.pdf",height = 5,width = 5,bg = "transparent")
+pdf("figures/figure4/beta.MTB.DS2.M.j.pdf",height = 5,width = 5,bg = "transparent")
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(PCOA.j$vectors[,1],PCOA.j$vectors[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(PCOA.j$vectors[,2])-0.1,max(PCOA.j$vectors[,2])+0.1),
@@ -1247,7 +1255,7 @@ summary(proc)
 proc.t <- protest(MTB.DS1.nMDS.b$points,MTG.DS1.nMDS.b$points, scores = "sites", permutations = 9999)
 
 
-pdf("figures/figure3/beta.P.MTB.DS1-MTG.DS1.NM.b.pdf",height = 5,width = 5)
+pdf("figures/figure4/beta.P.MTB.DS1-MTG.DS1.NM.b.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
@@ -1266,7 +1274,7 @@ proc <- procrustes(MTB.DS1.nMDS.b.sm$points,MTG.DS2.nMDS.b$points,symmetric = TR
 summary(proc)
 proc.t <- protest(MTB.DS1.nMDS.b.sm$points,MTG.DS2.nMDS.b$points, scores = "sites", permutations = 9999)
 
-pdf("figures/figure3/beta.P.MTB.DS1-MTG.DS2.NM.b.pdf",height = 5,width = 5)
+pdf("figures/figure4/beta.P.MTB.DS1-MTG.DS2.NM.b.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
@@ -1285,7 +1293,7 @@ proc <- procrustes(MTB.DS2.nMDS.b$points,MTG.DS1.nMDS.b$points,symmetric = TRUE,
 summary(proc)
 proc.t <- protest(MTB.DS2.nMDS.b$points,MTG.DS1.nMDS.b$points, scores = "sites", permutations = 9999)
 
-pdf("figures/figure3/beta.P.MTB.DS2-MTG.DS1.NM.b.pdf",height = 5,width = 5)
+pdf("figures/figure4/beta.P.MTB.DS2-MTG.DS1.NM.b.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
@@ -1304,7 +1312,7 @@ proc <- procrustes(MTB.DS2.nMDS.b.sm$points,MTG.DS2.nMDS.b$points,symmetric = TR
 summary(proc)
 proc.t <- protest(MTB.DS2.nMDS.b.sm$points,MTG.DS2.nMDS.b$points, scores = "sites", permutations = 9999)
 
-pdf("figures/figure3/beta.P.MTB.DS2-MTG.DS2.NM.b.pdf",height = 5,width = 5)
+pdf("figures/figure4/beta.P.MTB.DS2-MTG.DS2.NM.b.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
@@ -1325,7 +1333,7 @@ summary(proc)
 proc.t <- protest(MTB.DS1.nMDS.j.sm$points,MTG.DS1.nMDS.j$points, scores = "sites", permutations = 9999)
 
 
-pdf("figures/figure3/beta.P.MTB.DS1-MTG.DS1.NM.j.pdf",height = 5,width = 5)
+pdf("figures/figure4/beta.P.MTB.DS1-MTG.DS1.NM.j.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
@@ -1344,7 +1352,7 @@ proc <- procrustes(MTB.DS1.nMDS.j.sm$points,MTG.DS2.nMDS.j$points,symmetric = TR
 summary(proc)
 proc.t <- protest(MTB.DS1.nMDS.j.sm$points,MTG.DS2.nMDS.j$points, scores = "sites", permutations = 9999)
 
-pdf("figures/figure3/beta.P.MTB.DS1-MTG.DS2.NM.j.pdf",height = 5,width = 5)
+pdf("figures/figure4/beta.P.MTB.DS1-MTG.DS2.NM.j.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
@@ -1363,7 +1371,7 @@ proc <- procrustes(MTB.DS2.nMDS.j.sm$points,MTG.DS1.nMDS.j$points,symmetric = TR
 summary(proc)
 proc.t <- protest(MTB.DS2.nMDS.j.sm$points,MTG.DS1.nMDS.j$points, scores = "sites", permutations = 9999)
 
-pdf("figures/figure3/beta.P.MTB.DS2-MTG.DS1.NM.j.pdf",height = 5,width = 5)
+pdf("figures/figure4/beta.P.MTB.DS2-MTG.DS1.NM.j.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
@@ -1382,7 +1390,7 @@ proc <- procrustes(MTB.DS2.nMDS.j.sm$points,MTG.DS2.nMDS.j$points,symmetric = TR
 summary(proc)
 proc.t <- protest(MTB.DS2.nMDS.j.sm$points,MTG.DS2.nMDS.j$points, scores = "sites", permutations = 9999)
 
-pdf("figures/figure3/beta.P.MTB.DS2-MTG.DS2.NM.j.pdf",height = 5,width = 5)
+pdf("figures/figure4/beta.P.MTB.DS2-MTG.DS2.NM.j.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
@@ -1403,7 +1411,7 @@ summary(proc)
 proc.t <- protest(MTB.DS1.MDS.b$vectors[,1:2],MTG.DS1.MDS.b$vectors[,1:2], scores = "sites", permutations = 9999)
 
 
-pdf("figures/figure3/beta.P.MTB.DS1-MTG.DS1.M.b.pdf",height = 5,width = 5)
+pdf("figures/figure4/beta.P.MTB.DS1-MTG.DS1.M.b.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
@@ -1422,7 +1430,7 @@ proc <- procrustes(MTB.DS1.MDS.b.sm$vectors[,1:2],MTG.DS2.MDS.b$vectors[,1:2],sy
 summary(proc)
 proc.t <- protest(MTB.DS1.MDS.b.sm$vectors[,1:2],MTG.DS2.MDS.b$vectors[,1:2], scores = "sites", permutations = 9999)
 
-pdf("figures/figure3/beta.P.MTB.DS1-MTG.DS2.M.b.pdf",height = 5,width = 5)
+pdf("figures/figure4/beta.P.MTB.DS1-MTG.DS2.M.b.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
@@ -1441,7 +1449,7 @@ proc <- procrustes(MTB.DS2.MDS.b$vectors[,1:2],MTG.DS1.MDS.b$vectors[,1:2],symme
 summary(proc)
 proc.t <- protest(MTB.DS2.MDS.b$vectors[,1:2],MTG.DS1.MDS.b$vectors[,1:2], scores = "sites", permutations = 9999)
 
-pdf("figures/figure3/beta.P.MTB.DS2-MTG.DS1.M.b.pdf",height = 5,width = 5)
+pdf("figures/figure4/beta.P.MTB.DS2-MTG.DS1.M.b.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
@@ -1461,7 +1469,7 @@ summary(proc)
 proc.t <- protest(MTB.DS2.MDS.b.sm$vectors[,1:2],MTG.DS2.MDS.b$vectors[,1:2], scores = "sites", permutations = 9999)
 
 
-pdf("figures/figure3/beta.P.MTB.DS2-MTG.DS2.M.b.pdf",height = 5,width = 5)
+pdf("figures/figure4/beta.P.MTB.DS2-MTG.DS2.M.b.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
@@ -1483,7 +1491,7 @@ summary(proc)
 proc.t <- protest(MTB.DS1.MDS.j$vectors[,1:2],MTG.DS1.MDS.j$vectors[,1:2], scores = "sites", permutations = 9999)
 
 
-pdf("figures/figure3/beta.P.MTB.DS1-MTG.DS1.M.j.pdf",height = 5,width = 5)
+pdf("figures/figure4/beta.P.MTB.DS1-MTG.DS1.M.j.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
@@ -1502,7 +1510,7 @@ proc <- procrustes(MTB.DS1.MDS.j.sm$vectors[,1:2],MTG.DS2.MDS.j$vectors[,1:2],sy
 summary(proc)
 proc.t <- protest(MTB.DS1.MDS.j.sm$vectors[,1:2],MTG.DS2.MDS.j$vectors[,1:2], scores = "sites", permutations = 9999)
 
-pdf("figures/figure3/beta.P.MTB.DS1-MTG.DS2.M.j.pdf",height = 5,width = 5)
+pdf("figures/figure4/beta.P.MTB.DS1-MTG.DS2.M.j.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
@@ -1521,7 +1529,7 @@ proc <- procrustes(MTB.DS2.MDS.j$vectors[,1:2],MTG.DS1.MDS.j$vectors[,1:2],symme
 summary(proc)
 proc.t <- protest(MTB.DS2.MDS.j$vectors[,1:2],MTG.DS1.MDS.j$vectors[,1:2], scores = "sites", permutations = 9999)
 
-pdf("figures/figure3/beta.P.MTB.DS2-MTG.DS1.M.j.pdf",height = 5,width = 5)
+pdf("figures/figure4/beta.P.MTB.DS2-MTG.DS1.M.j.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
@@ -1541,7 +1549,7 @@ summary(proc)
 proc.t <- protest(MTB.DS2.MDS.j.sm$vectors[,1:2],MTG.DS2.MDS.j$vectors[,1:2], scores = "sites", permutations = 9999)
 
 
-pdf("figures/figure3/beta.P.MTB.DS2-MTG.DS2.M.j.pdf",height = 5,width = 5)
+pdf("figures/figure4/beta.P.MTB.DS2-MTG.DS2.M.j.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
@@ -1564,7 +1572,7 @@ proc <- procrustes(MTB.DS1.nMDS.b$points,MTG.DS1.nMDS.b$points,symmetric = TRUE,
 summary(proc)
 proc.t <- protest(MTB.DS1.nMDS.b$points,MTG.DS1.nMDS.b$points, scores = "sites", permutations = 9999)
 
-pdf("figures/figure3/custom.beta.MTB.DS1-MTG.DS1.NM.b.pdf",height = 5,width = 5)
+pdf("figures/figure4/custom.beta.MTB.DS1-MTG.DS1.NM.b.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
@@ -1587,7 +1595,7 @@ proc <- procrustes(MTB.DS2.nMDS.b.sm$points,MTG.DS2.nMDS.b$points,symmetric = TR
 summary(proc)
 proc.t <- protest(MTB.DS2.nMDS.b.sm$points,MTG.DS2.nMDS.b$points, scores = "sites", permutations = 9999)
 
-pdf("figures/figure3/custom.beta.MTB.DS2-MTG.DS2.NM.b.pdf",height = 5,width = 5)
+pdf("figures/figure4/custom.beta.MTB.DS2-MTG.DS2.NM.b.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(proc,type = "n",cex = 0.8,pch=16,main="")
 rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = "white", border = NA)
@@ -2056,7 +2064,7 @@ MTB.wide.DS3 <- make_binary(MTB.wide.DS3[-1,],1)
 MTB.wide.DS3 <- MTB.wide.DS3[,-1]
 
 colSums(MTB.wide.DS3)
-plottable(taxPR2.f$tax.Genus[match(rownames(MTB.wide.DS2),taxPR2.f$X.1)])
+table(taxPR2.f$tax.Genus[match(rownames(MTB.wide.DS2),taxPR2.f$X.1)])
 
 ##Alpha 
 
@@ -2076,7 +2084,7 @@ MTB.binary.DS2 <- make_binary(MTB.wide.DS2,3)
 
 ## Plots 
 
-pdf("figures/figure1/richness.MTG.DS1.pdf",width = 4,height = 4)
+pdf("figures/figure2/richness.MTG.DS1.pdf",width = 4,height = 4)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS1),1,8)),dates$sampleID)],
      colSums(MTG.binary.DS1),
@@ -2087,7 +2095,7 @@ plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS1),1,8)),dates$sampl
 dev.off()
 
 
-pdf("figures/figure1/richness.MTG.DS2.pdf",width = 4,height = 4)
+pdf("figures/figure2/richness.MTG.DS2.pdf",width = 4,height = 4)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS2),1,8)),dates$sampleID)],
      colSums(MTG.binary.DS2),
@@ -2097,7 +2105,7 @@ plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS2),1,8)),dates$sampl
      xlim=c(0,8400))
 dev.off()
 
-pdf("figures/figure1/richness.MTG.DS3.pdf",width = 4,height = 4)
+pdf("figures/figure2/richness.MTG.DS3.pdf",width = 4,height = 4)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS3),1,8)),dates$sampleID)],
      colSums(MTG.binary.DS3),
@@ -2107,7 +2115,7 @@ plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS3),1,8)),dates$sampl
      xlim=c(0,8400))
 dev.off()
 
-pdf("figures/figure1/richness.MTG.DS4.pdf",width = 4,height = 4)
+pdf("figures/figure2/richness.MTG.DS4.pdf",width = 4,height = 4)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS4),1,8)),dates$sampleID)],
      colSums(MTG.binary.DS4),
@@ -2117,7 +2125,7 @@ plot(dates$Median[match(as.factor(substr(names(MTG.binary.DS4),1,8)),dates$sampl
      xlim=c(0,8400))
 dev.off()
 
-pdf("figures/figure1/richness.MTB.DS1.pdf",width = 4,height = 4)
+pdf("figures/figure2/richness.MTB.DS1.pdf",width = 4,height = 4)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(dates$Median[match(as.factor(substr(names(MTB.binary.DS1),1,8)),dates$sampleID)],
      colSums(MTB.binary.DS1),
@@ -2127,7 +2135,7 @@ plot(dates$Median[match(as.factor(substr(names(MTB.binary.DS1),1,8)),dates$sampl
      xlim=c(0,8400))
 dev.off()
 
-pdf("figures/figure1/richness.MTB.DS2.pdf",width = 4,height = 4)
+pdf("figures/figure2/richness.MTB.DS2.pdf",width = 4,height = 4)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(dates$Median[match(as.factor(substr(names(MTB.binary.DS2),1,8)),dates$sampleID)],
      colSums(MTB.binary.DS2),
@@ -2142,7 +2150,7 @@ dev.off()
 colSums(MTG.binary.DS1)
 colSums(MTB.binary.DS1)
 
-pdf("figures/figure1/richness.comp.MTG.DS1-MTB.DS1.pdf",width = 4,height = 4)
+pdf("figures/figure2/richness.comp.MTG.DS1-MTB.DS1.pdf",width = 4,height = 4)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(colSums(MTG.binary.DS1),
      colSums(MTB.binary.DS1),
@@ -2159,7 +2167,7 @@ legend("topright",legend=c(paste0("Corr = ",round(unname(test$estimate),3)),
 dev.off()
 
 
-pdf("figures/figure1/richness.comp.MTG.DS1-MTB.DS2.pdf",width = 4,height = 4)
+pdf("figures/figure2/richness.comp.MTG.DS1-MTB.DS2.pdf",width = 4,height = 4)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(colSums(MTG.binary.DS1),
      colSums(MTB.binary.DS2),
@@ -2179,7 +2187,7 @@ dev.off()
 
 index <- match(names(colSums(MTG.binary.DS2)),names(colSums(MTB.binary.DS1)))
 
-pdf("figures/figure1/richness.comp.MTG.DS2-MTB.DS1.pdf",width = 4,height = 4)
+pdf("figures/figure2/richness.comp.MTG.DS2-MTB.DS1.pdf",width = 4,height = 4)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(colSums(MTG.binary.DS2),
      colSums(MTB.binary.DS1)[index],
@@ -2198,7 +2206,7 @@ dev.off()
 
 index <- match(names(colSums(MTG.binary.DS2)),names(colSums(MTB.binary.DS2)))
 
-pdf("figures/figure1/richness.comp.MTG.DS2-MTB.DS2.pdf",width = 4,height = 4)
+pdf("figures/figure2/richness.comp.MTG.DS2-MTB.DS2.pdf",width = 4,height = 4)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(colSums(MTG.binary.DS2),
      colSums(MTB.binary.DS2)[index],
@@ -2233,7 +2241,7 @@ colnames(datain) <- as.character(dates$Median[match(colnames(datain),dates$sampl
 out <- metaMDS(vegdist(t(prop.table(as.matrix(datain),2))),trymax = 200)
 out.j <- metaMDS(vegdist(t(prop.table(as.matrix(datain),2)),binary = TRUE,method = "jaccard"),trymax = 200) 
 
-pdf("figures/figure1/beta.MTG.DS1.pdf",height = 5,width = 5)
+pdf("figures/figure2/beta.MTG.DS1.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
@@ -2258,7 +2266,7 @@ colnames(datain) <- as.character(dates$Median[match(colnames(datain),dates$sampl
 out <- metaMDS(vegdist(t(prop.table(as.matrix(datain),2))),trymax = 200)
 out.j <- metaMDS(vegdist(t(prop.table(as.matrix(datain),2)),binary = TRUE,method = "jaccard"),trymax = 200) 
 
-pdf("figures/figure1/beta.MTG.DS2.pdf",height = 5,width = 5)
+pdf("figures/figure2/beta.MTG.DS2.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
@@ -2283,7 +2291,7 @@ colnames(datain) <- as.character(dates$Median[match(colnames(datain),dates$sampl
 out <- metaMDS(vegdist(t(prop.table(as.matrix(datain),2))),trymax = 200)
 out.j <- metaMDS(vegdist(t(prop.table(as.matrix(datain),2)),binary = TRUE,method = "jaccard"),trymax = 200) 
 
-pdf("figures/figure1/beta.MTG.DS3.pdf",height = 5,width = 5)
+pdf("figures/figure2/beta.MTG.DS3.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
@@ -2308,7 +2316,7 @@ colnames(datain) <- as.character(dates$Median[match(colnames(datain),dates$sampl
 out <- metaMDS(vegdist(t(prop.table(as.matrix(datain),2))),trymax = 200)
 out.j <- metaMDS(vegdist(t(prop.table(as.matrix(datain),2)),binary = TRUE,method = "jaccard"),trymax = 200) 
 
-pdf("figures/figure1/beta.MTG.DS4.pdf",height = 5,width = 5)
+pdf("figures/figure2/beta.MTG.DS4.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
@@ -2336,7 +2344,7 @@ out <- metaMDS(vegdist(t(prop.table(as.matrix(datain),2))),trymax = 200)
 out.j <- metaMDS(vegdist(t(prop.table(as.matrix(datain),2)),binary = TRUE,method = "jaccard"),trymax = 200) 
 out.s
 
-pdf("figures/figure1/beta.MTB.DS1.pdf",height = 5,width = 5)
+pdf("figures/figure2/beta.MTB.DS1.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
@@ -2364,7 +2372,7 @@ out <- metaMDS(vegdist(t(prop.table(as.matrix(datain),2))),trymax = 200)
 out.j <- metaMDS(vegdist(t(prop.table(as.matrix(datain),2)),binary = TRUE,method = "jaccard"),trymax = 200) 
 
 
-pdf("figures/figure1/beta.MTB.DS2.pdf",height = 5,width = 5)
+pdf("figures/figure2/beta.MTB.DS2.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(out$points[,1],out$points[,2],col="#d55e00",cex=1.3,pch=16,
      ylim=c(min(out$points[,2])-0.1,max(out$points[,2])+0.1),
@@ -2390,7 +2398,7 @@ proc <- procrustes(MTB.DS1.nMDS.b$points,MTG.DS1.nMDS$points,symmetric = TRUE,sc
 summary(proc)
 proc.t <- protest(MTB.DS1.nMDS.b$points,MTG.DS1.nMDS$points, scores = "sites", permutations = 9999)
 
-pdf("figures/figure1/beta.MTB.DS1-MTG.DS1.pdf",height = 5,width = 5)
+pdf("figures/figure2/beta.MTB.DS1-MTG.DS1.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(proc,type = "text",cex = 0.4)
 legend("topleft",legend=c(paste0("SS = ",round(proc.t$ss,3)),
@@ -2402,7 +2410,7 @@ proc <- procrustes(MTB.DS1.nMDS.b$points[2:11,],MTG.DS2.nMDS$points,symmetric = 
 summary(proc)
 proc.t <- protest(MTB.DS1.nMDS.b$points[2:11,],MTG.DS2.nMDS$points, scores = "sites", permutations = 9999)
 
-pdf("figures/figure1/beta.MTB.DS1-MTG.DS2.pdf",height = 5,width = 5)
+pdf("figures/figure2/beta.MTB.DS1-MTG.DS2.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(proc,type = "text",cex = 0.4)
 legend("topleft",legend=c(paste0("SS = ",round(proc.t$ss,3)),
@@ -2414,7 +2422,7 @@ proc <- procrustes(MTB.DS2.nMDS$points,MTG.DS1.nMDS$points,symmetric = TRUE,scal
 summary(proc)
 proc.t <- protest(MTB.DS2.nMDS$points,MTG.DS1.nMDS$points, scores = "sites", permutations = 9999)
 
-pdf("figures/figure1/beta.MTB.DS2-MTG.DS1.pdf",height = 5,width = 5)
+pdf("figures/figure2/beta.MTB.DS2-MTG.DS1.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(proc,type = "text",cex = 0.4)
 legend("topleft",legend=c(paste0("SS = ",round(proc.t$ss,3)),
@@ -2426,7 +2434,7 @@ proc <- procrustes(MTB.DS2.nMDS$points[2:11,],MTG.DS2.nMDS$points,symmetric = TR
 summary(proc)
 proc.t <- protest(MTB.DS2.nMDS$points[2:11,],MTG.DS2.nMDS$points, scores = "sites", permutations = 9999)
 
-pdf("figures/figure1/beta.MTB.DS2-MTG.DS2.pdf",height = 5,width = 5)
+pdf("figures/figure2/beta.MTB.DS2-MTG.DS2.pdf",height = 5,width = 5)
 par(mar=c(4.1, 4.1, 1.1, 1.1))
 plot(proc,type = "text",cex = 0.4)
 legend("topleft",legend=c(paste0("SS = ",round(proc.t$ss,3)),
@@ -2479,7 +2487,7 @@ MTG.com.a.plot$values <- cut(MTG.com.a.plot$value,breaks = c(50,100,1000,5000,10
 
 
 
-pdf("figures/figure1/ComparisonMTBMTG.pdf",height = 4,width = 11)
+pdf("figures/figure2/ComparisonMTBMTG.pdf",height = 4,width = 11)
 par(mar=c(5.1, 7.1, 2.1, 9.1), xpd=TRUE)
 plot(dates$Median[match(MTB.com$Sample,dates$sampleID)],
      as.numeric(factor(MTB.com$ID,levels=c("Zostera" ,"Gadus","Oikopleura","Clupea")))+0.1,
@@ -2519,7 +2527,7 @@ MTG.com.a.plot$values <- cut(MTG.com.a.plot$value,breaks = c(50,100,1000,5000,10
 
 
 
-pdf("figures/figure1/ComparisonMTBMTG.incAlG.pdf",height = 4,width = 11)
+pdf("figures/figure2/ComparisonMTBMTG.incAlG.pdf",height = 4,width = 11)
 par(mar=c(5.1, 7.1, 2.1, 9.1), xpd=TRUE)
 plot(dates$Median[match(MTB.com$Sample,dates$sampleID)],
      as.numeric(factor(MTB.com$ID,levels=c("Zostera" ,"Gadus","Oikopleura","Clupea")))+0.1,
@@ -2550,8 +2558,9 @@ dev.off()
 ### Extra stuff
 #length age relationship
 
-#metabarcdoing 
+#metabarcoding
 
+## all data by reads
 euk$ASV_len <- nchar(euk$unname.rawSeqs..match.row.names.expSamples...names.rawSeqs...) 
 
 test <- melt(euk, measure.vars=1:88, variable.name="Sample", value.name="nReads")
@@ -2564,47 +2573,170 @@ plot(jitter(dates$Median[match(substr(test2$Sample,1,8),dates$sampleID)],amount 
      ylab="ASV Length")
 dev.off()
 
+## nREPS data by >1 reps
+
 euk.Nreps$ASV_len <- nchar(euk.Nreps$unname.rawSeqs..match.row.names.expSamplesNreps...names.rawSeqs...) 
 
-test3 <- melt(euk.Nreps, measure.vars=1:11, variable.name="Sample", value.name="nReps")
-test4 <- test3[test3$nReps>0,]
-test5 <- test4[test4$phylum=="Chordata",]
+test <- melt(euk.Nreps, measure.vars=1:11, variable.name="Sample", value.name="nReads")
+test2 <- test[test$nReads>2,]
+test2$phylum[is.na(test2$phylum)] <- ""
+test3 <- test2[test2$phylum=="Chordata",]
+test4 <- test2[!test2$phylum=="Chordata",]
+
+MTB.len.median <- tapply(test2$ASV_len, test2$Sample, median)
+MTB.len.mean <- tapply(test2$ASV_len, test2$Sample, mean)
 
 
-pdf("figures/lengthAge.nReps.cols.pdf",width=11,height=7)
+pdf("figures/suppl.len/MTB.lengthAgeAllReps.Nreps.col.pdf",width=7,height=5.5)
 par(mar=c(5.1, 4.1, 2.1, 4.1), xpd=TRUE)
-palette(c("grey","blue","darkgreen","darkgrey","red"))
-plot(jitter(dates$Median[match(test4$Sample,dates$sampleID)],amount = 150),
-     jitter(test4$ASV_len,amount = 0.15),pch=16,cex=0.3,
+palette(c("grey","darkolivegreen2","lightsteelblue","darkgrey","salmon"))
+plot(jitter(dates$Mean[match(test4$Sample,dates$sampleID)],amount = 100),
+     jitter(test4$ASV_len,amount = 0.3),pch=16,cex=0.5,
      xlab="CalYrBP",
-     ylab="ASV Length",
+     ylab="ASV Length (bp)",
+     ylim=c(80,150),
      col=as.factor(test4$superkingdom))
-points(jitter(dates$Median[match(test5$Sample,dates$sampleID)],amount = 150),
-       jitter(test5$ASV_len,amount = 0.15),pch=16,cex=0.5,col="purple")
-legend(9000,130,legend = c("Eukaryotes","Bacteria","Archaea","Chordata","No Assign"),pch=15,col=c("red","darkgreen","blue","purple","grey"),cex=0.5, bty='n')
+points(jitter(dates$Mean[match(test3$Sample,dates$sampleID)],amount = 150),
+            jitter(test3$ASV_len,amount = 0.15),pch=16,cex=0.5,col="orchid3")
+legend(8500,130,legend = c("Eukaryota","Bacteria","Archaea","Chordata","No Assign"),pch=15,col=c("salmon","lightsteelblue","darkolivegreen2","orchid3","darkgrey"),cex=0.6, bty='n')   
+#points(dates$Mean[match(names(tapply(test2$ASV_len, test2$Sample, median)),dates$sampleID)],tapply(test2$ASV_len, test2$Sample, median),type="l",lty=2,col="darkred",lwd=3)
+#points(dates$Mean[match(names(tapply(test2$ASV_len, test2$Sample, mean)),dates$sampleID)],tapply(test2$ASV_len, test2$Sample, mean),type="l",lty=2,col="darkblue",lwd=3)
+#legend(8500,100,legend = c("Mean","Median"),pch=15,col=c("darkblue","darkred"),cex=0.6, bty='n') 
 dev.off()
 
 
-pdf("figures/lengthAge.nReps.pdf",width=6.5,height=5)
-plot(jitter(dates$Median[match(test4$Sample,dates$sampleID)],amount = 75),
-     jitter(test4$ASV_len,amount = 0.15),pch=16,cex=0.3,col="#4583C4",
+year <- dates$Mean[match(test2$Sample,dates$sampleID)]
+len <- test2$ASV_len
+
+sink(file="figures/suppl.len/MTB.len_year.lm.out.txt")
+summary(lm(test2$ASV_len~dates$Mean[match(test2$Sample,dates$sampleID)]))
+sink()
+
+
+
+## nREPS data by >1 reps METAZOA 
+
+euk.Nreps$ASV_len <- nchar(euk.Nreps$unname.rawSeqs..match.row.names.expSamplesNreps...names.rawSeqs...) 
+
+test <- melt(euk.Nreps, measure.vars=1:11, variable.name="Sample", value.name="nReads")
+test2 <- test[test$nReads>2,]
+test2 <- test2[test2$OTU%in%taxPR2.f$X.1[taxPR2.f$tax.Subdivision=="Metazoa"],]
+test2$phylum[is.na(test2$phylum)] <- ""
+test3 <- test2[test2$phylum=="Chordata",]
+test4 <- test2[!test2$phylum=="Chordata",]
+
+MTB.len.median.met <- tapply(test2$ASV_len, test2$Sample, median)
+MTB.len.mean.met <- tapply(test2$ASV_len, test2$Sample, mean)
+
+#predictions
+year <- dates$Mean[match(test4$Sample,dates$sampleID)]
+len <- test4$ASV_len
+
+predictions <- data.frame("year"=seq(min(MTB.year),max(MTB.year),10))
+predictions <- cbind(predictions,predict(lm(len~year),predictions,se.fit = TRUE))
+predictions$uppCI <- predictions$fit+predictions$se.fit*1.96
+predictions$lwrCI <- predictions$fit-predictions$se.fit*1.96
+
+
+#plot
+pdf("figures/suppl.len/MTB.lengthAgeAllReps.Nreps.met.col.pdf",width=7,height=5.5)
+par(mar=c(5.1, 4.1, 2.1, 4.1), xpd=TRUE)
+palette(c("salmon","black"))
+plot(jitter(dates$Mean[match(test4$Sample,dates$sampleID)],amount = 100),
+     jitter(test4$ASV_len,amount = 0.3),pch=16,cex=1,
      xlab="CalYrBP",
-     ylab="ASV Length (bp)")
+     ylab="ASV Length (bp)",
+     ylim=c(80,150),
+     col=as.factor(test4$superkingdom))
+points(jitter(dates$Mean[match(test3$Sample,dates$sampleID)],amount = 150),
+       jitter(test3$ASV_len,amount = 0.15),pch=16,cex=1,col="orchid3")
+legend(8500,130,legend = c("Eukaryota","Chordata","Linear fit"),pch=15,col=c("salmon","orchid3","black"),cex=0.6, bty='n')   
+polygon(c(predictions$year, rev(predictions$year)), c(predictions$uppCI, rev(predictions$lwrCI)), col=add.alpha('grey33',0.3), border=NA)
+points(predictions$year,predictions$fit,type="l",col="black",lwd=3)
+#points(dates$Mean[match(names(tapply(test2$ASV_len, test2$Sample, median)),dates$sampleID)],tapply(test2$ASV_len, test2$Sample, median),type="l",lty=2,col="darkred",lwd=3)
+#points(dates$Mean[match(names(tapply(test2$ASV_len, test2$Sample, mean)),dates$sampleID)],tapply(test2$ASV_len, test2$Sample, mean),type="l",lty=2,col="darkblue",lwd=3)
+#legend(8500,100,legend = c("Mean","Median"),pch=15,col=c("darkblue","darkred"),cex=0.6, bty='n') 
 dev.off()
 
-points(dates$Mean[match(MTG.raw.DS2$sample2,dates$sampleID)],MTG.raw.DS2$mean_L,pch=16,col="#d55e00")
 
-points(proc,pch=16,col="#4583C4",display = "target")
-points(proc,pch=16,col="#d55e00",display = "rotated")
+year <- dates$Mean[match(test4$Sample,dates$sampleID)]
+len <- test2$ASV_len
+
+predictions <- data.frame("year"=seq(min(MTB.year),max(MTB.year),10))
+predictions <- cbind(predictions,predict(lm(len~year),predictions,se.fit = TRUE))
+predictions$uppCI <- predictions$fit+predictions$se.fit*1.96
+predictions$lwrCI <- predictions$fit-predictions$se.fit*1.96
+
+plot(year,len,pch=16)
+
+polygon(c(predictions$year, rev(predictions$year)), c(predictions$uppCI, rev(predictions$lwrCI)), col=add.alpha('mediumslateblue',0.3), border=NA)
+points(predictions$year,predictions$fit,type="l",col="navyblue",lwd=3)
+
+
+sink(file="figures/suppl.len/MTB.met.len_year.lm.out.txt")
+summary(lm(len~year))
+sink()
+
 
 ##metagenomics
 
-pdf("figures/lengthAge.MTG.pdf",width=6.5,height=5)
-plot(dates$Mean[match(MTG.raw.DS2$sample2,dates$sampleID)],MTG.raw.DS2$mean_L,pch=16,col="#d55e00",xlab="CalYrBP",ylab="Average Sequence Length Per Taxa (bp)",cex=0.8)
+# all data 
+
+
+MTG.raw.DS1$tax_group <- factor(ifelse(grepl("Bacteria|bacteria", MTG.raw.DS1$tax_path), "Bacteria",
+                                       ifelse(grepl("Archaea", MTG.raw.DS1$tax_path), "Archaea",
+                                              ifelse(grepl("Eukaryota", MTG.raw.DS1$tax_path), "Eukaryota",
+                                                     ifelse(grepl("Viruses", MTG.raw.DS1$tax_path), "Viruses", NA)))))
+
+
+
+year <- dates$Mean[match(MTG.raw.DS1$sample2,dates$sampleID)]
+len <- MTG.raw.DS1$mean_L
+
+predictions <- data.frame("year"=seq(min(MTB.year),max(MTB.year),10))
+predictions <- cbind(predictions,predict(lm(len~year),predictions,se.fit = TRUE))
+predictions$uppCI <- predictions$fit+predictions$se.fit*1.96
+predictions$lwrCI <- predictions$fit-predictions$se.fit*1.96
+
+pdf("figures/suppl.len/MTG.lengthAgeAllReps.Nreps.col.pdf",width=7,height=5.5)
+par(mar=c(5.1, 4.1, 2.1, 4.1), xpd=TRUE)
+palette(c("darkolivegreen2","lightsteelblue","salmon","bisque3"))
+plot(jitter(dates$Mean[match(MTG.raw.DS1$sample2,dates$sampleID)],1),MTG.raw.DS1$mean_L,pch=16,col=MTG.raw.DS1$tax_group,xlab="CalYrBP",ylab="Mean sequence length per taxa (bp)",cex=0.8,ylim=c(40,140))
+#points(dates$Mean[match(names(tapply(MTG.raw.DS1$mean_L, MTG.raw.DS1$sample2, mean)),dates$sampleID)],tapply(MTG.raw.DS1$mean_L, MTG.raw.DS1$sample2, mean),type="l",lty=2,col="darkblue",lwd=3)
+polygon(c(predictions$year, rev(predictions$year)), c(predictions$uppCI, rev(predictions$lwrCI)), col=add.alpha('grey33',0.3), border=NA)
+points(predictions$year,predictions$fit,type="l",col="black",lwd=3)
+legend(8500,130,legend = c("Eukaryota","Bacteria","Archaea","Viruses","Linear fit"),pch=15,col=c("salmon","lightsteelblue","darkolivegreen2","bisque3","black"),cex=0.6, bty='n')   
 dev.off()
 
 
+sink(file="figures/suppl.len/MTG.len_year.lm.out.txt")
+summary(lm(len~year))
+sink()
 
+#metagenomics metazoa
+
+year <- dates$Mean[match(MTG.raw.DS2$sample2,dates$sampleID)]
+len <- MTG.raw.DS2$mean_L
+
+predictions <- data.frame("year"=seq(min(MTB.year),max(MTB.year),10))
+predictions <- cbind(predictions,predict(lm(len~year),predictions,se.fit = TRUE))
+predictions$uppCI <- predictions$fit+predictions$se.fit*1.96
+predictions$lwrCI <- predictions$fit-predictions$se.fit*1.96
+
+
+pdf("figures/suppl.len/MTG.lengthAgeAllReps.Nreps.met.col.pdf",width=7,height=5.5)
+par(mar=c(5.1, 4.1, 2.1, 4.1), xpd=TRUE)
+palette(c("darkolivegreen2","lightsteelblue","salmon","bisque3"))
+plot(dates$Mean[match(MTG.raw.DS2$sample2,dates$sampleID)],MTG.raw.DS2$mean_L,pch=16,col="salmon",xlab="CalYrBP",ylab="Mean sequence length per taxa (bp)",cex=0.8,ylim=c(40,140))
+#points(dates$Mean[match(names(tapply(MTG.raw.DS2$mean_L, MTG.raw.DS2$sample2, mean)),dates$sampleID)],tapply(MTG.raw.DS2$mean_L, MTG.raw.DS2$sample2, mean),type="l",lty=2,col="darkblue",lwd=3)
+polygon(c(predictions$year, rev(predictions$year)), c(predictions$uppCI, rev(predictions$lwrCI)), col=add.alpha('grey33',0.3), border=NA)
+points(predictions$year,predictions$fit,type="l",col="black",lwd=3)
+legend(8500,130,legend = c("Eukaryota","Linear fit"),pch=15,col=c("salmon","black"),cex=0.6, bty='n')   
+dev.off()
+
+sink(file="figures/suppl.len/MTG.met.len_year.lm.out.txt")
+summary(lm(len~year))
+sink()
 
 
 #plot high quality assignments

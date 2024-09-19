@@ -1,0 +1,19 @@
+
+Call:
+lm(formula = test2$ASV_len ~ dates$Mean[match(test2$Sample, dates$sampleID)])
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-36.020 -10.020  -6.947  15.232  35.053 
+
+Coefficients:
+                                                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                                      1.130e+02  2.345e-01 481.997   <2e-16 ***
+dates$Mean[match(test2$Sample, dates$sampleID)] -3.733e-05  9.289e-05  -0.402    0.688    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 14.47 on 6070 degrees of freedom
+Multiple R-squared:  2.66e-05,	Adjusted R-squared:  -0.0001381 
+F-statistic: 0.1615 on 1 and 6070 DF,  p-value: 0.6878
+

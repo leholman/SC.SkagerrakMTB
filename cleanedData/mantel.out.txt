@@ -5,11 +5,11 @@ Call:
 mantel(xdis = MTG.DS1.b, ydis = MTB.DS1.b, permutations = 10000) 
 
 Mantel statistic r: 0.6312 
-      Significance: 0.00089991 
+      Significance: 0.0011999 
 
 Upper quantiles of permutations (null model):
   90%   95% 97.5%   99% 
-0.240 0.311 0.368 0.455 
+0.238 0.304 0.366 0.456 
 Permutation: free
 Number of permutations: 10000
 
@@ -19,12 +19,12 @@ Mantel statistic based on Pearson's product-moment correlation
 Call:
 mantel(xdis = MTG.DS1.b, ydis = MTB.DS2.b, permutations = 10000) 
 
-Mantel statistic r: 0.3375 
-      Significance: 0.071593 
+Mantel statistic r: 0.295 
+      Significance: 0.10509 
 
 Upper quantiles of permutations (null model):
   90%   95% 97.5%   99% 
-0.293 0.373 0.455 0.537 
+0.301 0.374 0.432 0.496 
 Permutation: free
 Number of permutations: 10000
 
@@ -35,11 +35,11 @@ Call:
 mantel(xdis = MTG.DS2.b, ydis = MTB.DS1.b.s, permutations = 10000) 
 
 Mantel statistic r: 0.04457 
-      Significance: 0.38806 
+      Significance: 0.39576 
 
 Upper quantiles of permutations (null model):
   90%   95% 97.5%   99% 
-0.221 0.291 0.348 0.394 
+0.226 0.294 0.352 0.402 
 Permutation: free
 Number of permutations: 10000
 
@@ -49,12 +49,12 @@ Mantel statistic based on Pearson's product-moment correlation
 Call:
 mantel(xdis = MTG.DS2.b, ydis = MTB.DS2.b.s, permutations = 10000) 
 
-Mantel statistic r: -0.09366 
-      Significance: 0.58184 
+Mantel statistic r: -0.0708 
+      Significance: 0.54925 
 
 Upper quantiles of permutations (null model):
   90%   95% 97.5%   99% 
-0.382 0.481 0.547 0.610 
+0.415 0.554 0.614 0.669 
 Permutation: free
 Number of permutations: 10000
 
@@ -65,11 +65,11 @@ Call:
 mantel(xdis = MTG.DS1.j, ydis = MTB.DS1.j, permutations = 10000) 
 
 Mantel statistic r: 0.5229 
-      Significance: 0.00039996 
+      Significance: 0.00049995 
 
 Upper quantiles of permutations (null model):
   90%   95% 97.5%   99% 
-0.257 0.304 0.354 0.399 
+0.260 0.306 0.343 0.391 
 Permutation: free
 Number of permutations: 10000
 
@@ -79,12 +79,12 @@ Mantel statistic based on Pearson's product-moment correlation
 Call:
 mantel(xdis = MTG.DS1.j, ydis = MTB.DS2.j, permutations = 10000) 
 
-Mantel statistic r: 0.2998 
-      Significance: 0.11789 
+Mantel statistic r: 0.2753 
+      Significance: 0.11029 
 
 Upper quantiles of permutations (null model):
   90%   95% 97.5%   99% 
-0.345 0.424 0.465 0.506 
+0.313 0.467 0.512 0.559 
 Permutation: free
 Number of permutations: 10000
 
@@ -95,11 +95,11 @@ Call:
 mantel(xdis = MTG.DS2.j, ydis = MTB.DS1.j.s, permutations = 10000) 
 
 Mantel statistic r: 0.1722 
-      Significance: 0.23738 
+      Significance: 0.24388 
 
 Upper quantiles of permutations (null model):
   90%   95% 97.5%   99% 
-0.316 0.395 0.450 0.501 
+0.321 0.394 0.445 0.491 
 Permutation: free
 Number of permutations: 10000
 
@@ -109,12 +109,12 @@ Mantel statistic based on Pearson's product-moment correlation
 Call:
 mantel(xdis = MTG.DS2.j, ydis = MTB.DS2.j.s, permutations = 10000) 
 
-Mantel statistic r: 0.02887 
-      Significance: 0.42936 
+Mantel statistic r: -0.01135 
+      Significance: 0.44566 
 
 Upper quantiles of permutations (null model):
   90%   95% 97.5%   99% 
-0.347 0.440 0.514 0.585 
+0.350 0.455 0.533 0.593 
 Permutation: free
 Number of permutations: 10000
 

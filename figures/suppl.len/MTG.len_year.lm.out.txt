@@ -1,0 +1,20 @@
+
+Call:
+lm(formula = len ~ year)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-27.761 -10.159  -3.310   5.971  66.310 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 73.3727120  0.8683798  84.494  < 2e-16 ***
+year        -0.0010311  0.0001768  -5.831 7.42e-09 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 15.6 on 997 degrees of freedom
+  (3 observations deleted due to missingness)
+Multiple R-squared:  0.03298,	Adjusted R-squared:  0.03201 
+F-statistic: 34.01 on 1 and 997 DF,  p-value: 7.418e-09
+
