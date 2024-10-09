@@ -1682,6 +1682,14 @@ barplot(Family.C.prop,las=2,cex.names=0.6,col=rev(getPalette(dim(Family.C.prop)[
 legend(108,1,rev(rownames(Family.C.prop)),fill=getPalette(dim(Family.C.prop)[1]),cex=0.4,bty = "n",y.intersp=0.75)
 dev.off()
 
+
+pdf("figures/tax.Family.2.pdf",width = 12,height = 8)
+par(mfrow=c(1,1),mar=c(5.1, 4.1, 1.1, 7.1),xpd=TRUE)
+barplot(Family.A.prop,las=2,cex.names=0.6,col=rev(getPalette(dim(Family.A.prop)[1])),ylab="Read Abundance")
+legend(108,0.8,rev(rownames(Family.A.prop)),fill=getPalette(dim(Family.A.prop)[1]),cex=0.5,bty = "n",y.intersp=0.75)
+dev.off()
+
+
 ### Who da fungi!?
 test <- euk.Nreps[rownames(euk.Nreps) %in% taxPR2.f$X.1[taxPR2.f$tax.Family=="Eurotiomycetes"],]
 test2 <- euk[rownames(euk) %in% taxPR2.f$X.1[taxPR2.f$tax.Family=="Eurotiomycetes"],]
@@ -2632,25 +2640,25 @@ MTB.len.mean.met <- tapply(test2$ASV_len, test2$Sample, mean)
 year <- dates$Mean[match(test2$Sample,dates$sampleID)]
 len <- test2$ASV_len
 
-predictions <- data.frame("year"=seq(min(MTB.year),max(MTB.year),10))
+predictions <- data.frame("year"=seq(min(year),max(year),10))
 predictions <- cbind(predictions,predict(lm(len~year),predictions,se.fit = TRUE))
 predictions$uppCI <- predictions$fit+predictions$se.fit*1.96
 predictions$lwrCI <- predictions$fit-predictions$se.fit*1.96
 
 
 #plot
-pdf("figures/suppl.len/MTB.lengthAgeAllReps.Nreps.met.col.pdf",width=7,height=5.5)
+pdf("figures/suppl.len/MTB.lengthAgeAllReps.Nreps.met.col.pdf",width=5,height=4)
 par(mar=c(5.1, 4.1, 2.1, 4.1), xpd=TRUE)
 palette(c("salmon","black"))
 plot(jitter(dates$Mean[match(test4$Sample,dates$sampleID)],amount = 100),
-     jitter(test4$ASV_len,amount = 0.3),pch=16,cex=1,
+     jitter(test4$ASV_len,amount = 0.3),pch=16,cex=1.2,
      xlab="CalYrBP",
      ylab="ASV Length (bp)",
-     ylim=c(80,150),
+    # ylim=c(80,150),
      col=as.factor(test4$superkingdom))
 points(jitter(dates$Mean[match(test3$Sample,dates$sampleID)],amount = 150),
-       jitter(test3$ASV_len,amount = 0.15),pch=16,cex=1,col="orchid3")
-legend(8500,130,legend = c("Eukaryota","Chordata","Linear fit"),pch=15,col=c("salmon","orchid3","black"),cex=0.6, bty='n')   
+       jitter(test3$ASV_len,amount = 0.15),pch=16,cex=1.2,col="orchid3")
+legend(8500,133,legend = c("Eukaryota","Chordata","Linear fit"),pch=15,col=c("salmon","orchid3","black"),cex=0.6, bty='n')   
 polygon(c(predictions$year, rev(predictions$year)), c(predictions$uppCI, rev(predictions$lwrCI)), col=add.alpha('grey33',0.3), border=NA)
 points(predictions$year,predictions$fit,type="l",col="black",lwd=3)
 #points(dates$Mean[match(names(tapply(test2$ASV_len, test2$Sample, median)),dates$sampleID)],tapply(test2$ASV_len, test2$Sample, median),type="l",lty=2,col="darkred",lwd=3)
@@ -2662,7 +2670,7 @@ dev.off()
 year <- dates$Mean[match(test2$Sample,dates$sampleID)]
 len <- test2$ASV_len
 
-predictions <- data.frame("year"=seq(min(MTB.year),max(MTB.year),10))
+predictions <- data.frame("year"=seq(min(year),max(year),10))
 l1 <- lm(len~year)
 predictions <- cbind(predictions,predict(l1,predictions,se.fit = TRUE))
 predictions$uppCI <- predictions$fit+predictions$se.fit*1.96
@@ -2694,7 +2702,7 @@ MTG.raw.DS1$tax_group <- factor(ifelse(grepl("Bacteria|bacteria", MTG.raw.DS1$ta
 year <- dates$Mean[match(MTG.raw.DS1$sample2,dates$sampleID)]
 len <- MTG.raw.DS1$mean_L
 
-predictions <- data.frame("year"=seq(min(MTB.year),max(MTB.year),10))
+predictions <- data.frame("year"=seq(min(na.omit(year)),max(na.omit(year)),10))
 predictions <- cbind(predictions,predict(lm(len~year),predictions,se.fit = TRUE))
 predictions$uppCI <- predictions$fit+predictions$se.fit*1.96
 predictions$lwrCI <- predictions$fit-predictions$se.fit*1.96
@@ -2702,7 +2710,7 @@ predictions$lwrCI <- predictions$fit-predictions$se.fit*1.96
 pdf("figures/suppl.len/MTG.lengthAgeAllReps.Nreps.col.pdf",width=7,height=5.5)
 par(mar=c(5.1, 4.1, 2.1, 4.1), xpd=TRUE)
 palette(c("darkolivegreen2","lightsteelblue","salmon","bisque3"))
-plot(jitter(dates$Mean[match(MTG.raw.DS1$sample2,dates$sampleID)],1),MTG.raw.DS1$mean_L,pch=16,col=MTG.raw.DS1$tax_group,xlab="CalYrBP",ylab="Mean sequence length per taxa (bp)",cex=0.8,ylim=c(40,140))
+plot(jitter(dates$Mean[match(MTG.raw.DS1$sample2,dates$sampleID)],1),MTG.raw.DS1$mean_L,pch=16,col=MTG.raw.DS1$tax_group,xlab="CalYrBP",ylab="Mean sequence length per genera (bp)",cex=0.8,ylim=c(40,140))
 #points(dates$Mean[match(names(tapply(MTG.raw.DS1$mean_L, MTG.raw.DS1$sample2, mean)),dates$sampleID)],tapply(MTG.raw.DS1$mean_L, MTG.raw.DS1$sample2, mean),type="l",lty=2,col="darkblue",lwd=3)
 polygon(c(predictions$year, rev(predictions$year)), c(predictions$uppCI, rev(predictions$lwrCI)), col=add.alpha('grey33',0.3), border=NA)
 points(predictions$year,predictions$fit,type="l",col="black",lwd=3)
@@ -2724,20 +2732,20 @@ MTG.len.mean <- tapply(MTG.raw.DS1$mean_L, MTG.raw.DS1$sample2, mean)
 year <- dates$Mean[match(MTG.raw.DS2$sample2,dates$sampleID)]
 len <- MTG.raw.DS2$mean_L
 
-predictions <- data.frame("year"=seq(min(MTB.year),max(MTB.year),10))
+predictions <- data.frame("year"=seq(min(na.omit(year)),max(na.omit(year)),10))
 predictions <- cbind(predictions,predict(lm(len~year),predictions,se.fit = TRUE))
 predictions$uppCI <- predictions$fit+predictions$se.fit*1.96
 predictions$lwrCI <- predictions$fit-predictions$se.fit*1.96
 
 
-pdf("figures/suppl.len/MTG.lengthAgeAllReps.Nreps.met.col.pdf",width=7,height=5.5)
+pdf("figures/suppl.len/MTG.lengthAgeAllReps.Nreps.met.col.pdf",width=5,height=4)
 par(mar=c(5.1, 4.1, 2.1, 4.1), xpd=TRUE)
 palette(c("darkolivegreen2","lightsteelblue","salmon","bisque3"))
-plot(dates$Mean[match(MTG.raw.DS2$sample2,dates$sampleID)],MTG.raw.DS2$mean_L,pch=16,col="salmon",xlab="CalYrBP",ylab="Mean sequence length per taxa (bp)",cex=0.8,ylim=c(40,140))
+plot(dates$Mean[match(MTG.raw.DS2$sample2,dates$sampleID)],MTG.raw.DS2$mean_L,pch=16,col="salmon",xlab="CalYrBP",ylab="Mean sequence length per genera (bp)",cex=1.2)
 #points(dates$Mean[match(names(tapply(MTG.raw.DS2$mean_L, MTG.raw.DS2$sample2, mean)),dates$sampleID)],tapply(MTG.raw.DS2$mean_L, MTG.raw.DS2$sample2, mean),type="l",lty=2,col="darkblue",lwd=3)
 polygon(c(predictions$year, rev(predictions$year)), c(predictions$uppCI, rev(predictions$lwrCI)), col=add.alpha('grey33',0.3), border=NA)
 points(predictions$year,predictions$fit,type="l",col="black",lwd=3)
-legend(8500,130,legend = c("Eukaryota","Linear fit"),pch=15,col=c("salmon","black"),cex=0.6, bty='n')   
+legend(8500,80,legend = c("Eukaryota","Linear fit"),pch=15,col=c("salmon","black"),cex=0.6, bty='n')   
 dev.off()
 
 sink(file="figures/suppl.len/MTG.met.len_year.lm.out.txt")
@@ -2777,6 +2785,7 @@ legend("topright",legend=c(paste0("R2 = ",round(lm1.summary$adj.r.squared,3)),
 ## MTG met
 lm1.summary <- summary(lm(colSums(MTG.binary.DS2)~MTG.len.mean.met[match(names(MTG.binary.DS2),names(MTG.len.mean.met))]))
 plot(MTG.len.mean.met[match(names(MTG.binary.DS2),names(MTG.len.mean.met))],colSums(MTG.binary.DS2),pch=16,xlab="Mean read length",ylab="Genus richness")
+abline(lm1.summary,col="red")
 legend("topright",legend=c(paste0("R2 = ",round(lm1.summary$adj.r.squared,3)),
                            paste0("p = <0.001")),text.col = "red",bty="n")
 

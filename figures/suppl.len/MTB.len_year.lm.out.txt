@@ -7,9 +7,12 @@ Residuals:
 -36.020 -10.020  -6.947  15.232  35.053 
 
 Coefficients:
-                                                  Estimate Std. Error t value Pr(>|t|)    
-(Intercept)                                      1.130e+02  2.345e-01 481.997   <2e-16 ***
-dates$Mean[match(test2$Sample, dates$sampleID)] -3.733e-05  9.289e-05  -0.402    0.688    
+                                                  Estimate Std. Error t value
+(Intercept)                                      1.130e+02  2.345e-01 481.997
+dates$Mean[match(test2$Sample, dates$sampleID)] -3.733e-05  9.289e-05  -0.402
+                                                Pr(>|t|)    
+(Intercept)                                       <2e-16 ***
+dates$Mean[match(test2$Sample, dates$sampleID)]    0.688    
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
