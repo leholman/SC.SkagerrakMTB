@@ -1689,6 +1689,24 @@ barplot(Family.A.prop,las=2,cex.names=0.6,col=rev(getPalette(dim(Family.A.prop)[
 legend(108,0.8,rev(rownames(Family.A.prop)),fill=getPalette(dim(Family.A.prop)[1]),cex=0.5,bty = "n",y.intersp=0.75)
 dev.off()
 
+pdf("figures/tax.Family.2.tall.pdf",width = 8,height = 12)
+par(mfrow=c(1,1),mar=c(5.1, 4.1, 1.1, 7.1),xpd=TRUE)
+barplot(Family.A.prop,las=1,cex.names=0.6,col=rev(getPalette(dim(Family.A.prop)[1])),ylab="Read Abundance",horiz=TRUE)
+legend(108,0.8,rev(rownames(Family.A.prop)),fill=getPalette(dim(Family.A.prop)[1]),cex=0.5,bty = "n",y.intersp=0.75)
+dev.off()
+
+pdf("figures/tax.Family.2.rotated.pdf", width = 10, height = 12)  # Portrait layout
+par(mfrow=c(1,1), mar=c(5.1, 7.1, 1.1, 12.1), xpd=TRUE)  # Adjust margins
+
+barplot(Family.A.prop[,dim(Family.A.prop)[2]:1], horiz=TRUE, las=1, cex.names=0.6, 
+        col=rev(getPalette(dim(Family.A.prop)[1])), xlab="Read Abundance")  # Flip order & rotate
+
+legend(1.05,75, rev(rownames(Family.A.prop)), 
+       fill=getPalette(dim(Family.A.prop)[1]), cex=0.7, bty="n", y.intersp=0.75)  # Adjust legend
+
+dev.off()
+
+
 
 ### Who da fungi!?
 test <- euk.Nreps[rownames(euk.Nreps) %in% taxPR2.f$X.1[taxPR2.f$tax.Family=="Eurotiomycetes"],]
