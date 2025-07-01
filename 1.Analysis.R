@@ -38,6 +38,8 @@ taxPR2.f$tax.Division[taxPR2.f$Division<40] <- ""
 taxPR2.f$tax.Subdivision[taxPR2.f$Subdivision<80] <- ""
 taxPR2.f$tax.Family[taxPR2.f$Family<40] <- ""
 
+write.csv(taxPR2.f,"taxonomy/EUK.tax.PR2.filt.csv")
+
 
 
 ####====0.2 Functions ====####
